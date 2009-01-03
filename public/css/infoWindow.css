@@ -1,0 +1,55 @@
+#map_marker {
+    width: 175px;
+    margin-left: 50px;
+}
+
+#map_marker_beak {
+    width: 16px;
+    height: 11px;
+    margin-left: -50px;
+    background-image: url('/images/mjam/map_beak.png');
+}
+
+#map_marker b {
+    padding: 0 100px;
+    display: block;
+}
+
+#map_marker_contents {
+    background-color: white;
+}
+
+#map_marker_tl, #map_marker_tr, #map_marker_br, #map_marker_bl {
+    width: 7px;
+    height: 7px;
+}
+#map_marker_tl {
+    background-image: url('/images/mjam//map_tl.png');
+}
+#map_marker_tr {
+    background-image: url('/images/mjam//map_tr.png');
+}
+#map_marker_bl {
+    background-image: url('/images/mjam//map_bl.png');
+}
+#map_marker_br {
+    background-image: url('/images/mjam//map_br.png');
+}
+#map_marker_t, #map_marker_b {
+    height: 0px;
+    width: auto;
+    background-color: white;
+}
+#map_marker_t {
+    border-top: 2px solid #ffbc00;
+}
+#map_marker_b {
+    margin-top: -3px;
+    border-bottom: 2px solid #ffbc00;
+}
+#map_marker_l, #map_marker_r {
+    width: 2px;
+    height: auto;
+    background-color: #ffbc00;
+}
+

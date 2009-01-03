@@ -1,0 +1,18 @@
+<%inherit file="/blog/site.html" />
+<div id="log">
+
+<%def name="title()">Add Blog Post</%def>
+
+${h.rails.form(h.rails.url(action='blog_add_process'), multipart=True)}
+
+<!--${h.rails.start_form('/toolkit/blog_add_process')}-->
+<label>picture1: ${h.rails.file_field('picture1')}</label> 
+<label>title: ${h.rails.text_field(u'title')}</label> 
+<label>description: ${h.rails.text_field(u'description')}</label>
+<label>tags: ${h.rails.text_field(u'''tags''')}</label><br>
+<label>Subject: ${h.rails.text_field('subject')}</label><br>
+<label>Author: ${h.rails.text_field('author')}</label><br>
+<label>Post Content: ${h.rails.text_area('content',size="25x10")}</label><br>
+${h.rails.submit('Post New Page')}
+${h.rails.end_form}
+</div>

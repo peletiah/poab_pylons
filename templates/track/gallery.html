@@ -1,0 +1,9 @@
+<%inherit file="site.html" />
+
+<div id="content">
+
+% for image in c.images:
+    <img src="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_m"><br><br>
+% endfor    
+</div>
+

@@ -1,0 +1,9 @@
+<%inherit file="/blog/site.html" />
+<%def name="title()">Admin Control Panel</%def>
+
+This is home of the toolkit. <br>
+For now you can only 
+<a href="${h.rails.url_for(controller="toolkit", action="blog_add")}">add</a>
+blog posts.
+<p>
+Later on you'll be able to delete and edit also.
