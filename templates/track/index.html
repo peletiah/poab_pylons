@@ -1,73 +1,16 @@
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
 <div id="content">
-<script>//<![CDATA[
-
-   var map;
-   function writegmarker(lng,lat,gallerylink) {
-        var marker = new GMarker( new GLatLng(lng,lat) );
-                GEvent.addListener(marker, 'click', function(){
-                marker.openExtInfoWindow(
-                  map,
-                  "map_marker",
-                  controllerlink(gallerylink),
-                  {beakOffset: 3}
-                );
-              });
-        map.addOverlay(marker);
-   }
-
-
-    function writepolyline(encpts,enclvl) {
-    var encodedPolyline = new GPolyline.fromEncoded({
-                color: "#FF0000",
-                weight: 5,
-                points: encpts,
-                levels: enclvl,
-                zoomFactor: 32,
-                numLevels: 4
-        });
-        map.addOverlay(encodedPolyline);
-      }
-
-
-   function otfjson(markerlist) {
-        for (var i=0; i<markerlist.length; i++) {
-            writegmarker(markerlist[i].lat,markerlist[i].lon,markerlist[i].gal)
-	    writepolyline(markerlist[i].encpts,markerlist[i].enclvl)
-        }
-    }
-
-   function showGallery(gallerylink) {
-        new Ajax.Request(gallerylink, {onSuccess: function(response) { document.getElementById('gallery').innerHTML = response.responseText; }});
-        }
-
-
-   function controllerlink(gallerylink) {
-        return '<a href="javascript:showGallery(\''+gallerylink+'\')">gallery</a>';
-   }
-   function load() {
-      if (GBrowserIsCompatible()) {
-        map = new GMap2(document.getElementById("map"));
-        map.setCenter(new GLatLng('${c.infomarker.latitude}', '${c.infomarker.longitude}'), 13);
-        map.setMapType(G_PHYSICAL_MAP);
-        map.addControl(new GScaleControl());
-        map.addControl(new GLargeMapControl());
-        var mapControl = new GHierarchicalMapTypeControl();
-        map.addMapType(G_PHYSICAL_MAP);
-        mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
-        map.addControl(mapControl);
-        map.addControl(new GOverviewMapControl ());
-        map.enableScrollWheelZoom();
-	var markerlist = ${c.markerlist}
-	otfjson(markerlist);
-      }
-    }
-
-    //]]></script>
-
-
 <div id="map" style="width: 800px; height: 600px">
+</div>
+<div id="datechooser">
+${h.rails.form(h.rails.url(controller='track'), multipart=True)}
+<label>${h.rails.text_field('viewbydate')}</label>
+${h.rails.submit('Go!')}
+${h.rails.end_form}
+</div>
+<div id="error">
+${c.error}
 </div>
 <div id="gallery"></div>
 </div>

@@ -1,9 +1,11 @@
-<%inherit file="site.html" />
-
 <div id="content">
 
+<% i=0 %>
+${c.markerlist}
 % for image in c.images:
-    <img src="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_m"><br><br>
+    ${i}
+    <img src="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_t"><br><br>
+<%   i=i+1 %>
 % endfor    
 </div>
 

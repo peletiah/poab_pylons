@@ -6,11 +6,16 @@ body {
 
 #content {
 	position: relative;
+	width: 100%;
 	top: 60px;
 	margin: 0;
 	padding: 0;
-	left: 200px;
+	left: 0;
 	font: normal 13px verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
+}
+
+#map {
+	left: 60px;
 }
 
 #menu h1, #menu h2, #menu p {margin:0 10px; letter-spacing:1px;}
@@ -40,11 +45,11 @@ body {
 
 #menu {
 	position:fixed;
-	width: 60%;
+	width: 40%;
 	top: 10px;
-	left: 0;
-	right: 0;	
-	margin-left: auto;
+	left: 0px;
+	right: 0px;	
+	margin-left: 60px;
 	margin-right: auto;
 	z-index: 89;
         opacity: 0.8;
@@ -64,9 +69,21 @@ body {
 
 #gallery {
 	 position: fixed;
-	 top: 10px;
+	 top: 30px;
 	 left: 900px;
-	 z-index: 200;
+	 z-index: 1;
 	 }
 
+#datechooser {
+	 position: fixed;
+	 top: 10px;
+	 left: 900px;
+	 z-index: 201;
+	 }
 
+#error {
+	position: fixed;
+	top: 35px;
+	left: 900px;
+	color: red;
+	}	

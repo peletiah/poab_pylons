@@ -5,13 +5,85 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen"></link>
     <link type="text/css" rel="Stylesheet" media="screen" href="/css/infoWindow.css"/>
+    <link type="text/css" rel="Stylesheet" media="screen" href="/css/flora.datepicker.css"/>
     <!-- ${h.rails.javascript_include_tag(builtins=True)} -->
     <script src="/js/prototype-1.6.0.2.js" type="text/javascript"></script>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"
       type="text/javascript"></script>
     <script src="/js/extinfowindow.js" type="text/javascript"></script>
     <script src="/js/jquery-1.2.6.js" type="text/javascript"></script>
+    <script src="/js/jquery_plugins/ui.datepicker.js" type="text/javascript"></script>
 <!--    <script src="/js/gmaps.js" type="text/javascript"></script> -->
+   
+    <script>
+	$(document).ready(function(){
+	    $('#viewbydate').datepicker({rangeSelect: true, calendars: 2, firstDay: 1, dateFormat: 'yy-mm-dd'});
+	});
+    </script>
+    <script>//<![CDATA[
+
+   var map;
+   function writegmarker(lng,lat,gallerylink) {
+        var marker = new GMarker( new GLatLng(lng,lat) );
+                GEvent.addListener(marker, 'click', function(){
+                marker.openExtInfoWindow(
+                  map,
+                  "map_marker",
+                  controllerlink(gallerylink),
+                  {beakOffset: 3}
+                );
+              });
+        map.addOverlay(marker);
+   }
+
+
+    function writepolyline(encpts,enclvl) {
+    var encodedPolyline = new GPolyline.fromEncoded({
+                color: "#FF0000",
+                weight: 5,
+                points: encpts,
+                levels: enclvl,
+                zoomFactor: 32,
+                numLevels: 4
+        });
+        map.addOverlay(encodedPolyline);
+      }
+
+
+   function otfjson(markerlist) {
+        for (var i=0; i<markerlist.length; i++) {
+            writegmarker(markerlist[i].lat,markerlist[i].lon,markerlist[i].gal)
+            writepolyline(markerlist[i].encpts,markerlist[i].enclvl)
+        }
+    }
+
+   function showGallery(gallerylink) {
+        new Ajax.Request(gallerylink, {onSuccess: function(response) { document.getElementById('gallery').innerHTML = response.responseText; }});
+        }
+
+
+   function controllerlink(gallerylink) {
+        return '<a href="javascript:showGallery(\''+gallerylink+'\')">gallery</a>';
+   }
+   function load() {
+      if (GBrowserIsCompatible()) {
+        map = new GMap2(document.getElementById("map"));
+        map.setCenter(new GLatLng('${c.infomarker.latitude}', '${c.infomarker.longitude}'), 13);
+        map.setMapType(G_PHYSICAL_MAP);
+        map.addControl(new GScaleControl());
+        map.addControl(new GLargeMapControl());
+        var mapControl = new GHierarchicalMapTypeControl();
+        map.addMapType(G_PHYSICAL_MAP);
+        mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
+	map.addControl(mapControl);
+        map.addControl(new GOverviewMapControl ());
+        map.enableScrollWheelZoom();
+        var markerlist = ${c.markerlist}
+        otfjson(markerlist);
+      }
+    }
+
+    //]]></script>
    <title>${self.title()}</title>
   </head>
   <body onload="load()" onunload="GUnload()">
