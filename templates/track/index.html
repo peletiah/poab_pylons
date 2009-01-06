@@ -3,12 +3,6 @@
 <div id="content">
 <div id="map" style="width: 800px; height: 600px">
 </div>
-<div id="datechooser">
-${h.rails.form(h.rails.url(controller='track'), multipart=True)}
-<label>${h.rails.text_field('viewbydate')}</label>
-${h.rails.submit('Go!')}
-${h.rails.end_form}
-</div>
 <div id="error">
 ${c.error}
 </div>

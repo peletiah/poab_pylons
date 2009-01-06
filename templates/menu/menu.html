@@ -8,8 +8,25 @@
           <li><a href="${h.rails.url_for(controller="/view", action="")}">view</a></li>
           <li><a href="${h.rails.url_for(controller="/facts", action="")}">facts</a></li>
         </ul>
-
 </div>
-
 <b class="mbottom"><b class="mb4"></b><b class="mb3"></b><b class="mb2"></b><b class="mb1"></b></b>
+
+
 </div>
+
+  <div id="chooser">
+    <div id="toggledate">+/-</div>
+    ${h.rails.form(h.rails.url(controller='track'), multipart=True)}
+    <div id="dateinput">${h.rails.text_field('viewbydate')}
+	${h.rails.submit('Go!')}
+    </div>
+    ${h.rails.end_form}
+    <div id="toggledistance">+/-</div>
+    ${h.rails.form(h.rails.url(controller='track'), multipart=True)}
+    <div id="distanceinput">${h.rails.text_field('viewbydistance')}
+	${h.rails.submit('Go!')}
+    </div>
+    ${h.rails.end_form}
+  </div>
+
+

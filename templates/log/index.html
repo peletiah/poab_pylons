@@ -1,0 +1,13 @@
+<%inherit file="site.html" />
+<%include file="/menu/menu.html" />
+
+<div id="content">
+% for post in c.posts:
+<div id="log">
+        <h2>${post.topic}</h2>
+        <h3>${post.createdate}</h3>
+        <p>${post.content}</p>
+</div>
+% endfor
+</div>
+

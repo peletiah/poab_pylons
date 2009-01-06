@@ -3,21 +3,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen"></link>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen">
     <link type="text/css" rel="Stylesheet" media="screen" href="/css/infoWindow.css"/>
     <link type="text/css" rel="Stylesheet" media="screen" href="/css/flora.datepicker.css"/>
-    <!-- ${h.rails.javascript_include_tag(builtins=True)} -->
     <script src="/js/prototype-1.6.0.2.js" type="text/javascript"></script>
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"
       type="text/javascript"></script>
     <script src="/js/extinfowindow.js" type="text/javascript"></script>
     <script src="/js/jquery-1.2.6.js" type="text/javascript"></script>
     <script src="/js/jquery_plugins/ui.datepicker.js" type="text/javascript"></script>
-<!--    <script src="/js/gmaps.js" type="text/javascript"></script> -->
    
     <script>
 	$(document).ready(function(){
 	    $('#viewbydate').datepicker({rangeSelect: true, calendars: 2, firstDay: 1, dateFormat: 'yy-mm-dd'});
+	});
+    </script>
+    <script>
+	$(document).ready(function(){
+    
+	    $("#toggledate").click(function () {
+		$("#dateinput").slideToggle();
+		$("#distanceinput").slideUp();
+	    });    
+	    $("#toggledistance").click(function () {
+		$("#distanceinput").slideToggle();
+		$("#dateinput").slideUp();
+	    });
 	});
     </script>
     <script>//<![CDATA[

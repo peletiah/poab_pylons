@@ -1,21 +1,40 @@
 body {
-	margin: 10px auto;
+	background-color: fdf6db;
+	margin: 1em auto;
 	padding: 0;
-
 }
 
 #content {
 	position: relative;
 	width: 100%;
-	top: 60px;
+	top: 4em;
 	margin: 0;
 	padding: 0;
 	left: 0;
-	font: normal 13px verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
+	font: normal 0.8em verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
+	color: #CCCCCC;
+}
+
+#log {
+	width: 50em;
+        background-color: #888888;
+        border: 1px solid #000000;
+	border-width: 0.1em;
+        padding: 1.2em;
+        position: relative;
+        margin: 2em;
+	left: 2.8em;
 }
 
 #map {
-	left: 60px;
+	width: 50em;
+        background-color: #888888;
+        border: 1px solid #000000;
+        border-width: 0.1em;
+        padding: 1.2em;
+        position: relative;
+        margin: 2em;
+	left: 2.8em;
 }
 
 #menu h1, #menu h2, #menu p {margin:0 10px; letter-spacing:1px;}
@@ -74,12 +93,45 @@ body {
 	 z-index: 1;
 	 }
 
-#datechooser {
+#chooser {
 	 position: fixed;
-	 top: 10px;
-	 left: 900px;
 	 z-index: 201;
+	 width: 30em;
+	 left: 20em;
+	 top: -0.1em;
 	 }
+
+#dateinput {
+	position: fixed;
+	left: 19em;
+	width: 17em;
+	top: 1em;
+	 }
+
+#toggledate {
+	position: fixed;
+	left:58em;
+	z-index: 1000;
+	top: 1em;
+	 }
+
+
+#distanceinput {
+	position: fixed;
+	top: 1em;
+	left: 35em;
+	 }
+
+#toggledistance {
+	position: fixed;
+	z-index: 1000;
+	top: 1em;
+	left: 60em;
+	 }
+
+
+
+
 
 #error {
 	position: fixed;

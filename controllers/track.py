@@ -34,7 +34,7 @@ class TrackController(BaseController):
             q3 = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.track_id)
             c.images = q3.all()
             for c.track in c.tracks:
-                c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"track/gallery/%s", 'encpts':"%s", 'enclvl':"%s"}''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,c.track.gencpoly_pts,c.track.gencpoly_levels)
+                c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"track/gallery/%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,c.track.gencpoly_pts,c.track.gencpoly_levels)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 

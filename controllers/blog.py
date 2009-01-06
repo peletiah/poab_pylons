@@ -12,7 +12,7 @@ class BlogController(BaseController):
         # or, Return a response
 	q = model.Session.query(model.log)
         c.posts = q.limit(10)
-        return render("/blog/index.html")
+        return render("/log/index.html")
 
     def show(self):
         # Return a rendered template
@@ -20,4 +20,4 @@ class BlogController(BaseController):
         # or, Return a response
 	q = model.Session.query(model.log)
         c.posts = q.limit(10)
-        return render("/blog/index.html")
+        return render("/log/index.html")
