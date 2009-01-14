@@ -7,7 +7,8 @@
     width: 16px;
     height: 11px;
     margin-left: -50px;
-    background-image: url('/images/mjam/map_beak.png');
+    margin-top: 2px;
+    background-image: url('/images/infowindow/beak_grey.png');
 }
 
 #map_marker b {
@@ -16,7 +17,14 @@
 }
 
 #map_marker_contents {
-    background-color: white;
+    background-color: #666666;
+    opacity: 0.8;
+}
+
+#map_marker_contents a {
+    margin-left: 4px;
+    color: #eda22d;
+    font-weight: bold;
 }
 
 #map_marker_tl, #map_marker_tr, #map_marker_br, #map_marker_bl {
@@ -24,32 +32,39 @@
     height: 7px;
 }
 #map_marker_tl {
-    background-image: url('/images/mjam//map_tl.png');
+    background-image: url('/images/infowindow/grey_tl.png');
+     opacity: 0.8;
 }
 #map_marker_tr {
-    background-image: url('/images/mjam//map_tr.png');
+    background-image: url('/images/infowindow/grey_tr.png');
+    opacity: 0.8;
 }
 #map_marker_bl {
-    background-image: url('/images/mjam//map_bl.png');
+    background-image: url('/images/infowindow/grey_bl.png');
+    opacity: 0.8;
 }
 #map_marker_br {
-    background-image: url('/images/mjam//map_br.png');
+    background-image: url('/images/infowindow/grey_br.png');
+    opacity: 0.8;
 }
 #map_marker_t, #map_marker_b {
     height: 0px;
     width: auto;
-    background-color: white;
+    background-color: #666666;
+    border: None;
+    opacity: 0.8;
 }
 #map_marker_t {
-    border-top: 2px solid #ffbc00;
+    border-top: 2px solid #444444;
 }
 #map_marker_b {
-    margin-top: -3px;
-    border-bottom: 2px solid #ffbc00;
+    margin-top: -2px;
+    border-bottom: 2px solid #444444;
 }
 #map_marker_l, #map_marker_r {
     width: 2px;
     height: auto;
-    background-color: #ffbc00;
+    background-color: #444444;
+    opacity: 0.8;
 }
 

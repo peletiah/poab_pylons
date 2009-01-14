@@ -1,5 +1,3 @@
-<div id="content">
-
 <% i=0 %>
 ${c.markerlist}
 % for image in c.images:
@@ -7,5 +5,3 @@ ${c.markerlist}
     <img src="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_t"><br><br>
 <%   i=i+1 %>
 % endfor    
-</div>
-
