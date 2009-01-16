@@ -1,7 +1,14 @@
+<link type="text/css" rel="stylesheet" media="screen" href="/css/jquery.lightbox.css" />
+<script src="/js/jquery-1.2.6.pack.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/jquery_plugins/jquery_lightbox/js/jquery.lightbox.packed.js"></script>
+
 <% i=0 %>
 ${c.markerlist}
 % for image in c.images:
-    ${i}
-    <img src="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_t"><br><br>
+    <div id="thumbIndv">
+    <a rel="lightbox-MyGroup" href="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_b" title="bla">
+	<img src="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_s">
+    </a>
+    </div>
 <%   i=i+1 %>
 % endfor    

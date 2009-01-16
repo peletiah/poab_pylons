@@ -21,3 +21,6 @@ class BlogController(BaseController):
 	q = model.Session.query(model.log)
         c.posts = q.limit(10)
         return render("/log/index.html")
+
+    def menu(self):
+	return render("/menu/menu2.html")

@@ -2,12 +2,14 @@
 <%include file="/menu/menu.html" />
 
 <div id="content">
+<div id="log" "clearfix">
 % for post in c.posts:
-<div id="log">
+<div id="logdetail">
         <h2>${post.topic}</h2>
         <h3>${post.createdate}</h3>
-        <p>${post.content}</p>
+        ${post.content}
 </div>
 % endfor
+</div>
 </div>
 

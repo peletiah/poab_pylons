@@ -1,0 +1,19 @@
+<link type="text/css" rel="stylesheet" media="screen" href="/css/jquery.lightbox.css" />
+<script src="/js/jquery-1.2.6.pack.js" type="text/javascript"></script>
+<script type="text/javascript">
+function showGal(gallerylink) {
+        $.ajax({
+            url: gallerylink,
+            cache: true,
+            success: function(response) { 
+                        $("#gallery").replaceWith('<div id="gallery">' + response + '</div>'); 
+                     }
+        
+        });
+    }
+</script>
+
+<a href="javascript:showGal('/shared/lightbox/gallery.html')">gallery</a><br>
+<a href="http://benko.login.cx:4000/shared/lightbox/gallery.html" target="_blank">go to the gallery-page</a>
+<br><br><br>
+<div id="gallery"></div>

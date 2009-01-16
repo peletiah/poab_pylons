@@ -1,0 +1,87 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="/js/jquery-1.2.6.js" type="text/javascript"></script>
+<script src="/js/jquery_plugins/ui.datepicker.js" type="text/javascript"></script>
+<script>
+        $(document).ready(function(){
+        $('#viewbydate').datepicker({rangeSelect: true, calendars: 2, firstDay: 1, dateFormat: 'yy-mm-dd'});
+        $("#countryinput").hide();
+        $("#dateinput").hide();
+        $("#toggledate").click(function () {
+              $("#dateinput").toggle();
+	      $("#countryinput").hide();
+          });    
+        $("#togglecountry").click(function () {
+            $("#countryinput").toggle();              
+            $("#dateinput").hide();
+            });
+        });
+</script>
+<style type="text/css" media="all">
+body {
+        background-color: fdf6db;
+        margin: 1em;
+        padding: 0;
+}
+#inputfields {
+        position:fixed;
+	padding: 0.5em;
+        top: 0.9em;
+        width: 800px;
+	display: block;
+        margin-left: 4em;
+        margin-right: auto;
+        z-index: 89;
+        opacity: 0.8;
+	background:#444444;
+        border:1px solid #000000;
+}
+
+#input1 {
+}
+
+#input1 form { 
+    display: inline;
+}
+
+#dateinput {
+}
+
+#viewbydate {
+    width: 200px;
+}
+
+#input2 {
+}
+
+#input2 form { 
+    display: inline;
+}
+
+#viewbycountry {
+    width: 200px;
+}
+</style>
+
+
+</head>
+<body>
+<div id="inputfields">
+<span id="input1">
+    <form method="GET" action="/track">
+	<span id="toggledate"><img src="/images/chooser/calendar.jpg"></span>
+	 <span id="dateinput">
+	  <input id="viewbydate" type="text" name="viewbydate" />
+	  <input type="image" src="/images/chooser/check.png" name="submit" value="Submit" /></span>
+    </form>
+</span>
+<!--<span id="input2">			
+		<form method="GET" action="/track">
+		<span id="togglecountry"><img src="/images/chooser/globe.png"></span>
+		    <span id="countryinput">
+		    <input type="text" name="countryinput" />
+		    <input type="image" src="/images/chooser/check.png" name="submit" value="Submit" /></span>
+		</form>
+</span>		-->
+</div>	
+</body>
