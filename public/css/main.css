@@ -1,5 +1,5 @@
 body {
-	background-color: c4cdad;
+	background-color: #c4cdad;
 	margin: 1em auto;
 	padding: 0;
 }
@@ -40,13 +40,29 @@ body {
 }
 
 #menu a {
-        color: #EEEEEE;
+        color: #222222;
         text-decoration: none;
+	padding: 0.2em
         }
 
 #menu a:hover {
-        color: #CCCCCC;
+        color: #000000;
+	background-color: #888888;
+	padding: 0.2em
+	border: solid #000000;
+        border-width: 0.05em;
+        -moz-border-radius: 0.2em;
+        -webkit-border-radius: 0.2em;
+        border-radius: 0.2em;
         }
+
+#menu a:visited {
+        color: #222222;
+        text-decoration: none;
+	padding: 0.2em
+        }
+
+
 
 #menu form {
     margin : 0;
@@ -54,32 +70,31 @@ body {
     display: inline;
 }
 
+#menu img {
+	float: left;
+}
+
 #menu toggledate {
 	z-index: 1000;
-	 }
-
-#menu dateinput {
-        opacity: 0.8;
+	margin: 0.2em;
 	 }
 
 #menu togglecountry {
 	z-index: 1000;
+	margin: 0.2em;
 	 }
 
-#menu countryinput {
-	background:#444444;
-        opacity: 0.8;
-	display: block;
-	 }
 
 #menucontent {
-	      background:#444444; 
+	      background:#d9b421; 
 	      border: solid #000000;
-	      border-width: 0.05em;
+	      border-width: 0.1em;
 	      -moz-border-radius: 0.7em;
+	      -webkit-border-radius: 0.7em;
 	      border-radius: 0.7em; 
 	      font-family: helvetica; 
-	      font-height: 100%
+	      font-height: 100%;
+	      color: #222222;
 	      padding: 0em;
 	      width: 56em; 
 	    }
@@ -90,7 +105,7 @@ body {
 	position: relative;
 	width: 56em;
 	font: normal 1em verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
-	color: #CCCCCC;
+	color: #222222;
 	margin-left: 4em;
 }
 
@@ -101,12 +116,41 @@ body {
 #logdetail {
 	float: left;
         width: 45em;
-        background-color: #888888;
+        background-color: #9bacbc;
         border: solid #000000;
+	-moz-border-radius: 0.7em;
+	-webkit-border-radius: 0.7em;
+	border-radius: 0.7em; 
 	border-width: 0.05em;
 	margin-bottom: 2em;
-	padding: 1.2em;
+	padding: 0.5em;
 }
+
+
+#logdetail a {
+        color: #444444;
+        text-decoration: none;
+	padding: 0.2em
+       }
+
+#logdetail img {
+	margin: 1em;
+       }
+
+
+
+#logdetail a:hover {
+        color: #000000;
+	background-color: #888888;
+	padding: 0.2em
+	border: solid #000000;
+        border-width: 0.05em;
+        -moz-border-radius: 0.2em;
+        -webkit-border-radius: 0.2em;
+        border-radius: 0.2em;
+        }
+
+
 
 #track {
     margin-top: 7em;
@@ -159,52 +203,4 @@ body {
 	color: red;
 	}	
 
-
-#ImageBoxOverlay
-{
-	background-color: #000;
-}
-#ImageBoxCaption
-{
-	background-color: #F4F4EC;
-}
-#ImageBoxContainer
-{
-	width: 250px;
-	height: 250px;
-	background-color: #F4F4EC;
-}
-#ImageBoxCaptionText
-{
-	font-weight: bold;
-	padding-bottom: 5px;
-	font-size: 13px;
-	color: #000;
-}
-#ImageBoxCaptionImages
-{
-	margin: 0;
-}
-#ImageBoxNextImage
-{
-	background-image: url(/images/imagebox/spacer.gif);
-	background-color: transparent;
-}
-#ImageBoxPrevImage
-{
-	background-image: url(/images/imagebox/spacer.gif);
-	background-color: transparent;
-}
-#ImageBoxNextImage:hover
-{
-	background-image: url(/images/imagebox/next_image.jpg);
-	background-repeat:	no-repeat;
-	background-position: right top;
-}
-#ImageBoxPrevImage:hover
-{
-	background-image: url(/images/imagebox/prev_image.jpg);
-	background-repeat:	no-repeat;
-	background-position: left bottom;
-};
 

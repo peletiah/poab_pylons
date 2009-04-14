@@ -20,8 +20,8 @@
  *
  * @name jquery_lightbox: jquery.lightbox.js
  * @package jQuery Lightbox Plugin (balupton edition)
- * @version 1.3.6-final
- * @date March 08, 2009
+ * @version 1.3.4-final
+ * @date September 12, 2008
  * @category jQuery plugin
  * @author Benjamin "balupton" Lupton {@link http://www.balupton.com}
  * @copyright (c) 2008 Benjamin Arthur Lupton {@link http://www.balupton.com}
@@ -35,35 +35,13 @@
 	// More info: http://docs.jquery.com/Plugins/Authoring#Custom_Alias
 	
 	// Debug
-	if ( typeof $.log === 'undefined' ) {
-		if ( !$.browser.safari && typeof window.console !== 'undefined' && typeof window.console.log === 'function' )
-		{	// Use window.console
-			$.log = function(){
-				var args = [];
-			    for(var i = 0; i < arguments.length; i++) {
-			        args.push(arguments[i]);
-			    }
-			    window.console.log.apply(window.console, args);
-			}
-			$.console = {
-				log:	$.log,
-				debug:	window.console.debug	|| $.log,
-				warn:	window.console.warn		|| $.log,
-				error:	window.console.error	|| $.log,
-				trace:	window.console.trace	|| $.log
-			}
-		}
-		else
-		{	// Don't use anything
-			$.log = function ( ) { };
-			$.console = {
-				log:	$.log,
-				debug:	$.log,
-				warn:	$.log,
-				error:	alert,
-				trace:	$.log
-			};
-		}
+	if ( !$.browser.safari && typeof window.console !== 'undefined' && typeof window.console.log === 'function' )
+	{	// Use window.console
+		$.log = function ( ) { };
+	}
+	else
+	{	// Don't use anything
+		$.log = function ( ) { };
 	}
 	
 	// Pre-Req
@@ -408,7 +386,7 @@
 				
 				if ( !image )
 				{	// Error
-					$.console.error('We dont know what we have:', obj);
+					$.log('ERROR', 'We dont know what we have:', obj);
 					return false;
 				}
 				
@@ -452,7 +430,7 @@
 				// Determine image
 				if ( !image )
 				{	// Image doesn't exist
-					$.console.error('The desired image doesn\'t exist: ', image, this.list);
+					$.log('ERROR', 'The desired image doesn\'t exist: ', image, this.list);
 					return false;
 				}
 				
@@ -468,35 +446,21 @@
 		},
 		
 		// -----------------
-		// Variables
+		// Options
 		
 		constructed:		false,
-		compressed:			null,
-		
-		// -----------------
-		// Options
 		
 		src:				null,		// the source location of our js file
 		baseurl:			null,
 		
 		files: {
-			compressed: {
-				js: {
-					lightbox:	'js/jquery.lightbox.min.js',
-					colorBlend:	'js/jquery.color.min.js'
-				},
-				css: {
-					lightbox:	'css/jquery.lightbox.css'
-				}
+			// If you are doing a repack with packer (http://dean.edwards.name/packer/) then append ".packed" onto the js and css files before you pack it.
+			js: {
+				lightbox:	'js/jquery.lightbox.js',
+				colorBlend:	'js/jquery.color.js'
 			},
-			uncompressed: {
-				js: {
-					lightbox:	'js/jquery.lightbox.js',
-					colorBlend:	'js/jquery.color.js'
-				},
-				css: {
-					lightbox:	'css/jquery.lightbox.css'
-				}
+			css: {
+				lightbox:	'css/jquery.lightbox.css'
 			},
 			images: {
 				prev:		'images/prev.gif',
@@ -579,70 +543,39 @@
 			var domReady = initial;
 			
 			// Prepare options
-			options = options || {};
+			options = $.extend({}, options);
 			
 			// -------------------
 			// Handle files
 			
-			// Prepend function to use later
-			var prepend = function(item, value) {
-				if ( typeof item === 'object' ) {
-					for (var i in item) {
-						item[i] = prepend(item[i], value);
-					}
-				} else if ( typeof value === 'array' ) {
-					for (var i=0,n=item.length; i<n; ++i) {
-						item[i] = prepend(item[i], value);
-					}
-				} else {
-					item = value+item;
-				}
-				return item;
-			}
-			
 			// Add baseurl
 			if ( initial && (typeof options.files === 'undefined') )
 			{	// Load the files like default
-				
-				// Reset compressed
-				this.compressed = null;
-				
+			
 				// Get the src of the first script tag that includes our js file (with or without an appendix)
-				var $script = $('script[src*='+this.files.compressed.js.lightbox+']:first');
-				if ( $script.length !== 0 ) {
-					// Compressed
-					$.extend(true, this.files, this.files.compressed);
-					this.compressed = true;
-				} else {
-					// Uncompressed
-					$script = $('script[src*='+this.files.uncompressed.js.lightbox+']:first');
-					if ( $script.length !== 0 ) {
-						// Uncompressed
-						$.extend(true, this.files, this.files.uncompressed);
-						this.compressed = false;
-					} else {
-						// Nothing
-					}
-				}
+				this.src = $('script[src*='+this.files.js.lightbox+']:first').attr('src');
 				
 				// Make sure we found ourselves
-				if ( this.compressed === null )
+				if ( !this.src )
 				{	// We didn't
-					$.console.error('Lightbox was not able to find it\'s javascript script tag necessary for auto-inclusion.');
+					// $.log('WARNING', 'Lightbox was not able to find it\'s javascript script tag necessary for auto-inclusion.');
 					// We don't work with files anymore, so don't care for domReady
 					domReady = false;
 				}
 				else
 				{	// We found ourself
-					
-					// Grab the script src
-					this.src = $script.attr('src');
-					
+				
 					// The baseurl is the src up until the start of our js file
 					this.baseurl = this.src.substring(0, this.src.indexOf(this.files.js.lightbox));
 					
-					// Prepend baseurl to files
-					this.files = prepend(this.files, this.baseurl);
+					// Apply baseurl to files
+					var me = this;
+					$.each(this.files, function(group, val){
+						$.each(this, function(file, val){
+							me.files[group][file] = me.baseurl+val;
+						});
+					});
+					delete me;
 					
 					// Now as we have source, we may have more params
 					options = $.extend(options, $.params_to_json(this.src));
@@ -652,8 +585,13 @@
 			else
 			if ( typeof options.files === 'object' )
 			{	// We have custom files
-				// Prepend baseurl to files
-				options.files = prepend(options.files, this.baseurl);
+				var me = this;
+				$.each(options.files, function(group, val){
+					$.each(this, function(file, val){
+						this[file] = me.baseurl+val;
+					});
+				});
+				delete me;
 			}
 			else
 			{	// Don't have any files, so no need to perform domReady
@@ -663,18 +601,18 @@
 			// -------------------
 			// Apply options
 			
-			for ( var i in this.options )
+			for ( i in this.options )
 			{	// Cycle through the options
 				var name = this.options[i];
 				if ( (typeof options[name] === 'object') && (typeof this[name] === 'object') )
 				{	// We have a group like text or files
-					this[name] = $.extend(true, this[name], options[name]);
+					this[name] = $.extend(this[name], options[name]);
 				}
 				else if ( typeof options[name] !== 'undefined' )
 				{	// We have that option, so apply it
 					this[name] = options[name];
 				}
-			}	delete i;
+			}
 			
 			// -------------------
 			// Figure out what to do
@@ -889,7 +827,7 @@
 			var groups_n = 0;
 			var orig_rel = this.rel;
 			// Create the groups
-			$.each($('[rel*='+orig_rel+']'), function(index, obj){
+			$.each($('[@rel*='+orig_rel+']'), function(index, obj){
 				// Get the group
 				var rel = $(obj).attr('rel');
 				// Are we really a group
@@ -934,7 +872,7 @@
 			// Do we need to bother
 			if ( this.images.empty() )
 			{	// No images
-				$.console.warn('WARNING', 'Lightbox started, but no images: ', image, images);
+				$.log('WARNING', 'Lightbox started, but no images: ', image, images);
 				return false;
 			}
 			
@@ -1046,7 +984,7 @@
 			var image = this.images.active();
 			if ( !image || !image.width || !this.visible )
 			{	// No image or no visible lightbox, so we don't care
-				$.console.warn('A resize occured while no image or no lightbox...');
+				$.log('WARNING', 'A resize occured while no image or no lightbox...');
 				return false;
 			}
 			
@@ -1218,7 +1156,7 @@
 			var skipped_step_2 = step > 2 && $('#lightbox-image').attr('src') !== image.src;
 			if ( skipped_step_1 || skipped_step_2 )
 			{	// Force step 1
-				$.console.info('We wanted to skip a few steps: ', image, step, skipped_step_1, skipped_step_2);
+				$.log('We wanted to skip a few steps: ', image, step, skipped_step_1, skipped_step_2);
 				step = 1;
 			}
 			
