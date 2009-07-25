@@ -1,5 +1,5 @@
 body {
-	background-color: #c4cdad;
+	background-color: #444444;
 	margin: 1em auto;
 	padding: 0;
 }
@@ -86,7 +86,7 @@ body {
 
 
 #menucontent {
-	      background:#d9b421; 
+	      background:#666666; 
 	      border: solid #000000;
 	      border-width: 0.1em;
 	      -moz-border-radius: 0.7em;

@@ -514,12 +514,12 @@
 			closeInfo:	'You can also click anywhere outside the image to close.',
 			download:	'Direct link to download the image.',
 			help: {
-				close:		'Click to close',
-				interact:	'Hover to interact'
+				close:		'',
+				interact:	''
 			},
 			about: {
-				text: 	'jQuery Lightbox Plugin (balupton edition)',
-				title:	'Licenced under the GNU Affero General Public License.',
+				text: 	'',
+				title:	'',
 				link:	'http://jquery.com/plugins/project/jquerylightbox_bal'
 			}
 		},
