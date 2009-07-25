@@ -76,7 +76,6 @@
 
     }
 
-
    function trackoverlay() {
 	    markerlist = ${c.markerlist};
             for (var n=0; n<markerlist.length; n++) {
@@ -85,13 +84,18 @@
 	}
     }
 
+
+  var wikiOverlay; // global
+  wikiOverlay = new GLayer("org.wikipedia.en")
+
+
     function enableWikipedia() {
 	    if (i == true) {
-		map.removeOverlay(new GLayer("org.wikipedia.en"));
-		i =false;
+		map.removeOverlay(wikiOverlay);
+		i=false;
 	    }
 	    else {
-		map.addOverlay(new GLayer("org.wikipedia.en"));
+		map.addOverlay(wikiOverlay);
 		i=true;
 	    }
           }

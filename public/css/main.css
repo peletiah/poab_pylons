@@ -157,6 +157,7 @@ body {
     }
 
 #overlayswitch {
+    float:left;
     }
 
 #map {
@@ -183,7 +184,7 @@ body {
 }
 	
 #thumbIndv {
-        float: left;
+   float: left;
 	height: 75px;
 	width: 75px;
 	margin: 0;

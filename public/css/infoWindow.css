@@ -24,6 +24,7 @@
 #map_marker_contents a {
     margin-left: 4px;
     color: #eda22d;
+    opacity: 1;
     font-weight: bold;
 }
 
@@ -32,6 +33,7 @@
     height: 7px;
 }
 #map_marker_tl {
+    background-color: #666666;
     background-image: url('/images/infowindow/grey_tl.png');
      opacity: 0.8;
 }
@@ -55,14 +57,14 @@
     opacity: 0.8;
 }
 #map_marker_t {
-    border-top: 2px solid #444444;
+    border-top: None;
 }
 #map_marker_b {
-    margin-top: -2px;
-    border-bottom: 2px solid #444444;
+    margin-top: None;
+    border-bottom: 0px solid #444444;
 }
 #map_marker_l, #map_marker_r {
-    width: 2px;
+    width: 0px;
     height: auto;
     background-color: #444444;
     opacity: 0.8;
