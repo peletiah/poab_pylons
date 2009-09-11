@@ -1,20 +1,18 @@
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
 <div id="content">
-    <div id="track" class="clearfix">
-	<div id="map">
-	</div>
-
-	<div id="gallery">
-	</div>
+    <div id="track">
+        <div id="map">
+        </div>
+        <div id="gallery">
+        </div>
     </div>
     <div id="overlayswitch">
-	<input type="checkbox" onClick="enableWikipedia()"> Wikipedia Overlay
-	<input type="checkbox" onClick="toggletrack(this)" name="trackcheckbox" checked> markerlist
+        <input type="checkbox" onClick="enableWikipedia()"> Wikipedia Overlay
+        <input type="checkbox" onClick="toggletrack(this)" name="trackcheckbox" checked> Markerlist
     </div>
-	<div id="error">
-	    ${c.error}
-	</div>
-
+    <div id="error">
+        ${c.error}
+    </div>
 </div>
 

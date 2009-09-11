@@ -42,7 +42,7 @@ body {
 #menu a {
         color: #222222;
         text-decoration: none;
-	     padding: 0.2em
+	padding: 0.2em
         }
 
 #menu a:hover {
@@ -99,26 +99,18 @@ body {
 	      width: 56em; 
 	    }
 
-#viewbydate {
-    display:inline;
-    float: left;
-}
 
-
-#viewbydatecheck {
-    display: inline;
-    float: left;
-}
 
 #content {
+	position: relative;
 	width: 56em;
 	font: normal 1em verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
 	color: #222222;
 	margin-left: 4em;
-    margin-top: 7em;
 }
 
 #log {
+    margin-top: 7em;
 }
 
 #logdetail {
@@ -149,34 +141,31 @@ body {
 
 #logdetail a:hover {
         color: #000000;
-	     background-color: #888888;
-	     padding: 0.2em
-	     border: solid #000000;
+	background-color: #888888;
+	padding: 0.2em
+	border: solid #000000;
         border-width: 0.05em;
         -moz-border-radius: 0.2em;
         -webkit-border-radius: 0.2em;
         border-radius: 0.2em;
         }
 
-#logfooter {
-        margin-bottom: 2em;
-        float: left;
-        display: block;
-}
+
 
 #track {
-    float: left;
-    display:block;
+    margin-top: 7em;
     }
 
+#overlayswitch {
+    float:left;
+    }
 
 #map {
-    display: block;
-	 float: left;
-	 width: 32em;
-	 height: 30em;
-    border: 0.05em solid #000000;
-    border-width: 0.05em;
+	float: left;
+	width: 32em;
+	height: 30em;
+        border: 0.05em solid #000000;
+        border-width: 0.05em;
         }
 
 
@@ -188,10 +177,6 @@ body {
 	 z-index: 1;
 	 margin-left: 3em;
 	 }
-
-#overlayswitch {
-    display: block;
-    }
 
 #setThumbs {
 	float: left;

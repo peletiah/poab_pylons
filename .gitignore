@@ -1,5 +1,3 @@
 *.pyc
-*.png
-*.jpg
 public/shared/*
 *.swp

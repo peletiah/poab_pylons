@@ -1,6 +1,12 @@
+body {
+   background-color: #444444;
+   margin: 1em auto;
+   padding: 0;
+}
+
 #map_marker {
-    width: 175px;
-    margin-left: 50px;
+    width: 9.2em;
+    margin-left: 2.2em;
 }
 
 #map_marker_beak {
@@ -8,32 +14,72 @@
     height: 11px;
     margin-left: -50px;
     margin-top: 2px;
-    background-image: url('/images/infowindow/beak_grey.png');
+    /*background-image: url('/images/infowindow/beak_grey.png');*/
 }
 
-#map_marker b {
-    padding: 0 100px;
-    display: block;
-}
+
 
 #map_marker_contents {
     background-color: #666666;
     opacity: 0.8;
+    color: #DDDDDD;
 }
 
 #map_marker_contents a {
-    margin-left: 4px;
-    color: #eda22d;
+    color: #EEEEEE;
     opacity: 1;
     font-weight: bold;
 }
+
+#map_marker_contents img {
+    border: none;
+    decoration: none;
+    margin-top: 0.3em;
+}
+
+
+#map_marker_content_text {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    font-size: 75%;
+}
+
+
+.image_icon a {
+    background: url('/images/infowindow/image_icon.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    display: block;
+    float: left;
+}
+
+.image_icon a:hover {
+    width: 18px;
+    height: 18px;
+    background: url('/images/infowindow/image_icon_red.png') no-repeat;    
+}
+
+.log_icon a {
+    background: url('/images/infowindow/log_icon.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    display: block;
+    float:left;
+}
+
+.log_icon a:hover {
+    width: 18px;
+    height: 18px;
+    background: url('/images/infowindow/log_icon_red.png') no-repeat;    
+}
+
+
 
 #map_marker_tl, #map_marker_tr, #map_marker_br, #map_marker_bl {
     width: 7px;
     height: 7px;
 }
 #map_marker_tl {
-    background-color: #666666;
     background-image: url('/images/infowindow/grey_tl.png');
      opacity: 0.8;
 }

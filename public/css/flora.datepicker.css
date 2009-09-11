@@ -9,6 +9,7 @@
 }
 #ui-datepicker-div {
 	display: none;
+    margin-top: 1em;
 	border: 1px solid #FF9900;
 	z-index: 10;
 }
@@ -47,7 +48,7 @@ img.ui-datepicker-trigger {
 	color: #FFF;
 }
 .ui-datepicker-control {
-	background: #FF9900;
+	background: #FF0000;
 	padding: 2px 0px;
 }
 .ui-datepicker-links {
