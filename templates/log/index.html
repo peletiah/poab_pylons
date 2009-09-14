@@ -3,11 +3,14 @@
 
 <div id="content">
 <div id="log" "clearfix">
-% for post in c.posts:
+% for log in c.logdetails:
 <div id="logdetail">
-        <h2>${post.topic}
-        <h3>${post.createdate}</h3>
-        ${post.content}
+        <h2>${log.topic}</h2>
+        <b>date:</b> ${log.createdate}(${log.timezoneabbriv})<br>
+        <b>distance:</b> ${log.distance}km<br>
+        <b>duration:</b> ${log.timespan}<br>
+        <b>country:</b> ${log.country}/${log.continent}<br><br>
+        ${log.content}
 </div>
 % endfor
 </div>
