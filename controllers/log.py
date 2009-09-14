@@ -60,4 +60,4 @@ class LogController(BaseController):
                 country=c.country.iso_countryname
                 continent=c.continent.name
             c.logdetails.append(logdetails)
-        return render("/log/index2.html")
+        return render("/log/index.html")
