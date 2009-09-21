@@ -35,7 +35,7 @@
 		<span id="toggledate"><img src="/images/chooser/calendar.jpg"></span>
 		    <span id="dateinput">
 		    <input id="viewbydate" type="text" name="viewbydate" />
-		    <input type="image" src="/images/chooser/check.png" /></span>
+		    <input type="image" src="/images/chooser/check.png"/></span>
 		</form>
 	    </li>
 	    <li>
@@ -43,8 +43,13 @@
 		<span id="togglecountry"><img src="/images/chooser/globe.png"></span>
 		    <span id="countryinput">
 		    <input type="text" name="countryinput" />
-		    <input type="image" src="/images/chooser/check.png" /></span>
+		    <input type="image" src="/images/chooser/check.png"/></span>
 		</form>
 	   </li>
+      <li id="menu_nodecoration">
+        <a  href="${h.rails.url_for(controller="/facts", action="stats")}">
+        <img src="/images/chooser/stats.png">
+        </a>
+      </li>
 	</ul>
 </div>

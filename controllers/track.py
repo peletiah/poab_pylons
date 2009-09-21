@@ -37,13 +37,12 @@ class TrackController(BaseController):
             c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
         for c.infomarker in c.infomarkers:
             q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
-            c.tracks = q.order_by(desc(model.track.id)).all()
-            for c.track in c.tracks:
-                total_mins = c.track.timespan.seconds / 60
-                mins = total_mins % 60
-                hours = total_mins / 60
-                timespan = str(hours)+'h '+str(mins)+'min'
-                c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':%s, 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,c.track.date.strftime('%d/%m/%Y'),c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP),timespan,c.track.gencpoly_pts,c.track.gencpoly_levels)
+            c.track = q.one()
+            total_mins = c.track.timespan.seconds / 60
+            mins = total_mins % 60
+            hours = total_mins / 60
+            timespan = str(hours)+'h '+str(mins)+'min'
+            c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':%s, 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,c.track.date.strftime('%d/%m/%Y'),c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP),timespan,c.track.gencpoly_pts,c.track.gencpoly_levels)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 
@@ -51,3 +50,18 @@ class TrackController(BaseController):
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==id)
         c.images = q.limit(24)
         return render("/track/gallery.html")
+    
+    def infomarker(self,id):
+        c.markerlist='''['''
+        q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==id)
+        c.infomarker = q.one()
+        q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
+        c.track = q.one()
+        total_mins = c.track.timespan.seconds / 60
+        mins = total_mins % 60
+        hours = total_mins / 60
+        timespan = str(hours)+'h '+str(mins)+'min'
+        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':%s, 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,c.track.date.strftime('%d/%m/%Y'),c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP),timespan,c.track.gencpoly_pts,c.track.gencpoly_levels)
+        c.markerlist=c.markerlist + '''];'''
+        return render("/track/index.html")
+

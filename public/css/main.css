@@ -46,22 +46,14 @@ body {
         }
 
 #menu a:hover {
-        color: #000000;
-	background-color: #888888;
-	padding: 0.2em
-	border: solid #000000;
+        background-color: #222222;
+        color: #235E96;
+        text-decoration: bold;
+	     padding: 0.2em
+	     border: solid #000000;
         border-width: 0.05em;
-        -moz-border-radius: 0.2em;
-        -webkit-border-radius: 0.2em;
-        border-radius: 0.2em;
+        margin:none;
         }
-
-#menu a:visited {
-        color: #222222;
-        text-decoration: none;
-	padding: 0.2em
-        }
-
 
 
 #menu form {
@@ -72,6 +64,13 @@ body {
 
 #menu img {
 	float: left;
+   style: none;
+   border: none;
+}
+
+#menu_nodecoration a:hover {
+    background-color: #666666;
+      
 }
 
 #menu toggledate {
@@ -110,21 +109,31 @@ body {
     float: left;
 }
 
+
 #content {
 	width: 56em;
-	font: normal 1em verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
+   font: normal 0.9em trebuchet, verdana, arial,'Bitstream Vera Sans',helvetica,sans-serif;
 	color: #222222;
 	margin-left: 4em;
     margin-top: 7em;
+}
+
+#content h2 {
+    font-size: 120%;
+}
+
+#content h3 {
+    font-size: 110%;
 }
 
 #log {
 }
 
 #logdetail {
+    display: block;
 	float: left;
         width: 45em;
-        background-color: #9bacbc;
+        background-color: #777777;
         border: solid #000000;
 	-moz-border-radius: 0.7em;
 	-webkit-border-radius: 0.7em;
@@ -134,22 +143,85 @@ body {
 	padding: 0.5em;
 }
 
+#logdetail_icons {
+    display: block;
+    float: left;
+    margin-top:0.5em;
+}
 
+.image_icon a {
+    background: url('/images/infowindow/image_icon.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    display: block;
+    float: left;
+}
+
+.image_icon a:hover {
+    width: 18px;
+    height: 18px;
+    background: url('/images/infowindow/image_icon_red.png') no-repeat; 
+}
+
+.log_icon a {
+    background: url('/images/infowindow/log_icon.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    display: block;
+    float:left;
+}
+
+.log_icon a:hover {
+    width: 18px;
+    height: 18px;
+    background: url('/images/infowindow/log_icon_red.png') no-repeat;   
+}
+
+.track_icon a {
+    background: url('/images/infowindow/track_icon.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    display: block;
+    float:left;
+}
+
+.track_icon a:hover {
+    width: 18px;
+    height: 18px;
+    background: url('/images/infowindow/track_icon_red.png') no-repeat;   
+}
+
+.stats_icon a {
+    background: url('/images/infowindow/stats_icon.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    display: block;
+    float:left;
+}
+
+.stats_icon a:hover {
+    width: 18px;
+    height: 18px;
+    background: url('/images/infowindow/stats_icon_red.png') no-repeat;   
+}
 #logdetail a {
         color: #444444;
         text-decoration: none;
 	padding: 0.2em
        }
 
-#logdetail img {
-	margin: 1em;
+
+#log_inlineimage {
+    margin: 1em;
+    font-size: 80%;
        }
 
-
+#log_inlineimage img {
+    margin-bottom:1em;
+}
 
 #logdetail a:hover {
         color: #000000;
-	     background-color: #888888;
 	     padding: 0.2em
 	     border: solid #000000;
         border-width: 0.05em;
@@ -158,7 +230,8 @@ body {
         border-radius: 0.2em;
         }
 
-#logfooter {
+
+#log_footer {
         margin-bottom: 2em;
         float: left;
         display: block;
@@ -214,9 +287,22 @@ body {
 
 #error {
 	position: fixed;
-	top: 35px;
-	left: 900px;
+	top: 5.1em;
+	margin-left: 3em;
 	color: red;
 	}	
 
 
+#view_gallery {
+    margin-top: 2em;
+}
+
+#about_me {
+    float: left;
+    display: inline;
+}
+
+.img {
+    float: left;
+    display: inline;
+}

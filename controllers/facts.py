@@ -10,4 +10,7 @@ class FactsController(BaseController):
 
     def index(self):
         return render("/facts/index.html")
+ 
+    def stats(self):
+        return render("/facts/stats.html")
          

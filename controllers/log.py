@@ -50,6 +50,11 @@ class LogController(BaseController):
             c.country=q.one()
             q = model.Session.query(model.continent).filter(model.continent.id==c.country.continent_id)
             c.continent=q.one()
+            q = model.Session.query(model.imageinfo).filter(model.imageinfo.log_id==c.log.id)
+            c.images = q.all()
+            for image in c.images:
+                inlineimage='<div id=\'log_inlineimage\'><img src="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/"><br>%s</div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrdescription)
+                c.log.content=c.log.content.replace('[imgid'+str(image.id)+']',inlineimage)
             class logdetails:
                 topic=c.log.topic
                 createdate=localtime.strftime('%d-%m-%Y %H:%M:%S')
@@ -59,5 +64,6 @@ class LogController(BaseController):
                 timespan=c.timespan
                 country=c.country.iso_countryname
                 continent=c.continent.name
+                infomarkerid=c.infomarker.id
             c.logdetails.append(logdetails)
         return render("/log/index.html")
