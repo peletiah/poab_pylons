@@ -33,8 +33,12 @@
 
 
    function controllerlink(gallerylink,trackdate,distance,timespan) {
-        return '<div id="map_marker_content_text"><b>date:</b> '+trackdate+'<br><b>distance:</b> '+distance+'km<br><b>duration:</b> '+timespan+'<br><span class="image_icon"><a href="javascript:showGal(\''+gallerylink+'\')"></a></span><span class="log_icon"><a href="" /></span></div>';
-   }
+        if (timespan == '' || distance == '') {
+            return '<div id="map_marker_content_text"><b>date:</b> '+trackdate+'<br><span class="image_icon"><a href="javascript:showGal(\''+gallerylink+'\')"></a></span><span class="log_icon"><a href="" /></span></div>';
+            }
+        else {
+            return '<div id="map_marker_content_text"><b>date:</b> '+trackdate+'<br><b>distance:</b> '+distance+'<br><b>duration:</b> '+timespan+'<br><span class="image_icon"><a href="javascript:showGal(\''+gallerylink+'\')"></a></span><span class="log_icon"><a href="" /></span></div>';
+   }}
 
 
    function writegmarker(lng,lat,gallerylink,trackdate,distance,timespan,n) {
@@ -116,7 +120,6 @@
 	map.addControl(mapControl);
         map.addControl(new GOverviewMapControl ());
         map.enableScrollWheelZoom();
-	stuff = new GMarker( new GLatLng('48.2028384','16.3773008') );
 	trackoverlay();
       }
     }

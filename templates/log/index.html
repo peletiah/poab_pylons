@@ -5,12 +5,20 @@
         % for log in c.logdetails:
             <div id="logdetail">
                 <h2>${log.topic}</h2>
-                <b>date:</b> ${log.createdate}(${log.timezoneabbriv})<br>
-                <b>distance:</b> ${log.distance}km<br>
-                <b>duration:</b> ${log.timespan}<br>
+                <b>date:</b> ${log.createdate}<br>
+                % if log.distance==None:
+                    
+                % else:
+                    <b>distance:</b>${log.distance}<br>
+                % endif
+                % if log.timespan==None:
+                    
+                % else:
+                    <b>duration:</b>${log.timespan}<br>
+                % endif
                 <b>country:</b> ${log.country}/${log.continent}<br>
                 <div id="logdetail_icons">
-                <span class="image_icon"><a href="/track/trackbyid/${log.infomarkerid}"></a></span>
+                <span class="image_icon"><a href="/view"></a></span>
                 <span class="track_icon"><a href="/track/infomarker/${log.infomarkerid}"></a></span>
                 <span class="stats_icon"><a href="/facts/stats"></a></span></div><br><br>
                 ${log.content}

@@ -1,3 +1,7 @@
+html {
+    height: 100%;
+}
+
 body {
 	background-color: #444444;
 	margin: 1em auto;
@@ -18,13 +22,12 @@ body {
 .clearfix { display:inline-block; }
 
 #menu {
-	position:fixed;
 	top: 0.9em;
-	width: 56em;
-	margin-left: 4em;
-	margin-right: auto;
+	margin-left: 3%;
+	margin-right: 3%;
+   width: 94%;
 	z-index: 89;
-        opacity: 0.8;
+   opacity: 0.8;
 }
 
 #menu ul {
@@ -91,11 +94,10 @@ body {
 	      -moz-border-radius: 0.7em;
 	      -webkit-border-radius: 0.7em;
 	      border-radius: 0.7em; 
-	      font-family: helvetica; 
-	      font-height: 100%;
+         font: normal 1em helvetica,sans-serif;
 	      color: #222222;
-	      padding: 0em;
-	      width: 56em; 
+	      width: 100%; 
+         height: 1.4em;
 	    }
 
 #viewbydate {
@@ -111,11 +113,12 @@ body {
 
 
 #content {
-	width: 56em;
+	width: 94%;
    font: normal 0.9em trebuchet, verdana, arial,'Bitstream Vera Sans',helvetica,sans-serif;
 	color: #222222;
-	margin-left: 4em;
-    margin-top: 7em;
+	margin-left: 3%;
+   margin-right: 3%;
+   margin-top: 1em;
 }
 
 #content h2 {
@@ -127,20 +130,20 @@ body {
 }
 
 #log {
+    width: 45em;
 }
 
 #logdetail {
     display: block;
 	float: left;
-        width: 45em;
-        background-color: #777777;
-        border: solid #000000;
+   background-color: #777777;
+   border: solid #000000;
 	-moz-border-radius: 0.7em;
 	-webkit-border-radius: 0.7em;
 	border-radius: 0.7em; 
 	border-width: 0.05em;
+   padding:1em 2em 2em;
 	margin-bottom: 2em;
-	padding: 0.5em;
 }
 
 #logdetail_icons {
@@ -240,14 +243,16 @@ body {
 #track {
     float: left;
     display:block;
+    width:100%;
+    height:80%;
     }
 
 
 #map {
     display: block;
 	 float: left;
-	 width: 32em;
-	 height: 30em;
+	 width: 60%;
+	 height: 100%;
     border: 0.05em solid #000000;
     border-width: 0.05em;
         }
@@ -256,14 +261,16 @@ body {
 #gallery {
 	 display:inline;
 	 float: left;
-	 height: 30em;
-	 width: 20em;
+	 height: 100%;
+	 width: 312px;
 	 z-index: 1;
 	 margin-left: 3em;
 	 }
 
 #overlayswitch {
     display: block;
+    float: left;
+    margin-top: 1.5em;
     }
 
 #setThumbs {
@@ -276,8 +283,8 @@ body {
 	height: 75px;
 	width: 75px;
 	margin: 0;
-	margin-bottom: 0.1875em;
-	margin-left: 0.1875em;
+	margin-bottom: 3px;
+	margin-left: 3px;
 	pading: 0;
 }
 

@@ -1,7 +1,6 @@
 <link type="text/css" rel="stylesheet" media="screen" href="/css/jquery.lightbox.css" />
 
 <% i=0 %>
-${c.markerlist}
 % for image in c.images:
     <div id="thumbIndv">
     <a rel="lightbox-MyGroup" href="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_b" title="${image.flickrtitle}">

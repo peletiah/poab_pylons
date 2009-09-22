@@ -37,12 +37,26 @@ class TrackController(BaseController):
             c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
         for c.infomarker in c.infomarkers:
             q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
-            c.track = q.one()
-            total_mins = c.track.timespan.seconds / 60
-            mins = total_mins % 60
-            hours = total_mins / 60
-            timespan = str(hours)+'h '+str(mins)+'min'
-            c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':%s, 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,c.track.date.strftime('%d/%m/%Y'),c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP),timespan,c.track.gencpoly_pts,c.track.gencpoly_levels)
+            if q.count() == 1:
+                c.track = q.one()
+                total_mins = c.track.timespan.seconds / 60
+                mins = total_mins % 60
+                hours = total_mins / 60
+                timespan = str(hours)+'h '+str(mins)+'min'
+                rounded_distance=str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP))+'km'
+                date=c.track.date.strftime('%B %d, %Y')
+                trackpts=c.track.gencpoly_pts
+                tracklevels=c.track.gencpoly_levels
+            else:
+                q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
+                c.timezone = q.one()
+                localtime=c.infomarker.timestamp+c.timezone.utcoffset
+                rounded_distance=''
+                timespan=''
+                date=localtime.strftime('%B %d, %Y')
+                trackpts=''
+                tracklevels=''
+            c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 
@@ -56,12 +70,26 @@ class TrackController(BaseController):
         q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==id)
         c.infomarker = q.one()
         q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
-        c.track = q.one()
-        total_mins = c.track.timespan.seconds / 60
-        mins = total_mins % 60
-        hours = total_mins / 60
-        timespan = str(hours)+'h '+str(mins)+'min'
-        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':%s, 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,c.track.date.strftime('%d/%m/%Y'),c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP),timespan,c.track.gencpoly_pts,c.track.gencpoly_levels)
+        if q.count() == 1:
+            c.track = q.one()
+            total_mins = c.track.timespan.seconds / 60
+            mins = total_mins % 60
+            hours = total_mins / 60
+            timespan = str(hours)+'h '+str(mins)+'min'
+            rounded_distance=str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP))+'km'
+            date=c.track.date.strftime('%B %d, %Y')
+            trackpts=c.track.gencpoly_pts
+            tracklevels=c.track.gencpoly_levels
+        else:
+            q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
+            c.timezone = q.one()
+            localtime=c.infomarker.timestamp+c.timezone.utcoffset
+            rounded_distance=''
+            timespan=''
+            date=localtime.strftime('%B %d, %Y')
+            trackpts=''
+            tracklevels=''
+        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 
