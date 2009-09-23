@@ -1,3 +1,7 @@
 *.pyc
 public/shared/*
+credentials.ini
+*.pyc
+*.dia~
+*.autosave
 *.swp
