@@ -62,7 +62,7 @@ class TrackController(BaseController):
 
     def gallery(self,id):
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==id)
-        c.images = q.limit(24)
+        c.images = q.order_by(asc(model.imageinfo.flickrdatetaken)).limit(24)
         return render("/track/gallery.html")
     
     def infomarker(self,id):
