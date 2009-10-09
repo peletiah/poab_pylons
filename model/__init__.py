@@ -143,6 +143,7 @@ trackpoint_table = sa.Table("trackpoint", meta,
     sa.Column("pressure", types.Integer),
     sa.Column("timestamp", types.TIMESTAMP(timezone=True)),
     sa.Column("infomarker", types.Boolean, default=False, nullable=False),
+    sa.Column("location", types.VARCHAR(256)),
     )
 
 class trackpoint(object):
@@ -158,6 +159,7 @@ track_table = sa.Table("track", meta,
     sa.Column("timespan", types.Interval),
     sa.Column("gencpoly_pts", types.UnicodeText),
     sa.Column("gencpoly_levels", types.UnicodeText),
+    sa.Column("color", types.CHAR(6)),
     )
 
 class track(object):

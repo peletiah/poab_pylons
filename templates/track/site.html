@@ -52,11 +52,12 @@
                 );
               });
 	map.addOverlay(trackmarker[n]);
+   trackmarker[n].hide()
    }
 
-    function writepolyline(encpts,enclvl,n) {
+    function writepolyline(encpts,enclvl,color,n) {
 	trackpolyline[n] = new GPolyline.fromEncoded({
-                color: "#FF0000",
+                color: color,
                 weight: 5,
                 points: encpts,
                 levels: enclvl,
@@ -69,23 +70,34 @@
     function toggletrack(checkbox) {
 	    for (var n=0; n<markerlist.length; n++) {
 		if (checkbox.checked == true) {
-		    trackmarker[n].show()
 		    trackpolyline[n].show()
 		}
 		else {
-		    trackmarker[n].hide()
-		    trackmarker[n].closeExtInfoWindow(map)
 		    trackpolyline[n].hide()
 		}
 	    }
 
     }
 
+    function togglemarkers(checkbox) {
+	    for (var n=0; n<markerlist.length; n++) {
+		if (checkbox.checked == true) {
+		    trackmarker[n].show()
+		}
+		else {
+		    trackmarker[n].hide()
+		    trackmarker[n].closeExtInfoWindow(map)
+		}
+	    }
+
+    }
+
+
    function trackoverlay() {
 	    markerlist = ${c.markerlist};
             for (var n=0; n<markerlist.length; n++) {
 	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].gal,markerlist[n].trackdate,markerlist[n].distance,markerlist[n].timespan,n)
-	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,n)
+	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
     }
 

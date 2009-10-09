@@ -27,12 +27,12 @@ class LogController(BaseController):
             else:
                 #nothing found in the specified date-range
                 q = model.Session.query(model.log)
-                c.logs = q.order_by(desc(model.log.createdate)).all()
+                c.logs = q.order_by(desc(model.log.createdate)).limit(5)
                 c.error = 'no results for selected date(s)!'
         except KeyError:
             #select of all entries
                 q = model.Session.query(model.log)
-                c.logs = q.order_by(desc(model.log.createdate)).all()
+                c.logs = q.order_by(desc(model.log.createdate)).limit(5)
         c.logdetails=list()        
         for c.log in c.logs:
             # ###query for infomarker

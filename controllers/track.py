@@ -47,6 +47,7 @@ class TrackController(BaseController):
                 date=c.track.date.strftime('%B %d, %Y')
                 trackpts=c.track.gencpoly_pts
                 tracklevels=c.track.gencpoly_levels
+                trackcolor=c.track.color
             else:
                 q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
                 c.timezone = q.one()
@@ -56,7 +57,8 @@ class TrackController(BaseController):
                 date=localtime.strftime('%B %d, %Y')
                 trackpts=''
                 tracklevels=''
-            c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels)
+                trackcolor=''
+            c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 
@@ -80,6 +82,7 @@ class TrackController(BaseController):
             date=c.track.date.strftime('%B %d, %Y')
             trackpts=c.track.gencpoly_pts
             tracklevels=c.track.gencpoly_levels
+            trackcolor=c.track.color
         else:
             q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
             c.timezone = q.one()
@@ -89,7 +92,8 @@ class TrackController(BaseController):
             date=localtime.strftime('%B %d, %Y')
             trackpts=''
             tracklevels=''
-        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels)
+            trackcolor=''
+        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 
