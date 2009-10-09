@@ -50,7 +50,7 @@ body {
 
 #menu a:hover {
         background-color: #222222;
-        color: #235E96;
+        color: #00607f;
         text-decoration: bold;
 	     padding: 0.2em
 	     border: solid #000000;
@@ -114,7 +114,7 @@ body {
 
 #content {
 	width: 94%;
-   font: normal 0.9em trebuchet, verdana, arial,'Bitstream Vera Sans',helvetica,sans-serif;
+   font: normal 0.9em trebuchet, "Lucida Sans Unicode", "Lucida Grande", verdana, arial,'Bitstream Vera Sans',helvetica,sans-serif;
 	color: #222222;
 	margin-left: 3%;
    margin-right: 3%;
@@ -307,12 +307,19 @@ body {
     margin-top: 2em;
 }
 
-#about_me {
+#facts_about_me {
     float: left;
     display: inline;
 }
 
-.img {
+#facts_portrait {
     float: left;
     display: inline;
+}
+
+#facts_cv {
+    float: left;
+    display: inline;
+    margin-left: 3em;
+    font-weight: bold;
 }
