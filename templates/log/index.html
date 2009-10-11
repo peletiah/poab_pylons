@@ -3,9 +3,17 @@
 <div id="content">
     <div id="log" "clearfix">
         % for log in c.logdetails:
-            <div id="logdetail">
+                <div id="logdetail">
+                <table id="logheader">
+                    <tbody>
+                    <tr>
+                        <td class="leftcol">${log.createdate}</td>
+                        <td class="rightcol">${log.location}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="logcontent">
                 <h2>${log.topic}</h2>
-                <b>date:</b> ${log.createdate}<br>
                 % if log.distance==None:
                     
                 % else:
@@ -16,12 +24,12 @@
                 % else:
                     <b>duration:</b> ${log.timespan}<br>
                 % endif
-                <b>country:</b> ${log.country}/${log.continent}<br>
                 <div id="logdetail_icons">
                 <span class="image_icon"><a href="/view"></a></span>
                 <span class="track_icon"><a href="/track/infomarker/${log.infomarkerid}"></a></span>
                 <span class="stats_icon"><a href="/facts/stats"></a></span></div><br><br>
                 ${log.content}
+                </div>
             </div>
         % endfor
     </div>
