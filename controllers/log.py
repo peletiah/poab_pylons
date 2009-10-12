@@ -85,6 +85,7 @@ class LogController(BaseController):
                     timespan=None
                 country=c.country.iso_countryname
                 continent=c.continent.name
+                location=c.infomarker.location
                 infomarkerid=c.infomarker.id
             c.logdetails.append(logdetails)
         return render("/log/index.html")
