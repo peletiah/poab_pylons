@@ -22,7 +22,6 @@ body {
 .clearfix { display:inline-block; }
 
 #menu {
-	top: 0.9em;
 	margin-left: 3%;
 	margin-right: 3%;
    width: 94%;
@@ -34,7 +33,7 @@ body {
 	list-style: none;
 	border: solid #000000;
         border-width: 0.05em;
-	padding: 0.5em
+	padding: 0.5em;
 	}
 
 #menu li {
