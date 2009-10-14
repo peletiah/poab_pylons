@@ -56,7 +56,7 @@
 
     function writepolyline(encpts,enclvl,color,n) {
 	trackpolyline[n] = new GPolyline.fromEncoded({
-                color: color,
+                color: '#' + color,
                 weight: 5,
                 points: encpts,
                 levels: enclvl,
