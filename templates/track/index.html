@@ -12,7 +12,9 @@
         <input type="checkbox" onClick="toggletrack(this)" name="trackcheckbox" checked> Travelled<br>
         <input type="checkbox" onClick="togglemarkers(this)" name="trackcheckbox"> Markers
     </div>
+% if c.error:
     <div id="error">
         ${c.error}
     </div>
+% endif
 </div>

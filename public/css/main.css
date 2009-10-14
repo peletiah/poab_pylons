@@ -329,8 +329,14 @@ body {
 #error {
 	position: fixed;
 	top: 5.1em;
-	margin-left: 3em;
 	color: red;
+   background: #F99;
+   border: 1px solid;
+	padding: 0.2em 0.5em 0.2em 0.5em;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+   -khtml-border-radius: 5px;
+   border-radius: 5px;
 	}	
 
 

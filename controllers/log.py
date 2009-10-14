@@ -12,6 +12,22 @@ log = logging.getLogger(__name__)
 class LogController(BaseController):
 
     def index(self):
+        q = model.Session.query(model.log)
+        logs = q.all()
+        countrylist=list()
+        for log in logs:
+            q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==log.infomarker_id)
+            infomarkers=q.all()
+            for infomarker in infomarkers:
+                q = model.Session.query(model.country).filter(model.country.iso_numcode==infomarker.country_id)
+                country=q.one()
+                if country.iso_countryname in countrylist:
+                    pass
+                else:
+                    countrylist.append(country.iso_countryname)
+        c.countries=''
+        for element in countrylist:
+            c.countries=c.countries+','+str(element)
         try:
             #selection by date-range
             daterange=request.params['viewbydate']
@@ -30,10 +46,37 @@ class LogController(BaseController):
                 c.logs = q.order_by(desc(model.log.createdate)).limit(5)
                 c.error = 'no results for selected date(s)!'
         except KeyError:
-            #select of all entries
+            try:
+                #selection by country
+                country=request.params['viewbycountry']
+                q = model.Session.query(model.country).filter(model.country.iso_countryname==country)
+                try:
+                    countrydetails = q.one()
+                    q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.country_id==countrydetails.iso_numcode,model.trackpoint.infomarker==True))
+                    infomarkers = q.all()
+                    c.logs=list()
+                    for infomarker in infomarkers:
+                        q = model.Session.query(model.log).filter(model.log.infomarker_id==infomarker.id)
+                        logs = q.all()
+                        for log in logs:
+                            c.logs.append(log)
+                    if c.logs:
+                        pass
+                    else:
+                        #nothing found for the specified country
+                        q = model.Session.query(model.log)
+                        c.logs = q.order_by(desc(model.log.createdate)).limit(5)
+                        c.error = 'no results for selected country!'
+                except:
+                    #nothing found for the specified country
+                    q = model.Session.query(model.log)
+                    c.logs = q.order_by(desc(model.log.createdate)).limit(5)
+                    c.error = 'Country not found!'
+            except KeyError:
+                #select of all entries
                 q = model.Session.query(model.log)
                 c.logs = q.order_by(desc(model.log.createdate)).limit(5)
-        c.logdetails=list()        
+        c.logdetails=list()       
         for c.log in c.logs:
             # ###query for infomarker
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==c.log.infomarker_id)
@@ -89,3 +132,5 @@ class LogController(BaseController):
                 infomarkerid=c.infomarker.id
             c.logdetails.append(logdetails)
         return render("/log/index.html")
+
+

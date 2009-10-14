@@ -33,4 +33,9 @@
             </div>
         % endfor
     </div>
+% if c.error:
+    <div id="error">
+        ${c.error}
+    </div>
+% endif
 </div>

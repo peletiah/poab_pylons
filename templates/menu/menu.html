@@ -30,7 +30,7 @@
     </script>
 <script>
   $(document).ready(function(){
-    var data = "Austria Australia autan audsa audas aurs gaga augare Great\ Britain".split(" ");
+    var data = "${c.countries}".split(",");
 $("#viewbycountry").autocomplete(data);
   });
   </script>
@@ -51,10 +51,10 @@ $("#viewbycountry").autocomplete(data);
 		</form>
 	    </li>
 	    <li>
-		<form method="GET" action="bycountry/">
+		<form method="GET" action="">
 		<span id="togglecountry"><img src="/images/chooser/globe.png"></span>
 		    <span id="countryinput">
-		    <input id="viewbycountry" type="text" name="countryinput" />
+		    <input id="viewbycountry" type="text" name="viewbycountry" />
 		    <input type="image" src="/images/chooser/check.png" /></span>
 		</form>
 	   </li>
