@@ -35,14 +35,14 @@
 }
 
 .ac_loading {
-    background: white url('indicator.gif') right center no-repeat;
+    background: white url('/images/icons/load_indicator.gif') right center no-repeat;
 }
 
 .ac_odd {
-    background-color: #eee;
+    background-color: #eeeeee;
 }
 
 .ac_over {
-    background-color: #0A246A;
-    color: white;
+    background-color: #00607f;
+    color: #CCCCCC;
 }
