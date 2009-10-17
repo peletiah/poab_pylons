@@ -108,9 +108,9 @@ class LogController(BaseController):
             c.images = q.all()
             for image in c.images:
                 if image.flickrdescription==None:
-                    inlineimage='<div id=\'log_inlineimage\'><a href="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/_b" title="%s" rel="example2"><img src="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/"></a></div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret)
+                    inlineimage='<div id=\'log_inlineimage\'><a href="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/_b" title="%s" rel="image_colorbox"><img src="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/"></a></div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret)
                 else:
-                    inlineimage='<div id=\'log_inlineimage\'><a href="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/_b" title="%s" rel="example2"><img src="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/"></a><br>%s</div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrdescription)
+                    inlineimage='<div id=\'log_inlineimage\'><a href="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/_b" title="%s" rel="image_colorbox"><img src="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/"></a><br>%s</div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrdescription)
                 c.log.content=c.log.content.replace('[imgid'+str(image.id)+']',inlineimage)
             # ###create logdetails-class
             class logdetails:

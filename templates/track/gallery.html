@@ -1,11 +1,25 @@
+<link type="text/css" rel="Stylesheet" media="screen" href="/css/colorbox.css"/>
 <link type="text/css" rel="stylesheet" media="screen" href="/css/jquery.lightbox.css" />
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
+    });
+</script>
+
 <% i=0 %>
+<% prevpage=c.startfromimg-48 %>
+first ${c.firstimageid}<br>
+last ${c.lastimageid}<br>
+previous ${prevpage}<br>
+startfrom ${c.startfromimg}<br>
+<a href="javascript:showGal('/track/gallery/${c.infomarker}/${prevpage}')">previous page</a>
+<a href="javascript:showGal('/track/gallery/${c.infomarker}/${c.startfromimg}')">next page</a>
 % for image in c.images:
-    <div id="thumbIndv">
-    <a rel="lightbox-MyGroup" href="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_b" title="${image.flickrtitle}">
+ <div id="thumbIndv">
+    <a rel="image_colorbox" href="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_b" title="${image.flickrtitle}">
 	<img src="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_s">
     </a>
     </div>
 <%   i=i+1 %>
-% endfor    
+% endfor

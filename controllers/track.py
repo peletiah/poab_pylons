@@ -58,13 +58,25 @@ class TrackController(BaseController):
                 trackpts=''
                 tracklevels=''
                 trackcolor=''
-            c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
+            c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s/0", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 
-    def gallery(self,id):
-        q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==id)
-        c.images = q.order_by(asc(model.imageinfo.flickrdatetaken)).limit(24)
+    def gallery(self,infomarker,startfrom):
+        startimageid=startfrom
+        q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==infomarker)
+        firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
+        for image in firstimage:
+            c.firstimageid=image.id
+        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id > startimageid))
+        c.images = q.order_by(asc(model.imageinfo.id)).limit(24)
+        lastimage = q.order_by(desc(model.imageinfo.id)).limit(1)
+        c.startfromimg=0
+        for image in c.images:
+            if image.id > c.startfromimg:
+                c.startfromimg=image.id
+        for image in lastimage:
+            c.lastimageid=image.id-24
         return render("/track/gallery.html")
     
     def infomarker(self,id):
@@ -93,7 +105,7 @@ class TrackController(BaseController):
             trackpts=''
             tracklevels=''
             trackcolor=''
-        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
+        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"/track/gallery/%s/0", 'trackdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,c.infomarker.id,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 

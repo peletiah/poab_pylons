@@ -21,5 +21,6 @@ def make_map():
     map.connect(':controller/:action/:id')
     map.connect('', controller='log', action='index')
     map.connect('', controller='track', action='index')
+    map.connect('gallery/:infomarker/:startfrom', 'track/gallery/:infomarker/:startfrom', controller='track', action='gallery')
 
     return map
