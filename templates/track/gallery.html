@@ -6,14 +6,15 @@
         $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
     });
 </script>
-
+<div id="galleryimages">
 <% i=0 %>
 <!--firstimg ${c.firstimageid}<br>
 lastimg ${c.lastimageid}<br>
 firstimgonpage: ${c.firstimgonpage}<br>
 prevstartfromimg ${c.prevstartfromimg}<br>
 lastimgonpage: ${c.lastimgonpage}<br>
-startfromimg: ${c.startfromimg}<br>-->
+startfromimg: ${c.startfromimg}<br>
+imagecount: ${c.imagecount}<br>-->
 % for image in c.images:
  <div id="thumbIndv">
     <a rel="image_colorbox" href="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_b" title="${image.flickrtitle}">
@@ -22,6 +23,7 @@ startfromimg: ${c.startfromimg}<br>-->
     </div>
 <%   i=i+1 %>
 % endfor
+</div>
 <div id="gallerypages">
 % if c.prevstartfromimg >= c.firstimageid and c.prevstartfromimg != c.firstimgonpage:
 <a href="javascript:showGal('/track/gallery/${c.infomarker}/${c.prevstartfromimg}')">previous page</a>

@@ -79,6 +79,8 @@ class TrackController(BaseController):
         images_asc = q.order_by(asc(model.imageinfo.id)).limit(24)
         for image in images_asc:
                 c.lastimgonpage=image.id
+        #count images on current page
+        c.imagecount = q.limit(24).count()
         #first imageid on current page(no limit to 24 as we order decreasing and want the first id, not the 24th from the end)
         images_desc = q.order_by(desc(model.imageinfo.id)).all()
         for image in images_desc:
@@ -89,10 +91,13 @@ class TrackController(BaseController):
                 c.startfromimg=image.id
         #first imageid on previous page
         q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id < c.startfromimg))
-        imagesprevpage = q.order_by(desc(model.imageinfo.id)).limit(48)
+        if c.imagecount==24:
+            imagesprevpage = q.order_by(desc(model.imageinfo.id)).limit(48)
+        else:
+            #there are less than 24 images on the page, so imagesprevpage is not 2x24 pictures away
+            imagesprevpage = q.order_by(desc(model.imageinfo.id)).limit(23+c.imagecount)
         for image in imagesprevpage:
                 c.prevstartfromimg=image.id
-                #we went back to the start or we called gallery for the first time(startfromimg=0), we don't want to display a "previous page"-link:
         return render("/track/gallery.html")
     
     def infomarker(self,id):

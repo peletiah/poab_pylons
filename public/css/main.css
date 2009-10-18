@@ -296,8 +296,6 @@ body {
 #gallery {
 	 display:inline;
 	 float: left;
-	 height: 100%;
-	 width: 312px;
 	 z-index: 1;
 	 margin-left: 3em;
 	 }
@@ -305,6 +303,17 @@ body {
 #gallery a {
         border: None;
         color: #CCCCCC;
+}
+
+#galleryimages {
+    height: 468px;
+	 width: 312px;
+    float: left;
+    display: inline;
+}
+
+#gallerypages {
+        display: block;
 }
 
 #overlayswitch {
