@@ -316,6 +316,31 @@ body {
         display: block;
 }
 
+.gallerypagenext a,.gallerypageprev a {
+    width:20px;
+    height:20px;
+    background:url(/images/icons/controls_transwhite.png) no-repeat;
+    display: block;
+    float: left;
+}
+
+
+.gallerypageprev a {
+    background-position:0px 0px;
+}
+
+.gallerypageprev a:hover {
+    background-position:0px -25px;
+}
+
+.gallerypagenext a {
+    background-position:-25px 0px;
+}
+
+.gallerypagenext a:hover {
+    background-position:-25px -25px;
+}
+
 #overlayswitch {
     display: block;
     float: left;
