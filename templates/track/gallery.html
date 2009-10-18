@@ -8,13 +8,12 @@
 </script>
 
 <% i=0 %>
-<% prevpage=c.startfromimg-48 %>
-first ${c.firstimageid}<br>
-last ${c.lastimageid}<br>
-previous ${prevpage}<br>
-startfrom ${c.startfromimg}<br>
-<a href="javascript:showGal('/track/gallery/${c.infomarker}/${prevpage}')">previous page</a>
-<a href="javascript:showGal('/track/gallery/${c.infomarker}/${c.startfromimg}')">next page</a>
+<!--firstimg ${c.firstimageid}<br>
+lastimg ${c.lastimageid}<br>
+firstimgonpage: ${c.firstimgonpage}<br>
+prevstartfromimg ${c.prevstartfromimg}<br>
+lastimgonpage: ${c.lastimgonpage}<br>
+startfromimg: ${c.startfromimg}<br>-->
 % for image in c.images:
  <div id="thumbIndv">
     <a rel="image_colorbox" href="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_b" title="${image.flickrtitle}">
@@ -23,3 +22,12 @@ startfrom ${c.startfromimg}<br>
     </div>
 <%   i=i+1 %>
 % endfor
+<div id="gallerypages">
+% if c.prevstartfromimg >= c.firstimageid and c.prevstartfromimg != c.firstimgonpage:
+<a href="javascript:showGal('/track/gallery/${c.infomarker}/${c.prevstartfromimg}')">previous page</a>
+% endif
+% if c.startfromimg <= c.lastimageid and c.startfromimg != c.lastimgonpage:
+    <a href="javascript:showGal('/track/gallery/${c.infomarker}/${c.startfromimg}')">next page</a>
+% endif
+</div>
+

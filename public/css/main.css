@@ -302,6 +302,11 @@ body {
 	 margin-left: 3em;
 	 }
 
+#gallery a {
+        border: None;
+        color: #CCCCCC;
+}
+
 #overlayswitch {
     display: block;
     float: left;

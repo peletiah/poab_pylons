@@ -62,21 +62,37 @@ class TrackController(BaseController):
         c.markerlist=c.markerlist + '''];'''
         return render("/track/index.html")
 
-    def gallery(self,infomarker,startfrom):
-        startimageid=startfrom
+    def gallery(self,infomarker,startfromimg):
+        #first imageid
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==infomarker)
         firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
         for image in firstimage:
             c.firstimageid=image.id
-        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id > startimageid))
-        c.images = q.order_by(asc(model.imageinfo.id)).limit(24)
+        #last imageid
         lastimage = q.order_by(desc(model.imageinfo.id)).limit(1)
-        c.startfromimg=0
-        for image in c.images:
-            if image.id > c.startfromimg:
-                c.startfromimg=image.id
         for image in lastimage:
-            c.lastimageid=image.id-24
+            c.lastimageid=image.id
+        #imagedetails for the current page
+        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id >= startfromimg))
+        c.images = q.order_by(asc(model.imageinfo.flickrdatetaken)).limit(24)
+        #last imageid on current page
+        images_asc = q.order_by(asc(model.imageinfo.id)).limit(24)
+        for image in images_asc:
+                c.lastimgonpage=image.id
+        #first imageid on current page(no limit to 24 as we order decreasing and want the first id, not the 24th from the end)
+        images_desc = q.order_by(desc(model.imageinfo.id)).all()
+        for image in images_desc:
+                c.firstimgonpage=image.id
+        #first imageid on next page
+        imagesnextpage = q.order_by(asc(model.imageinfo.id)).limit(25)
+        for image in imagesnextpage:
+                c.startfromimg=image.id
+        #first imageid on previous page
+        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id < c.startfromimg))
+        imagesprevpage = q.order_by(desc(model.imageinfo.id)).limit(48)
+        for image in imagesprevpage:
+                c.prevstartfromimg=image.id
+                #we went back to the start or we called gallery for the first time(startfromimg=0), we don't want to display a "previous page"-link:
         return render("/track/gallery.html")
     
     def infomarker(self,id):
