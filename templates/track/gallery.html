@@ -26,11 +26,11 @@ imagecount: ${c.imagecount}<br>-->
 </div>
 <div id="gallerypages">
 % if c.prevstartfromimg >= c.firstimageid and c.prevstartfromimg != c.firstimgonpage:
-<span class="gallerypageprev"><a href="javascript:showGal('/track/gallery/${c.infomarker}/${c.prevstartfromimg}')">
+<span class="gallerypageprev"><a href="javascript:showSubcontent('/track/gallery/${c.infomarker}/${c.prevstartfromimg}')">
 </a></span>
 % endif
 % if c.startfromimg <= c.lastimageid and c.startfromimg != c.lastimgonpage:
-<span class="gallerypagenext"><a href="javascript:showGal('/track/gallery/${c.infomarker}/${c.startfromimg}')"></a></span>
+<span class="gallerypagenext"><a href="javascript:showSubcontent('/track/gallery/${c.infomarker}/${c.startfromimg}')"></a></span>
 % endif
 </div>
 

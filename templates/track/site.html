@@ -19,12 +19,12 @@
 
 ///////////////////// OVERLAYS //////////////////////////////
 
-   function showGal(gallerylink) {
+   function showSubcontent(contentlink) {
 	$.ajax({
-	    url: gallerylink,
+	    url: contentlink,
 	    cache: true,
 	    success: function(response) { 
-			$("#gallery").replaceWith('<div id="gallery">' + response + '</div>');
+			$("#subcontent").replaceWith('<div id="subcontent">' + response + '</div>');
 			$.Lightbox.domReady(); 
 		     }
         
@@ -32,22 +32,18 @@
     }
 
 
-   function controllerlink(gallerylink,trackdate,distance,timespan) {
-        if (timespan == '' || distance == '') {
-            return '<div id="map_marker_content_text"><b>date:</b> '+trackdate+'<br><span class="image_icon"><a href="javascript:showGal(\''+gallerylink+'\')"></a></span><span class="log_icon"><a href="" /></span></div>';
-            }
-        else {
-            return '<div id="map_marker_content_text"><b>date:</b> '+trackdate+'<br><b>distance:</b> '+distance+'<br><b>duration:</b> '+timespan+'<br><span class="image_icon"><a href="javascript:showGal(\''+gallerylink+'\')"></a></span><span class="log_icon"><a href="" /></span></div>';
-   }}
+   function controllerlink(markerdate,distance,timespan,gallerylink,loglink) {
+        return '<div id="map_marker_content_text"><b>date:</b> '+markerdate+'<br>'+distance+timespan+gallerylink+loglink+'</div>';
+   }
 
 
-   function writegmarker(lng,lat,gallerylink,trackdate,distance,timespan,n) {
+   function writegmarker(lng,lat,markerdate,distance,timespan,gallerylink,loglink,n) {
         trackmarker[n] = new GMarker( new GLatLng(lng,lat) );
                 GEvent.addListener(trackmarker[n], 'click', function(){
                 trackmarker[n].openExtInfoWindow(
                   map,
                   "map_marker",
-                  controllerlink(gallerylink,trackdate,distance,timespan),
+                  controllerlink(markerdate,distance,timespan,gallerylink,loglink),
                   {beakOffset: 3}
                 );
               });
@@ -95,7 +91,7 @@
    function trackoverlay() {
 	    markerlist = ${c.markerlist};
             for (var n=0; n<markerlist.length; n++) {
-	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].gal,markerlist[n].trackdate,markerlist[n].distance,markerlist[n].timespan,n)
+	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].markerdate,markerlist[n].distance,markerlist[n].timespan,markerlist[n].gal,markerlist[n].log,n)
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
     }
