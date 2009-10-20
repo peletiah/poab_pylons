@@ -25,7 +25,6 @@
 	    cache: true,
 	    success: function(response) { 
 			$("#subcontent").replaceWith('<div id="subcontent">' + response + '</div>');
-			$.Lightbox.domReady(); 
 		     }
         
 	});
@@ -37,6 +36,13 @@
    }
 
 
+   function dissectcontentlink(contentlink) {
+            dissectedlink = contentlink.split('(\'')[1].split('\')')[0];
+            showSubcontent(dissectedlink);
+        }
+            
+                
+
    function writegmarker(lng,lat,markerdate,distance,timespan,gallerylink,loglink,n) {
         trackmarker[n] = new GMarker( new GLatLng(lng,lat) );
                 GEvent.addListener(trackmarker[n], 'click', function(){
@@ -46,6 +52,7 @@
                   controllerlink(markerdate,distance,timespan,gallerylink,loglink),
                   {beakOffset: 3}
                 );
+                dissectcontentlink(gallerylink);        
               });
 	map.addOverlay(trackmarker[n]);
    }
