@@ -1,9 +1,9 @@
-<%def name="title()"></%def>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <link type="text/css" rel="Stylesheet" media="screen" href="/css/infoWindow.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/maroc.css" media="screen">
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"
       type="text/javascript"></script>
     <script src="/js/extinfowindow_packed.js" type="text/javascript"></script>
@@ -17,42 +17,24 @@
 
 ///////////////////// OVERLAYS //////////////////////////////
 
-   function showSubcontent(contentlink) {
-	$.ajax({
-	    url: contentlink,
-	    cache: true,
-	    success: function(response) { 
-			$("#subcontent").replaceWith('<div id="subcontent">' + response + '</div>');
-		     }
-        
-	});
-    }
 
-
-   function controllerlink(markerdate,distance,timespan,gallerylink,loglink) {
-        return '<div id="map_marker_content_text"><b>date:</b> '+markerdate+'<br>'+distance+timespan+gallerylink+loglink+'</div>';
+   function controllerlink(text) {
+        return '<div id="map_marker_content_text"><b>'+text+'</b></div>';
    }
 
 
-   function dissectcontentlink(contentlink) {
-            if (contentlink != '') {
-                dissectedlink = contentlink.split('(\'')[1].split('\')')[0];
-                showSubcontent(dissectedlink);
-            };
-        }
             
                 
 
-   function writegmarker(lng,lat,markerdate,distance,timespan,gallerylink,loglink,n) {
+   function writegmarker(lng,lat,text,n) {
         trackmarker[n] = new GMarker( new GLatLng(lng,lat) );
                 GEvent.addListener(trackmarker[n], 'click', function(){
                 trackmarker[n].openExtInfoWindow(
                   map,
                   "map_marker",
-                  controllerlink(markerdate,distance,timespan,gallerylink,loglink),
+                  controllerlink(text),
                   {beakOffset: 3}
                 );
-                dissectcontentlink(gallerylink);        
               });
 	map.addOverlay(trackmarker[n]);
    }
@@ -69,37 +51,13 @@
 	map.addOverlay(trackpolyline[n]);
       }
 
-    function toggletrack(checkbox) {
-	    for (var n=0; n<markerlist.length; n++) {
-		if (checkbox.checked == true) {
-		    trackpolyline[n].show()
-		}
-		else {
-		    trackpolyline[n].hide()
-		}
-	    }
-
-    }
-
-    function togglemarkers(checkbox) {
-	    for (var n=0; n<markerlist.length; n++) {
-		if (checkbox.checked == true) {
-		    trackmarker[n].show()
-		}
-		else {
-		    trackmarker[n].hide()
-		    trackmarker[n].closeExtInfoWindow(map)
-		}
-	    }
-
-    }
-
 
    function trackoverlay() {
 	    markerlist = ${c.markerlist};
             for (var n=0; n<markerlist.length; n++) {
-	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].markerdate,markerlist[n].distance,markerlist[n].timespan,markerlist[n].gal,markerlist[n].log,n)
+	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].text,n)
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
+		trackpolyline[n].show()
 	}
     }
 
@@ -124,7 +82,7 @@
    function load() {
       if (GBrowserIsCompatible()) {
         map = new GMap2(document.getElementById("map"));
-        map.setCenter(new GLatLng('${c.infomarker.latitude}', '${c.infomarker.longitude}'), 12);
+        map.setCenter(new GLatLng('30.424992973925598', '-8.6297607421875'), 9);
         map.setMapType(G_PHYSICAL_MAP);
         map.addControl(new GScaleControl());
         map.addControl(new GLargeMapControl());
@@ -139,9 +97,12 @@
     }
 
     //]]></script>
-   <title>${self.title()}</title>
+   <title>Marokko 2009</title>
   </head>
   <body onload="load()" onunload="GUnload()">
-  	${self.body()}
+  	<div id="content">
+        		<div id="map">
+        		</div>
+	</div>
   </body>
 </html>
