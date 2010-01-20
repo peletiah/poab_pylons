@@ -1,8 +1,60 @@
 <%inherit file="site.html" />
 <%include file="/menu/menu_facts.html" />
 
-<div id="content">
+<div id="content"
+
 <h3>Statistics for distance, height, temperature and other data i collect,<br>
 number crunch, merge and display in nice and informational graphs</h3>
-<div id="view_gallery"><img src="http://benko.login.cx:8080/flickr/3/2665/3880250647/898e71b7ab/"></div>
+
+
+    <div id="placeholder" style="width:600px;height:300px;"></div>
+
+<script id="source" language="javascript" type="text/javascript">
+$(function () {
+    var options = {
+        lines: { show: true },
+        points: { show: false },
+        xaxis: { mode: "time", timeformat: "%H", monthNames: ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"] }
+    };
+    var data = [];
+    var placeholder = $("#placeholder");
+    
+    $.plot(placeholder, data, options);
+
+    
+    // fetch one series, adding to what we got
+    var alreadyFetched = {};
+    
+       function fetchData() {
+        // find the URL in the link right next to us 
+        var dataurl = '/facts/infomarker/${c.infomarker}'
+        // then fetch the data with jQuery
+        function onDataReceived(series) {
+            // extract the first coordinate pair so you can see that
+            // data is now an ordinary Javascript object
+
+            // let's add it to our current data
+            if (!alreadyFetched[series.label]) {
+                alreadyFetched[series.label] = true;
+                data.push(series);
+            }
+            
+            // and plot all we got
+            $.plot(placeholder, data, options);
+         }
+        
+        $.ajax({
+            url: dataurl,
+            method: 'GET',
+            dataType: 'json',
+            success: onDataReceived
+        });
+    };
+fetchData();
+
+});
+</script>
+
+
+
 </div>

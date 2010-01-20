@@ -109,6 +109,7 @@ imageinfo_table = sa.Table("imageinfo", meta,
     sa.Column("flickrtitle", types.VARCHAR(256)),
     sa.Column("flickrdescription", types.UnicodeText),
     sa.Column("photohash", types.VARCHAR(256)),
+    sa.Column("photohash_990", types.VARCHAR(256)),
     )
 
 class imageinfo(object):
@@ -159,7 +160,7 @@ track_table = sa.Table("track", meta,
     sa.Column("timespan", types.Interval),
     sa.Column("gencpoly_pts", types.UnicodeText),
     sa.Column("gencpoly_levels", types.UnicodeText),
-    sa.Column("color", types.CHAR(6)),
+    sa.Column("color", types.CHAR(6), default='FF0000'),
     )
 
 class track(object):

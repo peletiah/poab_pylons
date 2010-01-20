@@ -112,6 +112,7 @@ class TrackController(BaseController):
             tracklevels=c.track.gencpoly_levels
             trackcolor=c.track.color
         else:
+            #WTF is happening here?
             q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
             c.timezone = q.one()
             localtime=c.infomarker.timestamp+c.timezone.utcoffset
