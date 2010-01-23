@@ -27,7 +27,8 @@ $(function () {
     
        function fetchData() {
         // find the URL in the link right next to us 
-        var dataurl = '/facts/infomarker/${c.infomarker}'
+        //var dataurl = '/facts/infomarker/${c.infomarker}'
+        var dataurl = '/facts/distance/${c.infomarker}'
         // then fetch the data with jQuery
         function onDataReceived(series) {
             // extract the first coordinate pair so you can see that
