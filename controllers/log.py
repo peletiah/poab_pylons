@@ -14,6 +14,7 @@ class LogController(BaseController):
     def index(self):
         q = model.Session.query(model.log)
         logs = q.all()
+        #provides menu-template with a comma-separated string(c.countries) of all countries
         countrylist=list()
         for log in logs:
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==log.infomarker_id)
@@ -28,6 +29,7 @@ class LogController(BaseController):
         c.countries=''
         for element in countrylist:
             c.countries=c.countries+','+str(element)
+        #from here we really start fetching the content for the log-view
         try:
             #selection by date-range
             daterange=request.params['viewbydate']
