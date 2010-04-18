@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Ammersin Getraenke</title>
+    <link href="layout.css" rel="stylesheet" type="text/css"></link>
+    <!--[if IE]><script language="javascript" type="text/javascript" src="../excanvas.min.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="../jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="../jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="../jquery.flot.selection.js"></script>
+ </head>
+    <body>
+    <h1>Getraenkerechnungen</h1>
+
+    <div id="placeholder" style="width:600px;height:300px;"></div>
+    
+    <div id="overview" style="margin-left:50px;margin-top:20px;width:400px;height:50px"></div>
+
+    <p>Warenwert Einkauf(normalisiert)</p>
+
+    <div id="placeholder2" style="width:600px;height:300px;"></div>
+    
+    <div id="overview2" style="margin-left:50px;margin-top:20px;width:400px;height:50px"></div>
+
+    <p>Warenwert Rechnungen einzeln</p>
+
+
+
+<script id="source">
+$(function () {
+    var d=[[1172098800000,352.1],[1173308400000,551.2],[1177020000000,675.37],[1178143200000,654.61],[1184709600000,293.54],[1187906400000,760.83],[1190066400000,521.36],[1192658400000,344.96],[1195772400000,250],[1196982000000,477.2],[1199919600000,479.08],[1201820400000,449.58],[1204066800000,402.44],[1207260000000,414.66],[1209074400000,460.56],[1210716000000,360.78],[1213826400000,317.76],[1215640800000,566.36],[1220392800000,417.68],[1221775200000,541.66],[1224626400000,596.48],[1225321200000,431.18],[1226358000000,544.88],[1229468400000,486.28],[1233097200000,341.04],[1234998000000,445.84],[1237330800000,605.59],[1239919200000,680.44],[1242597600000,558.28],[1245276000000,347],[1246485600000,654.54],[1249509600000,687.84],[1252015200000,565.64],[1253052000000,796.52],[1253656800000,501.2],[1256598000000,966.42],[1261004400000,648.5]]
+
+    // first correct the timestamps - they are recorded as the daily
+    // midnights in UTC+0100, but Flot always displays dates in UTC
+    // so we have to add one hour to hit the midnights in the plot
+    for (var i = 0; i < d.length; ++i)
+      d[i][0] += 60 * 60 * 1000;
+
+    // helper for returning the weekends in a period
+    function weekendAreas(axes) {
+        var markings = [];
+        var d = new Date(axes.xaxis.min);
+        // go to the first Saturday
+        d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 1) % 7))
+        d.setUTCSeconds(0);
+        d.setUTCMinutes(0);
+        d.setUTCHours(0);
+        var i = d.getTime();
+        do {
+            // when we don't set yaxis, the rectangle automatically
+            // extends to infinity upwards and downwards
+            markings.push({ xaxis: { from: i, to: i + 2 * 24 * 60 * 60 * 1000 } });
+            i += 7 * 24 * 60 * 60 * 1000;
+        } while (i < axes.xaxis.max);
+
+        return markings;
+    }
+    
+    var options = {
+        xaxis: { mode: "time" },
+        selection: { mode: "x" },
+        grid: { markings: weekendAreas }
+    };
+    
+    var plot = $.plot($("#placeholder"), [d], options);
+    
+    var overview = $.plot($("#overview"), [d], {
+        series: {
+            lines: { show: true, lineWidth: 1 },
+            shadowSize: 0
+        },
+        xaxis: { ticks: [], mode: "time" },
+        yaxis: { ticks: [], min: 0, autoscaleMargin: 0.1 },
+        selection: { mode: "x" }
+    });
+
+    // now connect the two
+    
+    $("#placeholder").bind("plotselected", function (event, ranges) {
+        // do the zooming
+        plot = $.plot($("#placeholder"), [d],
+                      $.extend(true, {}, options, {
+                          xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
+                      }));
+
+        // don't fire event on the overview to prevent eternal loop
+        overview.setSelection(ranges, true);
+    });
+    
+    $("#overview").bind("plotselected", function (event, ranges) {
+        plot.setSelection(ranges);
+    });
+});
+</script>
+
+<script id="source">
+$(function () {
+     var d=[[1172098800000,352.1],[1173308400000,4.51],[1173308400000,392.25],[1173913200000,154.44],[1175724000000,299.9],[1177020000000,375.47],[1178143200000,278.45],[1179180000000,376.16],[1184709600000,293.54],[1187906400000,409.46],[1188424800000,351.37],[1190066400000,521.36],[1192658400000,344.96],[1195772400000,250],[1196982000000,264.4],[1197500400000,212.8],[1199919600000,479.08],[1201820400000,449.58],[1204066800000,402.44],[1207260000000,414.66],[1209074400000,460.56],[1210716000000,360.78],[1213826400000,317.76],[1215640800000,172.22],[1217282400000,394.14],[1220392800000,417.68],[1221775200000,541.66],[1223589600000,454.68],[1224626400000,141.8],[1225321200000,431.18],[1226358000000,416.88],[1226444400000,128],[1229468400000,486.28],[1233097200000,341.04],[1234998000000,445.84],[1237330800000,605.59],[1239919200000,180.44],[1242597600000,1058.28],[1242943200000,211.58],[1245276000000,136],[1246485600000,654.54],[1248904800000,411.2],[1249509600000,276.84],[1252015200000,565.64],[1253052000000,796.52],[1253656800000,501.2],[1256598000000,966.42],[1261004400000,648.5]]
+//     var d=[[1172098800000,352.1],[1173308400000,4.51],[1173308400000,392.25],[1173913200000,154.44],[1175724000000,299.9],[1177020000000,375.47],[1178143200000,278.45],[1179180000000,376.16],[1184709600000,293.54],[1187906400000,409.46],[1188424800000,351.37],[1190066400000,521.36],[1192658400000,344.96],[1195772400000,250],[1197500400000,212.8],[1199919600000,479.08],[1196982000000,264.4],[1201820400000,449.58],[1204066800000,402.44],[1207260000000,414.66],[1209074400000,460.56],[1210716000000,360.78],[1213826400000,317.76],[1215640800000,172.22],[1217282400000,394.14],[1220392800000,417.68],[1221775200000,541.66],[1223589600000,454.68],[1224626400000,141.8],[1225321200000,431.18],[1226358000000,416.88],[1226444400000,128],[1229468400000,486.28],[1233097200000,341.04],[1234998000000,445.84],[1237330800000,605.59],[1239919200000,180.44],[1242597600000,1058.28],[1242943200000,211.58],[1245276000000,136],[1248904800000,411.2],[1246485600000,654.54],[1249509600000,276.84],[1252015200000,565.64],[1253052000000,796.52],[1253656800000,501.2],[1256598000000,966.42],[1261004400000,648.5]];
+
+    // first correct the timestamps - they are recorded as the daily
+    // midnights in UTC+0100, but Flot always displays dates in UTC
+    // so we have to add one hour to hit the midnights in the plot
+    for (var i = 0; i < d.length; ++i)
+      d[i][0] += 60 * 60 * 1000;
+
+    // helper for returning the weekends in a period
+    function weekendAreas(axes) {
+        var markings = [];
+        var d = new Date(axes.xaxis.min);
+        // go to the first Saturday
+        d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 1) % 7))
+        d.setUTCSeconds(0);
+        d.setUTCMinutes(0);
+        d.setUTCHours(0);
+        var i = d.getTime();
+        do {
+            // when we don't set yaxis, the rectangle automatically
+            // extends to infinity upwards and downwards
+            markings.push({ xaxis: { from: i, to: i + 2 * 24 * 60 * 60 * 1000 } });
+            i += 7 * 24 * 60 * 60 * 1000;
+        } while (i < axes.xaxis.max);
+
+        return markings;
+    }
+    
+    var options = {
+        xaxis: { mode: "time" },
+        selection: { mode: "x" },
+        grid: { markings: weekendAreas }
+    };
+    
+    var plot = $.plot($("#placeholder2"), [d], options);
+    
+    var overview = $.plot($("#overview2"), [d], {
+        series: {
+            lines: { show: true, lineWidth: 1 },
+            shadowSize: 0
+        },
+        xaxis: { ticks: [], mode: "time" },
+        yaxis: { ticks: [], min: 0, autoscaleMargin: 0.1 },
+        selection: { mode: "x" }
+    });
+
+    // now connect the two
+    
+    $("#placeholder2").bind("plotselected", function (event, ranges) {
+        // do the zooming
+        plot = $.plot($("#placeholder2"), [d],
+                      $.extend(true, {}, options, {
+                          xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
+                      }));
+
+        // don't fire event on the overview to prevent eternal loop
+        overview.setSelection(ranges, true);
+    });
+    
+    $("#overview2").bind("plotselected", function (event, ranges) {
+        plot.setSelection(ranges);
+    });
+});
+</script>
+ </body>
+</html>
