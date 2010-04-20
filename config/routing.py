@@ -18,9 +18,11 @@ def make_map():
 
     # CUSTOM ROUTES HERE
 
+    map.connect('', controller='log', action='index', startfromlog=0)
+    map.connect('log/', controller='log', action='index', startfromlog=0)
+    map.connect('log/index/:startfromlog', controller='log', action='index', startfromlog=0)
+    map.connect('gallery/:infomarker/:startfromimg', controller='track', action='gallery')
+    map.connect('track/gallery/:infomarker/:startfromimg', controller='track', action='gallery')
     map.connect(':controller/:action/:id')
-    map.connect('', controller='log', action='index')
-    map.connect('', controller='track', action='index')
-    map.connect('gallery/:infomarker/:startfromimg', 'track/gallery/:infomarker/:startfromimg', controller='track', action='gallery')
 
     return map

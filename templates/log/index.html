@@ -2,6 +2,22 @@
 <%include file="/menu/menu.html" />
 <div id="content">
     <div id="log" "clearfix">
+            highestlogid: ${c.highestlogid}<br />
+            lowestlogid: ${c.lowestlogid}<br />
+            startfromlog: ${c.startfromlog}<br />
+            lowestlogonpage: ${c.lowestlogonpage}<br />
+            startlognextpage: ${c.startlognextpage}<br />
+            startlogprevpage: ${c.startlogprevpage}
+
+        <div id="logpages">
+                % if c.startlogprevpage > c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
+                <span class="gallerypageprev"><a href="/log/index/${c.startlogprevpage}"></a></span>
+                % endif
+                % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
+                <span class="gallerypagenext"><a href="/log/index/${c.startlognextpage}"></a></span>
+                % endif
+        </div>
+
         % for log in c.logdetails:
                 <div id="logdetail">
                 <table id="logheader">
@@ -32,6 +48,15 @@
                 </div>
             </div>
         % endfor
+
+        <div id="logpages">
+                % if c.startlogprevpage > c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
+                <span class="gallerypageprev"><a href="/log/index/${c.startlogprevpage}"></a></span>
+                % endif
+                % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
+                <span class="gallerypagenext"><a href="/log/index/${c.startlognextpage}"></a></span>
+                % endif
+        </div>
     </div>
 % if c.error:
     <div id="error">

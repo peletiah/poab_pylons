@@ -11,25 +11,27 @@ log = logging.getLogger(__name__)
 
 class LogController(BaseController):
 
-    def index(self):
-        q = model.Session.query(model.log)
-        logs = q.all()
-        #provides menu-template with a comma-separated string(c.countries) of all countries
-        countrylist=list()
-        for log in logs:
-            q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==log.infomarker_id)
-            infomarkers=q.all()
-            for infomarker in infomarkers:
-                q = model.Session.query(model.country).filter(model.country.iso_numcode==infomarker.country_id)
-                country=q.one()
-                if country.iso_countryname in countrylist:
-                    pass
-                else:
-                    countrylist.append(country.iso_countryname)
-        c.countries=''
-        for element in countrylist:
-            c.countries=c.countries+','+str(element)
-        #from here we really start fetching the content for the log-view
+    def index(self,startfromlog):
+        #  #provides menu-template with a comma-separated string(c.countries) of all countries
+        # #awkward implementation, needs fix
+        # q = model.Session.query(model.log)
+        # logs = q.all()
+        # countrylist=list()
+        # for log in logs:
+        #     q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==log.infomarker_id)
+        #     infomarkers=q.all()
+        #     for infomarker in infomarkers:
+        #         q = model.Session.query(model.country).filter(model.country.iso_numcode==infomarker.country_id)
+        #         country=q.one()
+        #         if country.iso_countryname in countrylist:
+        #             pass
+        #         else:
+        #             countrylist.append(country.iso_countryname)
+        # c.countries=''
+        # for element in countrylist:
+        #     c.countries=c.countries+','+str(element)
+        ##
+        # from here we start fetching the content for the log-view
         try:
             #selection by date-range
             daterange=request.params['viewbydate']
@@ -38,7 +40,7 @@ class LogController(BaseController):
             lastdate = time.strptime(lastdate,time_format)
             lastdate=datetime.datetime(*lastdate[:6])
             delta = datetime.timedelta(days=1)
-            q = model.Session.query(model.log).filter(and_(model.log.createdate > daterange.split()[0],model.log.createdate <= lastdate+delta))
+            q = model.Session.query(model.log).filter(and_(model.log.createdate > daterange.split()[0],model.log.createdate <= lastdate+delta,model.log.id >= startfromlog))
             c.logs = q.order_by(desc(model.log.createdate)).all()
             if c.logs:
                 pass
@@ -54,7 +56,7 @@ class LogController(BaseController):
                 q = model.Session.query(model.country).filter(model.country.iso_countryname==country)
                 try:
                     countrydetails = q.one()
-                    q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.country_id==countrydetails.iso_numcode,model.trackpoint.infomarker==True))
+                    q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.country_id==countrydetails.iso_numcode,model.trackpoint.infomarker==True,model.log.id >= startfromlog))
                     infomarkers = q.all()
                     c.logs=list()
                     for infomarker in infomarkers:
@@ -66,18 +68,83 @@ class LogController(BaseController):
                         pass
                     else:
                         #nothing found for the specified country
-                        q = model.Session.query(model.log)
+                        q = model.Session.query(model.log).filter(model.log.id >= startfromlog)
                         c.logs = q.order_by(desc(model.log.createdate)).limit(5)
                         c.error = 'no results for selected country!'
                 except:
                     #nothing found for the specified country
-                    q = model.Session.query(model.log)
+                    q = model.Session.query(model.log).filter(model.log.id >= startfromlog)
                     c.logs = q.order_by(desc(model.log.createdate)).limit(5)
                     c.error = 'Country not found!'
             except KeyError:
-                #select of all entries
+                #find lowestlogid
                 q = model.Session.query(model.log)
-                c.logs = q.order_by(desc(model.log.createdate)).limit(5)
+                c.lowestlogid = q.order_by(asc(model.log.id)).first().id
+                #find highestlogid
+                c.highestlogid = q.order_by(desc(model.log.id)).first().id
+                #logs starting from startfromlog(show 5 newest logs if startfromlog=0)
+                if int(startfromlog) == 0:
+                    c.logs = q.order_by(desc(model.log.id)).limit(5)
+                    logsplusone = q.order_by(desc(model.log.id)).limit(6)
+                    c.startfromlog = int(c.highestlogid)
+                else:
+                    q = model.Session.query(model.log).filter(model.log.id <= startfromlog)
+                    c.logs = q.order_by(desc(model.log.id)).limit(5)
+                    logsplusone = q.order_by(desc(model.log.id)).limit(6)
+                    c.startfromlog = int(startfromlog)
+                for log in logsplusone:
+                    c.startlogprevpage = log.id
+                #lowestlogid on current page
+                for log in c.logs:
+                    c.lowestlogonpage = log.id
+                #the current page is not full so we need to add the missing pages to the next page to keep up with the correct pagecount
+                logsonpage=q.limit(5).count()
+                if logsonpage < 5:
+                    addtonext=logsonpage
+                else:
+                    addtonext=0
+                #startlogid on next page
+                if int(startfromlog) < c.highestlogid:
+                    q = model.Session.query(model.log).filter(model.log.id > startfromlog)
+                    logsnextpage = q.order_by(asc(model.log.id)).limit(5)
+                    for log in logsnextpage:
+                        c.startlognextpage = log.id
+                else:
+                    c.startlognextpage = c.highestlogid
+                #on the last page the next-page is probably not 5 logs away
+
+               # return c.startlognextpage,c.startlogprevpage,logsonpage
+               # #logs for current page starting from startfromlog(show last 5 if startfromlog=0)
+               # if int(startfromlog) == 0:
+               #     model.Session.query(model.log)
+               #     c.logs = q.order_by(desc(model.log.id)).limit(5)
+               #     for log in c.logs:
+               #         startfromlog=log.id
+               # q = model.Session.query(model.log).filter(model.log.id >= startfromlog)
+               # c.logs = q.order_by(asc(model.log.id)).limit(5)
+               # #firstlogid on current page
+               # logs_asc = q.order_by(asc(model.log.id)).limit(5)
+               # for log in logs_asc:
+               #     c.firstlogonpage=log.id
+               # #lastlogid on current page
+               # logs_desc = q.order_by(desc(model.log.id)).all()
+               # for log in logs_desc:
+               #     c.lastlogonpage=log.id
+               # #last logid on next page
+               # logsnextpage = q.order_by(asc(model.log.id)).limit(6)
+               # for log in logsnextpage:
+               #     c.startfromlog=log.id
+               # c.logcount = q.limit(5).count()
+               # #last logid on previous page
+               # q = model.Session.query(model.log).filter(model.log.id < c.startfromlog)
+               # if c.logcount==5:
+               #     logsprevpage=q.order_by(desc(model.log.id)).limit(10)
+               # else:
+               #     #there are less than 5 logs on the previous page, so logsprevpage is not 2x5 logs away
+               #     logsprevpage = q.order_by(desc(model.log.id)).limit(4+c.logcount)
+               # for log in logsprevpage:
+               #     c.prevstartfromlog=log.id
+        #return c.lowestlogid,c.highestlogid,c.firstlogonpage,c.lastlogonpage,c.startfromlog,c.prevstartfromlog,c.logcount
         c.logdetails=list()       
         for c.log in c.logs:
             # ###query for infomarker
@@ -110,7 +177,6 @@ class LogController(BaseController):
             c.images = q.all()
             for image in c.images:
                 if image.flickrdescription==None:
-                    #inlineimage='<div id=\'log_inlineimage\'><a href="http://benko.login.cxi:8080/flickr/%s/%s/%s/%s/_b" title="%s" rel="image_colorbox"><img src="http://benko.login.cx:8080/flickr/%s/%s/%s/%s/"></a></div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret)
                     inlineimage='<div id=\'log_inlineimage\'><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a></div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret)
                 else:
                     inlineimage='<div id=\'log_inlineimage\'><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><br>%s</div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrdescription)
@@ -135,5 +201,3 @@ class LogController(BaseController):
                 infomarkerid=c.infomarker.id
             c.logdetails.append(logdetails)
         return render("/log/index.html")
-
-
