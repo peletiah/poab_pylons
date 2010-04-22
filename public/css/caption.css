@@ -1,0 +1,35 @@
+.imagecontainer {
+  position: relative;
+  margin-bottom: 3em;
+}
+
+.caption {
+  font-family: Arial,Helvetica;
+  position: absolute;
+  left:0; bottom:0;
+  z-index: 2;
+  width: 100%;
+  padding: 1.5em 0;
+  overflow: hidden;
+  background:url(/images/caption/black80.png);
+  behavior: url(/css/iepngfix.htc);
+}
+
+.caption {
+  display: block;
+}
+.caption a,
+.caption span {
+  font-family: Arial,Helvetica;
+  color: #aaa;
+  font-size: .9em;
+}
+.caption span {
+  padding-left: .5em;
+}
+.caption a:hover {
+  color: #fff;
+}
+.caption a span {
+  text-decoration: none;
+}

@@ -271,11 +271,61 @@ body {
    width: 35em;
 }
 
-#log_footer {
-        margin-bottom: 2em;
-        float: left;
+#logfooter {
+        height: 3em;
+        padding: 3em;
+        margin-top: 2em;
         display: block;
 }
+
+#pages {
+   display: block;
+	float: left;
+	margin-bottom: 2em;
+}
+
+.logpagenext a,.logpageprev a,.logpagelowest a,.logpagehighest a {
+    width:20px;
+    height:20px;
+    background:url(/images/icons/controls_transwhite_with_end.png) no-repeat;
+    display: block;
+    float: left;
+}
+
+
+.logpagelowest a {
+    background-position:-122px 0px;
+}
+
+.logpagelowest a:hover {
+    background-position:-122px -25px;
+}
+
+.logpagehighest a {
+    text-align: right;
+    background-position:-150px 0px;
+}
+
+.logpagehighest a:hover {
+    background-position:-150px -25px;
+}
+
+.logpageprev a {
+    background-position:0px 0px;
+}
+
+.logpageprev a:hover {
+    background-position:0px -25px;
+}
+
+.logpagenext a {
+    background-position:-25px 0px;
+}
+
+.logpagenext a:hover {
+    background-position:-25px -25px;
+}
+
 
 #track {
     float: left;
@@ -318,7 +368,7 @@ body {
         display: block;
 }
 
-.gallerypagenext a,.gallerypageprev a {
+.gallerypagenext a,.gallerypageprev a,.gallerypagelowest a,.gallerypagehighest a {
     width:20px;
     height:20px;
     background:url(/images/icons/controls_transwhite.png) no-repeat;
@@ -326,6 +376,25 @@ body {
     float: left;
 }
 
+
+.gallerypagelowest a {
+    background-position:-52px 0px;
+}
+
+.gallerypagelowest a:hover {
+    background-position:-52px -25px;
+}
+
+.gallerypagehighest a {
+    position: absolute;
+    margin-left: 296px;
+    margin-top: 468px;
+    background-position:-80px 0px;
+}
+
+.gallerypagehighest a:hover {
+    background-position:-80px -25px;
+}
 
 .gallerypageprev a {
     background-position:0px 0px;
@@ -336,6 +405,9 @@ body {
 }
 
 .gallerypagenext a {
+    position: absolute;
+    margin-left: 273px;
+    margin-top: 468px;
     background-position:-25px 0px;
 }
 

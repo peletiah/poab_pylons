@@ -12,26 +12,6 @@ log = logging.getLogger(__name__)
 class LogController(BaseController):
 
     def index(self,startfromlog):
-        #  #provides menu-template with a comma-separated string(c.countries) of all countries
-        # #awkward implementation, needs fix
-        # q = model.Session.query(model.log)
-        # logs = q.all()
-        # countrylist=list()
-        # for log in logs:
-        #     q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==log.infomarker_id)
-        #     infomarkers=q.all()
-        #     for infomarker in infomarkers:
-        #         q = model.Session.query(model.country).filter(model.country.iso_numcode==infomarker.country_id)
-        #         country=q.one()
-        #         if country.iso_countryname in countrylist:
-        #             pass
-        #         else:
-        #             countrylist.append(country.iso_countryname)
-        # c.countries=''
-        # for element in countrylist:
-        #     c.countries=c.countries+','+str(element)
-        ##
-        # from here we start fetching the content for the log-view
         try:
             #selection by date-range
             daterange=request.params['viewbydate']
@@ -111,40 +91,6 @@ class LogController(BaseController):
                         c.startlognextpage = log.id
                 else:
                     c.startlognextpage = c.highestlogid
-                #on the last page the next-page is probably not 5 logs away
-
-               # return c.startlognextpage,c.startlogprevpage,logsonpage
-               # #logs for current page starting from startfromlog(show last 5 if startfromlog=0)
-               # if int(startfromlog) == 0:
-               #     model.Session.query(model.log)
-               #     c.logs = q.order_by(desc(model.log.id)).limit(5)
-               #     for log in c.logs:
-               #         startfromlog=log.id
-               # q = model.Session.query(model.log).filter(model.log.id >= startfromlog)
-               # c.logs = q.order_by(asc(model.log.id)).limit(5)
-               # #firstlogid on current page
-               # logs_asc = q.order_by(asc(model.log.id)).limit(5)
-               # for log in logs_asc:
-               #     c.firstlogonpage=log.id
-               # #lastlogid on current page
-               # logs_desc = q.order_by(desc(model.log.id)).all()
-               # for log in logs_desc:
-               #     c.lastlogonpage=log.id
-               # #last logid on next page
-               # logsnextpage = q.order_by(asc(model.log.id)).limit(6)
-               # for log in logsnextpage:
-               #     c.startfromlog=log.id
-               # c.logcount = q.limit(5).count()
-               # #last logid on previous page
-               # q = model.Session.query(model.log).filter(model.log.id < c.startfromlog)
-               # if c.logcount==5:
-               #     logsprevpage=q.order_by(desc(model.log.id)).limit(10)
-               # else:
-               #     #there are less than 5 logs on the previous page, so logsprevpage is not 2x5 logs away
-               #     logsprevpage = q.order_by(desc(model.log.id)).limit(4+c.logcount)
-               # for log in logsprevpage:
-               #     c.prevstartfromlog=log.id
-        #return c.lowestlogid,c.highestlogid,c.firstlogonpage,c.lastlogonpage,c.startfromlog,c.prevstartfromlog,c.logcount
         c.logdetails=list()       
         for c.log in c.logs:
             # ###query for infomarker

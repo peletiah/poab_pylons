@@ -126,12 +126,15 @@
         map = new GMap2(document.getElementById("map"));
         map.setCenter(new GLatLng('${c.infomarker.latitude}', '${c.infomarker.longitude}'), 12);
         map.setMapType(G_PHYSICAL_MAP);
-        map.addControl(new GScaleControl());
-        map.addControl(new GLargeMapControl());
+        map.addControl(new GScaleControl()); //adds a small "legend" in the left lower corner
+        map.addControl(new GLargeMapControl3D()); //adds the standard zoom and pan-control
+        var topLeft = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(70,5));
+        map.addControl(new GNavLabelControl(),topLeft); //displays the current location(country/region/etc.)
         var mapControl = new GHierarchicalMapTypeControl();
         map.addMapType(G_PHYSICAL_MAP);
+        mapControl.clearRelationships();
         mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
-	map.addControl(mapControl);
+        map.addControl(mapControl);
         map.addControl(new GOverviewMapControl ());
         map.enableScrollWheelZoom();
 	trackoverlay();

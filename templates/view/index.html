@@ -1,11 +1,71 @@
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
 
+<!--<link href="css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"  />-->
+
 <div id="content">
-% for image in c.imagelist:
-   <!--<img src="http://benko.login.cx:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_b" class="resize">-->
-   <img src="http://farm${image.flickrfarm}.static.flickr.com/${image.flickrserver}/${image.flickrphotoid}_${image.flickrsecret}_b.jpg" class="resize">
-    <br />
-    <br />
+<!--            highestimageid: ${c.highestimageid}<br />
+            lowestimageid: ${c.lowestimageid}<br />
+            startfromimage: ${c.startfromimage}<br />
+            lowestimageonpage: ${c.lowestimageonpage}<br />
+            startimagenextpage: ${c.startimagenextpage}<br />
+            startimageprevpage: ${c.startimageprevpage}<br />
+-->
+    <div id="pages">
+            % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
+                <span class="logpagelowest"><a href="/view/index/${c.lowestimageid}" title="Jump to oldest photos"></a></span>
+            % endif
+            % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
+                <span class="logpageprev"><a href="/view/index/${c.startimageprevpage}" title="Show older photos"></a></span>
+            % endif
+            % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
+                <span class="logpagenext"><a href="/view/index/${c.startimagenextpage}" title="Show newer photos"></a></span>
+            % endif
+            % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
+                <span class="logpagehighest"><a href="/view/index/${c.highestimageid}" title="Jump to newest photos"></a></span>
+            % endif
+        </div>
+
+
+
+
+% for viewdetail in c.viewlist:
+<div class="imagecontainer" style="width: 990px;">
+    <img src="/trackdata/bydate/${viewdetail.logdate}/images/best_990/${viewdetail.imgname}">
+    <div class="caption">
+        <span>&#8594;</span>
+            <a href="http://www.flickr.com/peletiah/${viewdetail.flickrphotoid}" target="_blank">www.flickr.com</a>
+    </div>
+</div>
+
 % endfor
+
+<script>
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){
+      $(".caption",this).show();
+    }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+
+</script>
+
+
+    <div id="pages">
+            % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
+                <span class="logpagelowest"><a href="/view/index/${c.lowestimageid}" title="Jump to oldest photos"></a></span>
+            % endif
+            % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
+                <span class="logpageprev"><a href="/view/index/${c.startimageprevpage}" title="Show older photos"></a></span>
+            % endif
+            % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
+                <span class="logpagenext"><a href="/view/index/${c.startimagenextpage}" title="Show newer photos"></a></span>
+            % endif
+            % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
+                <span class="logpagehighest"><a href="/view/index/${c.highestimageid}" title="Jump to newest photos"></a></span>
+            % endif
+        </div>
+
+
+
 </div>

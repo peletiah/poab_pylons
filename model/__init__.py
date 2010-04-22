@@ -110,6 +110,7 @@ imageinfo_table = sa.Table("imageinfo", meta,
     sa.Column("flickrdescription", types.UnicodeText),
     sa.Column("photohash", types.VARCHAR(256)),
     sa.Column("photohash_990", types.VARCHAR(256)),
+    sa.Column("imgname", types.VARCHAR(64)),
     )
 
 class imageinfo(object):
