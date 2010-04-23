@@ -58,6 +58,7 @@
    }
 
     function writepolyline(encpts,enclvl,color,n) {
+    var polyOptions = {geodesic:true};
 	trackpolyline[n] = new GPolyline.fromEncoded({
                 color: '#' + color,
                 weight: 5,

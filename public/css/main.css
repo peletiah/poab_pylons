@@ -27,7 +27,7 @@ body {
 	margin-right: auto;
    min-width: 970px;
 	width: 94%;
-	z-index: 30000;
+	z-index: 3;
    opacity: 0.8;
 }
 
@@ -82,12 +82,12 @@ body {
 }
 
 #menu toggledate {
-	z-index: 1000;
+	z-index: 2;
 	margin: 0.2em;
 	 }
 
 #menu togglecountry {
-	z-index: 1000;
+	z-index: 2;
 	margin: 0.2em;
 	 }
 
@@ -151,6 +151,8 @@ body {
 	border-radius: 10px; 
 	border-width: 0.05em;
 	margin-bottom: 2em;
+   position: relative;
+   top: 20px;
 }
 
 #logdetail_icons {
@@ -281,7 +283,6 @@ body {
 #pages {
    display: block;
 	float: left;
-	margin-bottom: 2em;
 }
 
 .logpagenext a,.logpageprev a,.logpagelowest a,.logpagehighest a {
@@ -371,7 +372,7 @@ body {
 .gallerypagenext a,.gallerypageprev a,.gallerypagelowest a,.gallerypagehighest a {
     width:20px;
     height:20px;
-    background:url(/images/icons/controls_transwhite.png) no-repeat;
+    background:url(/images/icons/controls_transwhite_with_end.png) no-repeat;
     display: block;
     float: left;
 }
