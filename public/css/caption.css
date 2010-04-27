@@ -1,7 +1,8 @@
 .imagecontainer {
   position: relative;
-  margin-bottom: 3em;
+  margin-bottom: 2em;
   top: 20px;
+  width: 990px;
 }
 
 .imagecontainer img {
@@ -21,12 +22,13 @@
 
 .caption {
   display: block;
+  font-style: None;
 }
 .caption a,
 .caption span {
   font-family: Arial,Helvetica;
   color: #aaa;
-  font-size: .9em;
+  font-size: 80%;
 }
 .caption span {
   padding-left: .5em;

@@ -131,7 +131,7 @@ class LogController(BaseController):
                     inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
-    </div></div>%s</div>''' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrphotoid,image.flickrdescription)
+    </div></div><span class="imagedescription">%s</span></div>''' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrphotoid,image.flickrdescription)
                 c.log.content=c.log.content.replace('[imgid'+str(image.id)+']',inlineimage)
             # ###create logdetails-class
             class logdetails:

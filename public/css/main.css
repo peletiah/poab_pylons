@@ -236,17 +236,6 @@ body {
 	/*padding: 0.2em this shit makes stupid gaps where you don't find them, not sure why i added it*/
        }
 
-
-#log_inlineimage {
-    margin-top: 2em;
-    margin-bottom: 2em;
-    font-size: 80%;
-    font-style: italic;
-       }
-
-#log_inlineimage img {
-}
-
 #logdetail a:hover {
         color: #000000;
 	     padding: 0.2em
@@ -257,6 +246,36 @@ body {
         -khtml-border-radius: 10px;
         border-radius: 10px;
         }
+
+
+
+
+#log_inlineimage {
+    margin-top: 2em;
+    margin-bottom: 2em;
+       }
+
+.imagedescription {
+    font-size: 80%;
+    font-style: italic;
+}
+
+#log_inlineimage a{
+  font-family: Arial,Helvetica;
+  color: #aaa;
+}
+
+#log_inlineimage span {
+  padding-left: .5em;
+}
+#log_inlineimage a:hover {
+  color: #fff;
+}
+#log_inlineimage a span {
+  text-decoration: none;
+}
+
+
 
 #logheader {
         background: #00607f;
