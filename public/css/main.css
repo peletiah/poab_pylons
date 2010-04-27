@@ -140,6 +140,20 @@ body {
     max-width: 40em;
 }
 
+#fuckcss{
+    background-color: #ffffff;
+    display: block;
+   float: left;
+   border: solid #000000;
+   -moz-border-radius: 10px;
+   -webkit-border-radius: 10px;
+   -khtml-border-radius: 10px;
+   border-radius: 10px; 
+   border-width: 0.05em;
+   margin-bottom: 2em;
+   position: relative;
+   top: 20px;
+}
 #logdetail {
    display: block;
 	float: left;
@@ -219,7 +233,7 @@ body {
 #logdetail a {
         color: #444444;
         text-decoration: none;
-	padding: 0.2em
+	/*padding: 0.2em this shit makes stupid gaps where you don't find them, not sure why i added it*/
        }
 
 
@@ -231,7 +245,6 @@ body {
        }
 
 #log_inlineimage img {
-    margin-bottom:1em;
 }
 
 #logdetail a:hover {

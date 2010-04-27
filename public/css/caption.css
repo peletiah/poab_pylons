@@ -4,6 +4,9 @@
   top: 20px;
 }
 
+.imagecontainer img {
+    border-style: none;
+}
 .caption {
   font-family: Arial,Helvetica;
   position: absolute;

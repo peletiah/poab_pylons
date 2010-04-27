@@ -11,26 +11,15 @@
             startimagenextpage: ${c.startimagenextpage}<br />
             startimageprevpage: ${c.startimageprevpage}<br />
 -->
-    <div id="pages">
-            % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
-                <span class="logpagelowest"><a href="/view/index/${c.lowestimageid}" title="Jump to oldest photos"></a></span>
-            % endif
-            % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
-                <span class="logpageprev"><a href="/view/index/${c.startimageprevpage}" title="Show older photos"></a></span>
-            % endif
-            % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
-                <span class="logpagenext"><a href="/view/index/${c.startimagenextpage}" title="Show newer photos"></a></span>
-            % endif
-            % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
-                <span class="logpagehighest"><a href="/view/index/${c.highestimageid}" title="Jump to newest photos"></a></span>
-            % endif
-        </div>
 
 
+${pages()}
 
 % for viewdetail in c.viewlist:
-<div class="imagecontainer" style="width: 990px;">
-    <img src="/trackdata/bydate/${viewdetail.logdate}/images/best_990/${viewdetail.imgname}">
+
+<div class="imagecontainer">
+    
+    <a href="http://google.com"><img id="image" src="/trackdata/bydate/${viewdetail.logdate}/images/best_990/${viewdetail.imgname}"></a>
     <div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/${viewdetail.flickrphotoid}" target="_blank">www.flickr.com</a>
@@ -43,13 +32,19 @@
 $(".caption").hide();
 $("div.imagecontainer").mouseover(function(){
       $(".caption",this).show();
+      width=($("img[id='image']",this).width())
+      $('div.imagecontainer').css({width: width});
     }).mouseout(function(){
       $(".caption",this).hide();
     });
 
+
 </script>
 
+${pages()}
 
+
+<%def name="pages()">
     <div id="pages">
             % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
                 <span class="logpagelowest"><a href="/view/index/${c.lowestimageid}" title="Jump to oldest photos"></a></span>
@@ -65,6 +60,4 @@ $("div.imagecontainer").mouseover(function(){
             % endif
         </div>
 
-
-
-</div>
+</%def>

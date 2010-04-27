@@ -123,9 +123,15 @@ class LogController(BaseController):
             c.images = q.all()
             for image in c.images:
                 if image.flickrdescription==None:
-                    inlineimage='<div id=\'log_inlineimage\'><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a></div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret)
+                    inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
+        <span>&#8594;</span>
+            <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
+    </div></div></div>''' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrphotoid)
                 else:
-                    inlineimage='<div id=\'log_inlineimage\'><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><br>%s</div>' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrdescription)
+                    inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
+        <span>&#8594;</span>
+            <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
+    </div></div>%s</div>''' % (image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrtitle,image.flickrfarm,image.flickrserver,image.flickrphotoid,image.flickrsecret,image.flickrphotoid,image.flickrdescription)
                 c.log.content=c.log.content.replace('[imgid'+str(image.id)+']',inlineimage)
             # ###create logdetails-class
             class logdetails:

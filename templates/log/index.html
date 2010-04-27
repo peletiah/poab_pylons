@@ -9,20 +9,8 @@
             startlognextpage: ${c.startlognextpage}<br />
             startlogprevpage: ${c.startlogprevpage}-->
 
-        <div id="pages">
-            % if c.startlogprevpage >= c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
-                <span class="logpagelowest"><a href="/log/index/${c.lowestlogid}" title="Jump to oldest entries"></a></span>
-            % endif
-            % if c.startlogprevpage >= c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
-                <span class="logpageprev"><a href="/log/index/${c.startlogprevpage}" title="Show older entries"></a></span>
-            % endif
-            % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
-                <span class="logpagenext"><a href="/log/index/${c.startlognextpage}" title="Show newer entries"></a></span>
-            % endif
-            % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
-                <span class="logpagehighest"><a href="/log/index/${c.highestlogid}" title="Jump to newest entries"></a></span>
-            % endif 
-        </div>
+
+${pages()}
         % for log in c.logdetails:
                 <div id="logdetail">
                 <table id="logheader">
@@ -54,24 +42,42 @@
             </div>
         % endfor
 
-        <div id="pages">
-            % if c.startlogprevpage >= c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
-            <span class="logpagelowest"><a href="/log/index/${c.lowestlogid}"></a></span>
-            % endif
-            % if c.startlogprevpage >= c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
-            <span class="logpageprev"><a href="/log/index/${c.startlogprevpage}"></a></span>
-            % endif
-            % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
-            <span class="logpagenext"><a href="/log/index/${c.startlognextpage}"></a></span>
-            % endif
-            % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
-            <span class="logpagehighest"><a href="/log/index/${c.highestlogid}"></a></span>
-            % endif 
-    </div>
+    ${pages()}
+
 </div>
+
 % if c.error:
     <div id="error">
         ${c.error}
     </div>
 % endif
 </div>
+
+<%def name="pages()">
+    <div id="pages">
+        % if c.startlogprevpage >= c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
+            <span class="logpagelowest"><a href="/log/index/${c.lowestlogid}" title="Jump to oldest entries"></a></span>
+        % endif
+        % if c.startlogprevpage >= c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
+            <span class="logpageprev"><a href="/log/index/${c.startlogprevpage}" title="Show older entries"></a></span>
+        % endif
+        % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
+            <span class="logpagenext"><a href="/log/index/${c.startlognextpage}" title="Show newer entries"></a></span>
+        % endif
+        % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
+            <span class="logpagehighest"><a href="/log/index/${c.highestlogid}" title="Jump to newest entries"></a></span>
+        % endif 
+    </div>
+</%def>
+
+<script>
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){
+      $(".caption",this).show();
+      width=($("img[id='inlineimage']",this).width())
+      $('div.imagecontainer').css({width: width});
+ }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+
+</script>
