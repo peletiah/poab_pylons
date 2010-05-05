@@ -8,18 +8,18 @@
 <script type="text/javascript" src="/js/jquery_plugins/autocomplete/autocomplete/lib/jquery.dimensions.js"></script>
 <script type="text/javascript" src="/js/jquery_plugins/autocomplete/jquery.autocomplete.min.js"></script>
 <script type="text/javascript" src="/js/jquery_plugins/colorbox/jquery.colorbox.js"></script>
-<!--<script src="/js/graph/jquery.flot.js" type="text/javascript"> </script>-->
-<!--<script type="text/javascript" src="/js/graph/graph.js"></script>-->
+<script src="/js/graph/flot/jquery.flot.js" type="text/javascript"> </script>
 <!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.pack.js"></script><![endif]-->
 <script type="text/javascript">
             $(document).ready(function(){
                 $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
+                $("a[rel='map_colorbox']").colorbox({transition:"fade", width:"990px", height:"600px", iframe:true});
         });
         </script>
 
 <div id="menu">
 	<ul id="menucontent" class="clearfix">
-	    <li><span id="logo">poab</span></li>
+	    <!--<li><span id="logo">poab</span></li>-->
 	    <li><a href="${h.rails.url_for(controller="/log", action="")}">log</a></li>
 	    <li><a href="${h.rails.url_for(controller="/track", action="")}">track</a></li>
 	    <li><a href="${h.rails.url_for(controller="/view", action="")}">view</a></li>

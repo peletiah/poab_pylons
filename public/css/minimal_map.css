@@ -1,0 +1,77 @@
+body {
+   background-color: None;
+   margin: 0;
+   padding: 0;
+   font: normal 0.9em trebuchet, "Lucida Sans Unicode", "Lucida Grande", verdana, arial,'Bitstream Vera Sans',helvetica,sans-serif;
+}
+
+#map_marker {
+    width: 100px;
+    height: 66px;
+    margin: 0;
+}
+
+#map_marker_beak {
+    width: 16px;
+    height: 11px;
+    margin: 0;
+    /*background-image: url('/images/infowindow/beak_grey.png');*/
+}
+
+
+
+#map_marker_contents {
+    color: #DDDDDD;
+}
+
+#map_marker_contents a {
+    color: #EEEEEE;
+    font-weight: bold;
+}
+
+
+#map_marker_contents_img {
+    border: none;
+    decoration: none;
+    margin: 0;
+    opacity: 1;
+}
+
+
+#map_marker_content_text {
+    background-color: #000000;
+    font-size: 60%;
+    opacity: 0.8;
+    padding: 0 0 0 0.5em;
+    margin: 0 0 2em 0;
+}
+
+
+#map_marker_tl, #map_marker_tr, #map_marker_br, #map_marker_bl {
+    margin:0;
+}
+#map_marker_tl {
+    margin:0;
+}
+#map_marker_tr {
+    margin:0;
+}
+#map_marker_bl {
+    margin:0;
+}
+#map_marker_br {
+    margin:0;
+}
+#map_marker_t, #map_marker_b {
+    margin:0;
+}
+#map_marker_t {
+    margin:0;
+}
+#map_marker_b {
+    margin:0;
+}
+#map_marker_l, #map_marker_r {
+    width: 0px;
+}
+

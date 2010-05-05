@@ -1,0 +1,16 @@
+<link href="/css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"/>
+<div id="minimal_log">
+    <h2>${c.log.topic}</h2>
+    ${c.log.content}
+</div>
+<script>
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){
+      $(".caption",this).show();
+      width=($("img[id='inlineimage']",this).width())
+      $('div.imagecontainer').css({width: width});
+ }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+
+</script>

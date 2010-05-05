@@ -57,16 +57,16 @@ ${pages()}
 <%def name="pages()">
     <div id="pages">
             % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
-                <span class="logpagelowest"><a href="/view/index/${c.lowestimageid}" title="Jump to oldest photos"></a></span>
+                <span class="logpagelowest"><a href="/view/infomarker/${c.infomarker_id}/${c.lowestimageid}" title="Jump to oldest photos"></a></span>
             % endif
             % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
-                <span class="logpageprev"><a href="/view/index/${c.startimageprevpage}" title="Show older photos"></a></span>
+                <span class="logpageprev"><a href="/view/infomarker/${c.infomarker_id}/${c.startimageprevpage}" title="Show older photos"></a></span>
             % endif
             % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
-                <span class="logpagenext"><a href="/view/index/${c.startimagenextpage}" title="Show newer photos"></a></span>
+                <span class="logpagenext"><a href="/view/infomarker/${c.infomarker_id}/${c.startimagenextpage}" title="Show newer photos"></a></span>
             % endif
             % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
-                <span class="logpagehighest"><a href="/view/index/${c.highestimageid}" title="Jump to newest photos"></a></span>
+                <span class="logpagehighest"><a href="/view/infomarker/${c.infomarker_id}/${c.highestimageid}" title="Jump to newest photos"></a></span>
             % endif
         </div>
 

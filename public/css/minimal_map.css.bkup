@@ -1,0 +1,121 @@
+body {
+   background-color: None;
+   margin: 0;
+   padding: 0;
+}
+
+#map_marker {
+    width: 3em;
+    margin-left: 2.2em;
+    padding: 2em;
+}
+
+#map_marker_beak {
+    width: 16px;
+    height: 11px;
+    margin-left: -50px;
+    margin-top: 2px;
+    /*background-image: url('/images/infowindow/beak_grey.png');*/
+}
+
+
+
+#map_marker_contents {
+    background-color: #666666;
+    opacity: 1;
+    color: #DDDDDD;
+}
+
+#map_marker_contents a {
+    color: #EEEEEE;
+    opacity: 1;
+    font-weight: bold;
+}
+
+
+#map_marker_contents img {
+    border: none;
+    decoration: none;
+    margin-top: 0.3em;
+    opacity: 1;
+}
+
+
+#map_marker_content_text {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    font-size: 75%;
+}
+
+
+.image_icon a {
+    background: url('/images/infowindow/image_icon.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    display: block;
+    float: left;
+}
+
+.image_icon a:hover {
+    width: 18px;
+    height: 18px;
+    background: url('/images/infowindow/image_icon_red.png') no-repeat;    
+}
+
+.log_icon a {
+    background: url('/images/infowindow/log_icon.png') no-repeat;
+    height: 18px;
+    width: 18px;
+    display: block;
+    float:left;
+}
+
+.log_icon a:hover {
+    width: 18px;
+    height: 18px;
+    background: url('/images/infowindow/log_icon_red.png') no-repeat;    
+}
+
+
+
+#map_marker_tl, #map_marker_tr, #map_marker_br, #map_marker_bl {
+    width: 7px;
+    height: 7px;
+}
+#map_marker_tl {
+    background-image: url('/images/infowindow/grey_tl.png');
+     opacity: 1;
+}
+#map_marker_tr {
+    background-image: url('/images/infowindow/grey_tr.png');
+    opacity: 1;
+}
+#map_marker_bl {
+    background-image: url('/images/infowindow/grey_bl.png');
+    opacity: 1;
+}
+#map_marker_br {
+    background-image: url('/images/infowindow/grey_br.png');
+    opacity: 1;
+}
+#map_marker_t, #map_marker_b {
+    height: 0px;
+    width: auto;
+    background-color: #666666;
+    border: None;
+    opacity: 1;
+}
+#map_marker_t {
+    border-top: None;
+}
+#map_marker_b {
+    margin-top: None;
+    border-bottom: 0px solid #444444;
+}
+#map_marker_l, #map_marker_r {
+    width: 0px;
+    height: auto;
+    background-color: #444444;
+    opacity: 1;
+}
+

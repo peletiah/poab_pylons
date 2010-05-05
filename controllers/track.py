@@ -41,15 +41,13 @@ class TrackController(BaseController):
                 firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
                 for image in firstimage:
                     #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:showSubcontent(\'/track/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
+                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
             else:
                 gallerylink=''
             q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
             if q.count() > 0:
-                firstlog = q.order_by(asc(model.log.id)).limit(1)
-                for log in firstlog:
-                    #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed):
-                    loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/track/log/%s/%s\')\\"></a></span>""" % (c.infomarker.id,log.id)
+                #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
+                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
             else:
                 loglink=''
 
@@ -88,15 +86,13 @@ class TrackController(BaseController):
             firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
             for image in firstimage:
                 #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:showSubcontent(\'/track/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
+                gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
         else:
             gallerylink=''
         q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
         if q.count() > 0:
-            firstlog = q.order_by(asc(model.log.id)).limit(1)
-            for log in firstlog:
-                #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed):
-                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/track/log/%s/%s\')\\"></a></span>""" % (c.infomarker.id,log.id)
+            #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed):
+            loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
         else:
             loglink=''
         q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
@@ -128,42 +124,37 @@ class TrackController(BaseController):
 
 
 
-    def gallery(self,infomarker,startfromimg):
-        #first imageid
-        q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==infomarker)
-        firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
-        for image in firstimage:
-            c.firstimageid=image.id
-        #last imageid
-        lastimage = q.order_by(desc(model.imageinfo.id)).limit(1)
-        for image in lastimage:
-            c.lastimageid=image.id
-        #imagedetails for the current page
-        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id >= startfromimg))
-        c.images = q.order_by(asc(model.imageinfo.flickrdatetaken)).limit(24)
-        #last imageid on current page
-        images_asc = q.order_by(asc(model.imageinfo.id)).limit(24)
-        for image in images_asc:
-                c.lastimgonpage=image.id
-        #count images on current page
-        c.imagecount = q.limit(24).count()
-        #first imageid on current page(no limit to 24 as we order decreasing and want the first id, not the 24th from the end)
-        images_desc = q.order_by(desc(model.imageinfo.id)).all()
-        for image in images_desc:
-                c.firstimgonpage=image.id
-        #first imageid on next page
-        imagesnextpage = q.order_by(asc(model.imageinfo.id)).limit(25)
-        for image in imagesnextpage:
-                c.startfromimg=image.id
-        #first imageid on previous page
-        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id < c.startfromimg))
-        if c.imagecount==24:
-            imagesprevpage = q.order_by(desc(model.imageinfo.id)).limit(48)
+    def simple(self,trackpoint,imageid):
+        c.markerlist='''['''
+        q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==trackpoint)
+        c.trackpoint = q.one()
+        q = model.Session.query(model.track).filter(model.track.id==c.trackpoint.track_id)
+        if q.count() == 1:
+            c.track = q.one()
+            total_mins = c.track.timespan.seconds / 60
+            mins = total_mins % 60
+            hours = total_mins / 60
+            timespan = '<b>duration:</b> %sh%smin<br />' % (str(hours),str(mins))
+            rounded_distance = '<b>distance:</b> %skm<br />' % (str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP)))
+            date=c.track.date.strftime('%B %d, %Y')
+            trackpts=c.track.gencpoly_pts
+            tracklevels=c.track.gencpoly_levels
+            trackcolor=c.track.color
         else:
-            #there are less than 24 images on the page, so imagesprevpage is not 2x24 pictures away
-            imagesprevpage = q.order_by(desc(model.imageinfo.id)).limit(23+c.imagecount)
-        for image in imagesprevpage:
-                c.prevstartfromimg=image.id
-        return render("/track/gallery.html")
-    
-
+            #WTF is happening here?
+            q = model.Session.query(model.timezone).filter(model.timezone.id==c.trackpoint.timezone_id)
+            c.timezone = q.one()
+            localtime=c.trackpoint.timestamp+c.timezone.utcoffset
+            rounded_distance=''
+            timespan=''
+            date=localtime.strftime('%B %d, %Y')
+            trackpts=''
+            tracklevels=''
+            trackcolor=''
+        q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageid)
+        c.imageinfo=q.one()
+        flickrthumb='http://farm%s.static.flickr.com/%s/%s_%s_t.jpg' % (c.imageinfo.flickrfarm,c.imageinfo.flickrserver,c.imageinfo.flickrphotoid,c.imageinfo.flickrsecret)
+        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'altitude':%s, 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s", 'flickrthumb':"%s"},''' % (c.trackpoint.latitude,c.trackpoint.longitude,c.trackpoint.altitude,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor,flickrthumb)
+        c.markerlist=c.markerlist + '''];'''
+        return render("/track/minimal_map.html")
+   

@@ -29,16 +29,16 @@ imagecount: ${c.imagecount}<br>-->
 </div>
 <div id="gallerypages">
     % if c.prevstartfromimg >= c.firstimageid and c.prevstartfromimg != c.firstimgonpage:
-        <span class="gallerypagelowest"><a href="javascript:showSubcontent('/track/gallery/${c.infomarker}/${c.firstimageid}')"></a></span>
+        <span class="gallerypagelowest"><a href="javascript:showSubcontent('/view/gallery/${c.infomarker}/${c.firstimageid}')"></a></span>
     % endif
     % if c.prevstartfromimg >= c.firstimageid and c.prevstartfromimg != c.firstimgonpage:
-        <span class="gallerypageprev"><a href="javascript:showSubcontent('/track/gallery/${c.infomarker}/${c.prevstartfromimg}')"></a></span>
+        <span class="gallerypageprev"><a href="javascript:showSubcontent('/view/gallery/${c.infomarker}/${c.prevstartfromimg}')"></a></span>
     % endif
     % if c.startfromimg <= c.lastimageid and c.startfromimg != c.lastimgonpage:
-        <span class="gallerypagenext"><a href="javascript:showSubcontent('/track/gallery/${c.infomarker}/${c.startfromimg}')"></a></span>
+        <span class="gallerypagenext"><a href="javascript:showSubcontent('/view/gallery/${c.infomarker}/${c.startfromimg}')"></a></span>
     % endif
     % if c.startfromimg <= c.lastimageid and c.startfromimg != c.lastimgonpage:
-        <span class="gallerypagehighest"><a href="javascript:showSubcontent('/track/gallery/${c.infomarker}/${c.lastimageid}')"></a></span>
+        <span class="gallerypagehighest"><a href="javascript:showSubcontent('/view/gallery/${c.infomarker}/${c.lastimageid}')"></a></span>
     % endif
 </div>
 
