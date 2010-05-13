@@ -136,15 +136,15 @@ class LogController(BaseController):
                 q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageinfo_id)
                 imageinfo = q.one()
                 if imageinfo.flickrdescription==None:
-                    inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
+                    inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="/trackdata/bydate/%s/images/best_990/%s" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
-    </div></div></div>''' % (imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid)
+    </div></div></div>''' % (localtime.strftime('%Y-%m-%d'),imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid)
                 else:
-                    inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
+                    inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="/trackdata/bydate/%s/images/best_990/%s" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
-    </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid,imageinfo.flickrdescription)
+    </div></div><span class="imagedescription">%s</span></div>''' % (localtime.strftime('%Y-%m-%d'),imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid,imageinfo.flickrdescription)
                 c.log.content=c.log.content.replace(imgidtag,inlineimage)
             # ###create logdetails-class
             class logdetails:
