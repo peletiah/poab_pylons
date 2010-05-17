@@ -135,7 +135,7 @@ class TrackController(BaseController):
             mins = total_mins % 60
             hours = total_mins / 60
             timespan = '<b>duration:</b> %sh%smin<br />' % (str(hours),str(mins))
-            rounded_distance = '<b>distance:</b> %skm<br />' % (str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP)))
+            location = c.trackpoint.location
             date=c.track.date.strftime('%B %d, %Y')
             trackpts=c.track.gencpoly_pts
             tracklevels=c.track.gencpoly_levels
@@ -145,7 +145,7 @@ class TrackController(BaseController):
             q = model.Session.query(model.timezone).filter(model.timezone.id==c.trackpoint.timezone_id)
             c.timezone = q.one()
             localtime=c.trackpoint.timestamp+c.timezone.utcoffset
-            rounded_distance=''
+            location=c.trackpoint.location
             timespan=''
             date=localtime.strftime('%B %d, %Y')
             trackpts=''
@@ -154,7 +154,7 @@ class TrackController(BaseController):
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageid)
         c.imageinfo=q.one()
         flickrthumb='http://farm%s.static.flickr.com/%s/%s_%s_t.jpg' % (c.imageinfo.flickrfarm,c.imageinfo.flickrserver,c.imageinfo.flickrphotoid,c.imageinfo.flickrsecret)
-        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'altitude':%s, 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s", 'flickrthumb':"%s"},''' % (c.trackpoint.latitude,c.trackpoint.longitude,c.trackpoint.altitude,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor,flickrthumb)
+        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'altitude':%s, 'markerdate':"%s", 'location':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s", 'flickrthumb':"%s"},''' % (c.trackpoint.latitude,c.trackpoint.longitude,c.trackpoint.altitude,date,location,timespan,trackpts,tracklevels,trackcolor,flickrthumb)
         c.markerlist=c.markerlist + '''];'''
         return render("/track/minimal_map.html")
    

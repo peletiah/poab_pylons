@@ -18,20 +18,19 @@
 
 ///////////////////// OVERLAYS //////////////////////////////
 
-   function controllerlink(altitude,lat,lon,flickrthumb) {
-        return '<div id="map_marker_content_img"><img src="'+flickrthumb+'"></div><div id="map_marker_content_text"><b>alt:</b>'+altitude+'m<br />lat: '+lat+'<br />lon: '+lon+'</div>';
+   function photoinfowindow(altitude,lat,lon,location,flickrthumb) {
+        return '<div id="map_marker_content_img"><img src="'+flickrthumb+'"></div><div id="map_marker_content_text"><b>alt:</b>'+altitude+'m<br />'+location+'</div>';
    }
               
 
 
-   function writegmarker(lat,lon,altitude,flickrthumb,n) {
+   function writegmarker(lat,lon,altitude,location,flickrthumb,n) {
         trackmarker[n] = new GMarker( new GLatLng(lat,lon) );
-                trackmarker[n].openExtInfoWindow(map,"map_marker",controllerlink(altitude,lat,lon,flickrthumb),{beakOffset: 3})
                 GEvent.addListener(trackmarker[n], 'click', function(){
                 trackmarker[n].openExtInfoWindow(
                   map,
                   "map_marker",
-                  controllerlink(altitude,lat,lon,flickrthumb),
+                  photoinfowindow(altitude,lat,lon,location,flickrthumb),
                   {beakOffset: 3}
                 );
               });
@@ -54,7 +53,7 @@
    function trackoverlay() {
 	    markerlist = ${c.markerlist};
             for (var n=0; n<markerlist.length; n++) {
-	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].altitude,markerlist[n].flickrthumb,n)
+	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].altitude,markerlist[n].location,markerlist[n].flickrthumb,n)
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
     }
@@ -64,7 +63,7 @@
    function load() {
       if (GBrowserIsCompatible()) {
         map = new GMap2(document.getElementById("map_simple"));
-        map.setCenter(new GLatLng('${c.trackpoint.latitude}', '${c.trackpoint.longitude}'), 10);
+        map.setCenter(new GLatLng('${c.trackpoint.latitude}', '${c.trackpoint.longitude}'), 6);
         map.setMapType(G_PHYSICAL_MAP);
         map.addControl(new GScaleControl()); //adds a small "legend" in the left lower corner
         map.addControl(new GSmallZoomControl3D()); //adds the standard zoom and pan-control

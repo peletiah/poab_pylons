@@ -115,6 +115,8 @@ imageinfo_table = sa.Table("imageinfo", meta,
     sa.Column("shutter", types.VARCHAR(64)),
     sa.Column("focal_length", types.VARCHAR(64)),
     sa.Column("iso", types.VARCHAR(8)),
+    sa.Column("online", types.Boolean, default=False, nullable=False),
+    sa.Column("fullsize_online", types.Boolean, default=False, nullable=False)
     )
 
 class imageinfo(object):

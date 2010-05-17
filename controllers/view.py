@@ -12,7 +12,7 @@ class ViewController(BaseController):
 
     def index(self,startfromimage):
         #preparing the pagecontrol
-        q = model.Session.query(model.imageinfo)
+        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.online==True,model.imageinfo.online==True))
         c.lowestimageid = q.order_by(asc(model.imageinfo.id)).first().id
         #find highestimageid
         c.highestimageid = q.order_by(desc(model.imageinfo.id)).first().id
@@ -22,7 +22,7 @@ class ViewController(BaseController):
             imagesplusone = q.order_by(desc(model.imageinfo.id)).limit(11)
             c.startfromimage = int(c.highestimageid)
         else:
-            q = model.Session.query(model.imageinfo).filter(model.imageinfo.id <= startfromimage)
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.id <= startfromimage,model.imageinfo.online==True,model.imageinfo.online==True))
             c.images = q.order_by(desc(model.imageinfo.id)).limit(10)
             imagesplusone = q.order_by(desc(model.imageinfo.id)).limit(11)
             c.startfromimage = int(startfromimage)
@@ -40,7 +40,7 @@ class ViewController(BaseController):
             addtonext=0
         #startimageid on next page
         if int(startfromimage) < c.highestimageid:
-            q = model.Session.query(model.imageinfo).filter(model.imageinfo.id > startfromimage)
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.id > startfromimage,model.imageinfo.online==True))
             imagesnextpage = q.order_by(asc(model.imageinfo.id)).limit(10)
             for image in imagesnextpage:
                 c.startimagenextpage = image.id
@@ -90,7 +90,7 @@ class ViewController(BaseController):
 
     def infomarker(self,infomarker,startfromimage):
         #preparing the pagecontrol
-        q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==infomarker)
+        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.online==True))
         c.lowestimageid = q.order_by(asc(model.imageinfo.id)).first().id
         #find highestimageid
         c.highestimageid = q.order_by(desc(model.imageinfo.id)).first().id
@@ -100,7 +100,7 @@ class ViewController(BaseController):
             imagesplusone = q.order_by(desc(model.imageinfo.id)).limit(11)
             c.startfromimage = int(c.highestimageid)
         else:
-            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.id <= startfromimage,model.imageinfo.infomarker_id==infomarker))
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.id <= startfromimage,model.imageinfo.infomarker_id==infomarker,model.imageinfo.online==True))
             c.images = q.order_by(desc(model.imageinfo.id)).limit(10)
             imagesplusone = q.order_by(desc(model.imageinfo.id)).limit(11)
             c.startfromimage = int(startfromimage)
@@ -118,7 +118,7 @@ class ViewController(BaseController):
             addtonext=0
         #startimageid on next page
         if int(startfromimage) < c.highestimageid:
-            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.id > startfromimage,model.imageinfo.infomarker_id==infomarker))
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.id > startfromimage,model.imageinfo.infomarker_id==infomarker,model.imageinfo.online==True))
             imagesnextpage = q.order_by(asc(model.imageinfo.id)).limit(10)
             for image in imagesnextpage:
                 c.startimagenextpage = image.id
@@ -169,7 +169,7 @@ class ViewController(BaseController):
 
     def gallery(self,infomarker,startfromimg):
             #first imageid
-            q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==infomarker)
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.online==True))
             firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
             for image in firstimage:
                 c.firstimageid=image.id
@@ -178,7 +178,7 @@ class ViewController(BaseController):
             for image in lastimage:
                 c.lastimageid=image.id
             #imagedetails for the current page
-            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id >= startfromimg))
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id >= startfromimg,model.imageinfo.online==True))
             c.images = q.order_by(asc(model.imageinfo.flickrdatetaken)).limit(24)
             #last imageid on current page
             images_asc = q.order_by(asc(model.imageinfo.id)).limit(24)
@@ -195,7 +195,7 @@ class ViewController(BaseController):
             for image in imagesnextpage:
                     c.startfromimg=image.id
             #first imageid on previous page
-            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id < c.startfromimg))
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.infomarker_id==infomarker,model.imageinfo.id < c.startfromimg,model.imageinfo.online==True))
             if c.imagecount==24:
                 imagesprevpage = q.order_by(desc(model.imageinfo.id)).limit(48)
             else:
