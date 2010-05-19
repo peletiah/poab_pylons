@@ -50,8 +50,8 @@ class ViewController(BaseController):
         c.viewlist=list()
         for image in c.images:
             #get info from related logentry
-            q = model.Session.query(model.log).filter(model.log.id==image.log_id)
-            c.loginfo=q.one()
+            #q = model.Session.query(model.log).filter(model.log.id==image.log_id)
+            #c.loginfo=q.one()
             #get info from related trackpoint or infomarker
             if image.trackpoint_id:
                 trackpoint_id=image.trackpoint_id
@@ -78,7 +78,7 @@ class ViewController(BaseController):
                 shutter=image.shutter
                 focal_length=image.focal_length
                 iso=image.iso
-                logdate=c.loginfo.createdate.strftime('%Y-%m-%d') #needed for the imagepath
+                #logdate=c.loginfo.createdate.strftime('%Y-%m-%d') #needed for the imagepath
                 trackpointinfo=c.trackpointinfo
                 localtime=c.localtime.strftime('%Y-%m-%d %H:%M:%S')
                 timezone=c.timezone
@@ -129,8 +129,8 @@ class ViewController(BaseController):
         c.infomarker_id=infomarker
         for image in c.images:
             #get info from related logentry
-            q = model.Session.query(model.log).filter(model.log.id==image.log_id)
-            c.loginfo=q.one()
+            #q = model.Session.query(model.log).filter(model.log.id==image.log_id)
+            #c.loginfo=q.one()
             #get info from related trackpoint or infomarker
             if image.trackpoint_id:
                 trackpoint_id=image.trackpoint_id
@@ -157,7 +157,7 @@ class ViewController(BaseController):
                 shutter=image.shutter
                 focal_length=image.focal_length
                 iso=image.iso
-                logdate=c.loginfo.createdate.strftime('%Y-%m-%d') #needed for the imagepath
+                #logdate=c.loginfo.createdate.strftime('%Y-%m-%d') #needed for the imagepath
                 trackpointinfo=c.trackpointinfo
                 localtime=c.localtime.strftime('%Y-%m-%d %H:%M:%S')
                 timezone=c.timezone
