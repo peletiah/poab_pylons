@@ -34,6 +34,12 @@
                   {beakOffset: 3}
                 );
               });
+              trackmarker[n].openExtInfoWindow(
+                  map,
+                  "map_marker",
+                  photoinfowindow(altitude,lat,lon,location,flickrthumb),
+                  {beakOffset: 3}
+                );
 	map.addOverlay(trackmarker[n]);
    }
 

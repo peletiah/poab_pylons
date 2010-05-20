@@ -7,8 +7,8 @@ body {
 
 #map_marker {
     width: 100px;
-    height: 66px;
     margin: 0;
+   font: normal 0.9em trebuchet, "Lucida Sans Unicode", "Lucida Grande", verdana, arial,'Bitstream Vera Sans',helvetica,sans-serif;
 }
 
 #map_marker_beak {
@@ -47,31 +47,8 @@ body {
 }
 
 
-#map_marker_tl, #map_marker_tr, #map_marker_br, #map_marker_bl {
-    margin:0;
-}
-#map_marker_tl {
-    margin:0;
-}
-#map_marker_tr {
-    margin:0;
-}
-#map_marker_bl {
-    margin:0;
-}
-#map_marker_br {
-    margin:0;
-}
-#map_marker_t, #map_marker_b {
-    margin:0;
-}
-#map_marker_t {
-    margin:0;
-}
-#map_marker_b {
-    margin:0;
-}
-#map_marker_l, #map_marker_r {
-    width: 0px;
+#map_marker_tl, #map_marker_tr, #map_marker_br, #map_marker_bl,#map_marker_t,#map_marker_b,#map_marker_l,#map_marker_r {
+width:2px;
+height:2px;
 }
 

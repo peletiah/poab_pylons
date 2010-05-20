@@ -74,11 +74,10 @@ class TrackController(BaseController):
                 tracklevels=''
                 trackcolor=''
             c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
-        c.markerlist=c.markerlist + '''];'''
+        c.markerlist=(c.markerlist + '''];''').replace('},];','}];')
         return render("/track/index.html")
 
     def infomarker(self,id):
-        c.markerlist='''['''
         q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==id)
         c.infomarker = q.one()
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
@@ -118,14 +117,12 @@ class TrackController(BaseController):
             trackpts=''
             tracklevels=''
             trackcolor=''
-        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
-        c.markerlist=c.markerlist + '''];'''
+        c.markerlist='''[{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"}];''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
         return render("/track/index.html")
 
 
 
     def simple(self,trackpoint,imageid):
-        c.markerlist='''['''
         q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==trackpoint)
         c.trackpoint = q.one()
         q = model.Session.query(model.track).filter(model.track.id==c.trackpoint.track_id)
@@ -154,7 +151,6 @@ class TrackController(BaseController):
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageid)
         c.imageinfo=q.one()
         flickrthumb='http://farm%s.static.flickr.com/%s/%s_%s_t.jpg' % (c.imageinfo.flickrfarm,c.imageinfo.flickrserver,c.imageinfo.flickrphotoid,c.imageinfo.flickrsecret)
-        c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'altitude':%s, 'markerdate':"%s", 'location':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s", 'flickrthumb':"%s"},''' % (c.trackpoint.latitude,c.trackpoint.longitude,c.trackpoint.altitude,date,location,timespan,trackpts,tracklevels,trackcolor,flickrthumb)
-        c.markerlist=c.markerlist + '''];'''
+        c.markerlist='''[{'lat':%s, 'lon':%s, 'altitude':%s, 'markerdate':"%s", 'location':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s", 'flickrthumb':"%s"}];''' % (c.trackpoint.latitude,c.trackpoint.longitude,c.trackpoint.altitude,date,location,timespan,trackpts,tracklevels,trackcolor,flickrthumb)
         return render("/track/minimal_map.html")
    

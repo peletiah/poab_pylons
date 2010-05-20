@@ -1,10 +1,18 @@
 <link href="/css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"/>
+<link type="text/css" rel="Stylesheet" media="screen" href="/css/colorbox.css"/>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
+    });
+</script>
 <div id="minimal_log">
     <h2>${c.log.topic}</h2>
     ${c.log.content}
 </div>
 <script>
 $(".caption").hide();
+width=($("img[id='inlineimage']").width())
+$('div.imagecontainer').css({width: width});
 $("div.imagecontainer").mouseover(function(){
       $(".caption",this).show();
       width=($("img[id='inlineimage']",this).width())
