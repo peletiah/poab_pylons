@@ -13,90 +13,49 @@ log = logging.getLogger(__name__)
 class LogController(BaseController):
 
     def index(self,startfromlog):
-        try:
-            #selection by date-range
-            daterange=request.params['viewbydate']
-            lastdate=daterange.split()[2]
-            time_format = "%Y-%m-%d"
-            lastdate = time.strptime(lastdate,time_format)
-            lastdate=datetime.datetime(*lastdate[:6])
-            delta = datetime.timedelta(days=1)
-            q = model.Session.query(model.log).filter(and_(model.log.createdate > daterange.split()[0],model.log.createdate <= lastdate+delta,model.log.id >= startfromlog))
-            c.logs = q.order_by(desc(model.log.createdate)).all()
-            if c.logs:
-                pass
-            else:
-                #nothing found in the specified date-range
-                q = model.Session.query(model.log)
-                c.logs = q.order_by(desc(model.log.createdate)).limit(5)
-                c.error = 'no results for selected date(s)!'
-        except KeyError:
-            try:
-                #selection by country
-                country=request.params['viewbycountry']
-                q = model.Session.query(model.country).filter(model.country.iso_countryname==country)
-                try:
-                    countrydetails = q.one()
-                    q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.country_id==countrydetails.iso_numcode,model.trackpoint.infomarker==True,model.log.id >= startfromlog))
-                    infomarkers = q.all()
-                    c.logs=list()
-                    for infomarker in infomarkers:
-                        q = model.Session.query(model.log).filter(model.log.infomarker_id==infomarker.id)
-                        logs = q.all()
-                        for log in logs:
-                            c.logs.append(log)
-                    if c.logs:
-                        pass
-                    else:
-                        #nothing found for the specified country
-                        q = model.Session.query(model.log).filter(model.log.id >= startfromlog)
-                        c.logs = q.order_by(desc(model.log.createdate)).limit(5)
-                        c.error = 'no results for selected country!'
-                except:
-                    #nothing found for the specified country
-                    q = model.Session.query(model.log).filter(model.log.id >= startfromlog)
-                    c.logs = q.order_by(desc(model.log.createdate)).limit(5)
-                    c.error = 'Country not found!'
-            except KeyError:
-                #find lowestlogid
-                q = model.Session.query(model.log)
-                c.lowestlogid = q.order_by(asc(model.log.id)).first().id
-                #find highestlogid
-                c.highestlogid = q.order_by(desc(model.log.id)).first().id
-                #logs starting from startfromlog(show 5 newest logs if startfromlog=0)
-                if int(startfromlog) == 0:
-                    c.logs = q.order_by(desc(model.log.id)).limit(5)
-                    logsplusone = q.order_by(desc(model.log.id)).limit(6)
-                    c.startfromlog = int(c.highestlogid)
-                else:
-                    q = model.Session.query(model.log).filter(model.log.id <= startfromlog)
-                    c.logs = q.order_by(desc(model.log.id)).limit(5)
-                    logsplusone = q.order_by(desc(model.log.id)).limit(6)
-                    c.startfromlog = int(startfromlog)
-                for log in logsplusone:
-                    c.startlogprevpage = log.id
-                #lowestlogid on current page
-                for log in c.logs:
-                    c.lowestlogonpage = log.id
-                #the current page is not full so we need to add the missing pages to the next page to keep up with the correct pagecount
-                logsonpage=q.limit(5).count()
-                if logsonpage < 5:
-                    addtonext=logsonpage
-                else:
-                    addtonext=0
-                #startlogid on next page
-                if int(startfromlog) < c.highestlogid:
-                    q = model.Session.query(model.log).filter(model.log.id > startfromlog)
-                    logsnextpage = q.order_by(asc(model.log.id)).limit(5)
-                    for log in logsnextpage:
-                        c.startlognextpage = log.id
-                else:
-                    c.startlognextpage = c.highestlogid
+        q = model.Session.query(model.log).filter(model.log.id >= startfromlog)
+        #find lowestlogid
+        q = model.Session.query(model.log)
+        c.lowestlogid = q.order_by(asc(model.log.id)).first().id
+        #find highestlogid
+        c.highestlogid = q.order_by(desc(model.log.id)).first().id
+        #logs starting from startfromlog(show 3 newest logs if startfromlog=0)
+        if int(startfromlog) == 0:
+            c.logs = q.order_by(desc(model.log.id)).limit(3)
+            logsplusone = q.order_by(desc(model.log.id)).limit(4)
+            c.startfromlog = int(c.highestlogid)
+        else:
+            q = model.Session.query(model.log).filter(model.log.id <= startfromlog)
+            c.logs = q.order_by(desc(model.log.id)).limit(3)
+            logsplusone = q.order_by(desc(model.log.id)).limit(4)
+            c.startfromlog = int(startfromlog)
+        for log in logsplusone:
+            c.startlogprevpage = log.id
+        #lowestlogid on current page
+        for log in c.logs:
+            c.lowestlogonpage = log.id
+        #the current page is not full so we need to add the missing pages to the next page to keep up with the correct pagecount
+        logsonpage=q.limit(3).count()
+        if logsonpage < 5:
+            addtonext=logsonpage
+        else:
+            addtonext=0
+        #startlogid on next page
+        if int(startfromlog) < c.highestlogid:
+            q = model.Session.query(model.log).filter(model.log.id > startfromlog)
+            logsnextpage = q.order_by(asc(model.log.id)).limit(3)
+            for log in logsnextpage:
+                c.startlognextpage = log.id
+        else:
+            c.startlognextpage = c.highestlogid
         c.logdetails=list()       
         for c.log in c.logs:
             # ###query for infomarker
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==c.log.infomarker_id)
             c.infomarker=q.one()
+            # ###query for last trackpoint
+            q = model.Session.query(model.trackpoint).filter(model.trackpoint.track_id==c.infomarker.track_id).order_by(asc(model.trackpoint.timestamp))
+            c.lasttrkpt=q.first()
             # ###query for startfromimg
             q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
             if q.count() > 0:
@@ -136,15 +95,15 @@ class LogController(BaseController):
                 q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageinfo_id)
                 imageinfo = q.one()
                 if imageinfo.flickrdescription==None:
-                    inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
+                    inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s"></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
-    </div></div></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid)
+    </div></div></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrphotoid)
                 else:
-                    inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg"></a><div class="caption">
+                    inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s"></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
-    </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid,imageinfo.flickrdescription)
+    </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrphotoid,imageinfo.flickrdescription)
                 c.log.content=c.log.content.replace(imgidtag,inlineimage)
             # ###create logdetails-class
             class logdetails:
@@ -162,7 +121,7 @@ class LogController(BaseController):
                     timespan=None
                 country=c.country.iso_countryname
                 continent=c.continent.name
-                location=c.infomarker.location
+                location=c.lasttrkpt.location
                 infomarkerid=c.infomarker.id
                 gallerylink=c.gallerylink
             c.logdetails.append(logdetails)
@@ -188,15 +147,5 @@ class LogController(BaseController):
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
     </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid,imageinfo.flickrdescription)
-#            if imageinfo.flickrdescription==None:
-#                inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s_m.jpg"></a><div class="caption">
-#        <span>&#8594;</span>
-#            <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
-#    </div></div></div>''' % (imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid)
-#            else:
-#                inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="http://farm%s.static.flickr.com/%s/%s_%s_b.jpg" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s_m.jpg"></a><div class="caption">
-#        <span>&#8594;</span>
-#            <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
-#    </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid,imageinfo.flickrdescription)
             c.log.content=c.log.content.replace(imgidtag,inlineimage)
         return render("/log/minimal_log.html")

@@ -140,20 +140,7 @@ body {
     max-width: 40em;
 }
 
-#fuckcss{
-    background-color: #ffffff;
-    display: block;
-   float: left;
-   border: solid #000000;
-   -moz-border-radius: 10px;
-   -webkit-border-radius: 10px;
-   -khtml-border-radius: 10px;
-   border-radius: 10px; 
-   border-width: 0.05em;
-   margin-bottom: 2em;
-   position: relative;
-   top: 20px;
-}
+
 #logdetail {
    display: block;
 	float: left;
@@ -164,7 +151,7 @@ body {
 	-khtml-border-radius: 10px;
 	border-radius: 10px; 
 	border-width: 0.05em;
-	margin-bottom: 2em;
+	margin-bottom: 6em;
    position: relative;
    top: 20px;
 }
@@ -289,7 +276,7 @@ body {
         -khtml-border-top-left-radius: 8px;
         border-radius-topleft: 8px;
         padding: 0.5em;
-        font-size: 90%;
+        font-size: 120%;
         width: 100%;
 }
 

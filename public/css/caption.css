@@ -43,10 +43,23 @@
 
 #caption_right {
     float:right;
-    padding: 0 1em 0 0;
+    padding: 0 10px 0 0;
+    width: 290px;
     text-align: right;
 }
+#caption_center {
+    float:left;
+    padding: 0;
+    text-align: center;
+    width:390px;
+    margin: 0 auto;
+}
+#caption_center a {
+    text-decoration:none;
+}
+    
 #caption_left {
     float:left;
-    padding: 0 0 0 1em
+    padding: 0 0 0 10px;
+    width: 290px;
 }

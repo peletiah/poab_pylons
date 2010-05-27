@@ -73,6 +73,7 @@ class ViewController(BaseController):
                 flickrsecret=image.flickrsecret
                 title=image.flickrtitle
                 description=image.flickrdescription
+                log_id=image.log_id
                 imgname=image.imgname
                 aperture=image.aperture
                 shutter=image.shutter
@@ -157,6 +158,7 @@ class ViewController(BaseController):
                 shutter=image.shutter
                 focal_length=image.focal_length
                 iso=image.iso
+                log_id=image.log_id
                 #logdate=c.loginfo.createdate.strftime('%Y-%m-%d') #needed for the imagepath
                 trackpointinfo=c.trackpointinfo
                 localtime=c.localtime.strftime('%Y-%m-%d %H:%M:%S')

@@ -12,6 +12,7 @@
    var map;
    var i = false;
    trackpolyline=new Array();
+   countrypolyline=new Array();
    trackmarker=new Array();
 
 
@@ -70,6 +71,19 @@
 	map.addOverlay(trackpolyline[n]);
       }
     
+ function writecountry(encpts,enclvl,color,n) {
+    var polyOptions = {geodesic:true};
+	countrypolyline[n] = new GPolyline.fromEncoded({
+                color: '#' + color,
+                weight: 2,
+                points: encpts,
+                levels: enclvl,
+                zoomFactor: 32,
+                numLevels: 4
+        });
+	map.addOverlay(countrypolyline[n]);
+      }
+    
     function toggletrack(checkbox) {
 	    for (var n=0; n<markerlist.length; n++) {
 		if (checkbox.checked == true) {
@@ -103,7 +117,13 @@
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
     }
- 
+    function countryoverlay() {
+        shapeslist = ${c.country_shapes_list};
+        for (var n=0; n<shapeslist.length; n++) {
+            writecountry(shapeslist[n].encpts,shapeslist[n].enclvl,shapeslist[n].shapecolor)         }
+        }
+
+
   var wikiOverlay; // global
   wikiOverlay = new GLayer("org.wikipedia.en")
 
@@ -140,6 +160,7 @@
         ov.hide(true);
         map.enableScrollWheelZoom();
 	trackoverlay();
+	//countryoverlay();
       }
     }
 

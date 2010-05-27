@@ -14,27 +14,10 @@ class TrackController(BaseController):
 
     def index(self):
         c.markerlist='''['''
-        try:
-        #selection by date-range
-            daterange=request.params['viewbydate']
-            lastdate=daterange.split()[2]
-            time_format = "%Y-%m-%d"
-            lastdate = time.strptime(lastdate,time_format)
-            lastdate=datetime.datetime(*lastdate[:6])
-            delta = datetime.timedelta(days=1)
-            q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.infomarker==True,model.trackpoint.timestamp > daterange.split()[0],model.trackpoint.timestamp <= lastdate+delta))
-            c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
-            if c.infomarkers:
-                pass
-            else:
-                #nothing found in the specified date-range
-                q = model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
-                c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
-                c.error = 'no results for selected date(s)!'
-        except KeyError:
+        c.country_shapes_list='''['''
         #selection of all entries
-            q = model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
-            c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
+        q = model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
+        c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
         for c.infomarker in c.infomarkers:
             q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
             if q.count() > 0:
@@ -73,7 +56,13 @@ class TrackController(BaseController):
                 trackpts=''
                 tracklevels=''
                 trackcolor=''
+            q = model.Session.query(model.country_shapes).filter(model.country_shapes.country_id==32)
+            country_shapes=q.all()
+            for country_shape in country_shapes:
+                c.country_shapes_list=c.country_shapes_list+'''{'encpts':"%s",'enclvl':"%s",'shapecolor':"%s"},''' % (country_shape.gencpoly_pts,country_shape.gencpoly_levels,country_shape.color)
+                
             c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
+        c.country_shapes_list=(c.country_shapes_list + '''];''').replace('},];','}];')
         c.markerlist=(c.markerlist + '''];''').replace('},];','}];')
         return render("/track/index.html")
 

@@ -27,6 +27,20 @@ ${pages()}
             <span>&#8594;</span>
             <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}">view on map</a>
         </span>
+        <span id="caption_center">
+                        % if viewdetail.description:
+                <a href="/log/${viewdetail.log_id}">${viewdetail.description}</a>
+            % else:
+                <a href="/log/${viewdetail.log_id}">&ldquo;${viewdetail.title}&rdquo;</a>
+            % endif            
+            <br />
+            ${viewdetail.trackpointinfo.location},
+            % if viewdetail.trackpointinfo.temperature==None:
+            n/a
+            % else:
+            ${viewdetail.trackpointinfo.temperature}&#8451
+            % endif
+        </span>
         <span id="caption_right">
             ${viewdetail.localtime} (<a href="" title="${viewdetail.timezone.description}, ${viewdetail.utcoffset}">${viewdetail.timezone.abbreviation})</a><br />
             ${viewdetail.focal_length}&nbsp;|&nbsp;${viewdetail.aperture}&nbsp;|&nbsp;${viewdetail.shutter}

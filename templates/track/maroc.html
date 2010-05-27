@@ -42,11 +42,13 @@
     function writepolyline(encpts,enclvl,color,n) {
 	trackpolyline[n] = new GPolyline.fromEncoded({
                 color: '#' + color,
-                weight: 5,
+                weight: 2,
                 points: encpts,
                 levels: enclvl,
                 zoomFactor: 32,
-                numLevels: 4
+                numLevels: 4,
+                opacity: 1,
+                fill: true
         });
 	map.addOverlay(trackpolyline[n]);
       }
@@ -82,7 +84,7 @@
    function load() {
       if (GBrowserIsCompatible()) {
         map = new GMap2(document.getElementById("map"));
-        map.setCenter(new GLatLng('30.424992973925598', '-8.6297607421875'), 9);
+        map.setCenter(new GLatLng('23.754', '120.946'), 6);
         map.setMapType(G_PHYSICAL_MAP);
         map.addControl(new GScaleControl());
         map.addControl(new GLargeMapControl());

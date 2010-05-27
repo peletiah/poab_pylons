@@ -22,6 +22,9 @@ def init_model(bind):
 
     orm.mapper(country, country_table,
         order_by=[country_table.c.iso_numcode.desc()])
+ 
+    orm.mapper(country_shapes, country_shapes_table,
+        order_by=[country_shapes_table.c.id.desc()])
     
     orm.mapper(continent, continent_table,
         order_by=[continent_table.c.id.desc()])
@@ -69,6 +72,18 @@ country_table = sa.Table("country", meta,
     )
 
 class country(object):
+    def __str(self):
+        return self.title
+
+country_shapes_table = sa.Table("country_shapes", meta,
+    sa.Column("id", types.Integer, primary_key=True, autoincrement=True),
+    sa.Column("country_id", types.Integer, ForeignKey('country.iso_numcode')),
+    sa.Column("gencpoly_pts", types.UnicodeText),
+    sa.Column("gencpoly_levels", types.UnicodeText),
+    sa.Column("color", types.CHAR(6), default='FF0000')
+    )
+
+class country_shapes(object):
     def __str(self):
         return self.title
 
