@@ -207,3 +207,84 @@ class ViewController(BaseController):
                     c.prevstartfromimg=image.id
             return render("/view/gallery.html")
 
+
+
+    def tabbed(self,startfromimage):
+        #preparing the pagecontrol
+        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.online==True,model.imageinfo.online==True))
+        c.lowestimageid = q.order_by(asc(model.imageinfo.id)).first().id
+        #find highestimageid
+        c.highestimageid = q.order_by(desc(model.imageinfo.id)).first().id
+        #images starting from startfromimage(show 5 newest images if startfromimage=0)
+        if int(startfromimage) == 0:
+            c.images = q.order_by(desc(model.imageinfo.id)).limit(10)
+            imagesplusone = q.order_by(desc(model.imageinfo.id)).limit(11)
+            c.startfromimage = int(c.highestimageid)
+        else:
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.id <= startfromimage,model.imageinfo.online==True,model.imageinfo.online==True))
+            c.images = q.order_by(desc(model.imageinfo.id)).limit(10)
+            imagesplusone = q.order_by(desc(model.imageinfo.id)).limit(11)
+            c.startfromimage = int(startfromimage)
+        for image in imagesplusone:
+            c.startimageprevpage = image.id
+        #lowestimageid on current page
+        for image in c.images:
+            c.lowestimageonpage = image.id
+        #the current page is not full so we need to add 
+        #the missing pages to the next page to keep up with the correct pagecount
+        imagesonpage=q.limit(10).count()
+        if imagesonpage < 10:
+            addtonext=imagesonpage
+        else:
+            addtonext=0
+        #startimageid on next page
+        if int(startfromimage) < c.highestimageid:
+            q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.id > startfromimage,model.imageinfo.online==True))
+            imagesnextpage = q.order_by(asc(model.imageinfo.id)).limit(10)
+            for image in imagesnextpage:
+                c.startimagenextpage = image.id
+        else:
+            c.startimagenextpage = c.highestimageid
+
+        c.viewlist=list()
+        for image in c.images:
+            #get info from related logentry
+            #q = model.Session.query(model.log).filter(model.log.id==image.log_id)
+            #c.loginfo=q.one()
+            #get info from related trackpoint or infomarker
+            if image.trackpoint_id:
+                trackpoint_id=image.trackpoint_id
+            else:
+                trackpoint_id=image.infomarker_id
+                c.prefix='near '
+            q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==trackpoint_id)
+            c.trackpointinfo=q.one()
+            #get timezone
+            q = model.Session.query(model.timezone).filter(model.timezone.id==c.trackpointinfo.timezone_id)
+            c.timezone = q.one()
+            c.localtime=image.flickrdatetaken+c.timezone.utcoffset
+            deltaseconds=round(c.timezone.utcoffset.days*86400+c.timezone.utcoffset.seconds)
+            class viewdetail:
+                photoid=image.id
+                flickrfarm=image.flickrfarm
+                flickrserver=image.flickrserver
+                flickrphotoid=image.flickrphotoid
+                flickrsecret=image.flickrsecret
+                title=image.flickrtitle
+                description=image.flickrdescription
+                log_id=image.log_id
+                imgname=image.imgname
+                aperture=image.aperture
+                shutter=image.shutter
+                focal_length=image.focal_length
+                iso=image.iso
+                #logdate=c.loginfo.createdate.strftime('%Y-%m-%d') #needed for the imagepath
+                trackpointinfo=c.trackpointinfo
+                localtime=c.localtime.strftime('%Y-%m-%d %H:%M:%S')
+                timezone=c.timezone
+                #calculate the offset in seconds
+                utcoffset=timediff.timediff(deltaseconds)
+            c.viewlist.append(viewdetail)
+        return render("/view/tabbed.html")
+
+

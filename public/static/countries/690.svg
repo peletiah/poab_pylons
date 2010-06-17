@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="250" width="370" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+<g id="background">
+<rect id="" width="370" height="250" fill="#222222"/>
+</g>
+  <g id="690" style="stroke-miterlimit: 3; fill: #F1F1F1; stroke: #000000; stroke-opacity: 1; stroke-width: 0.05; stroke-linejoin: bevel; stroke-linecap: square">
+    <polygon id="Seychelles" points="352.3,27.6 351.1,27.4 349.6,26.5 349.0,25.8 349.5,25.1 352.1,26.4 352.4,27.4 " />
+    <polygon id="Seychelles" points="332.8,33.4 331.9,32.4 331.8,31.7 333.1,31.5 333.6,32.3 333.3,33.1 " />
+    <polygon id="Seychelles" points="343.4,42.8 343.3,43.8 342.6,43.3 341.3,42.0 337.6,37.8 340.1,35.3 340.7,35.0 341.2,35.3 343.5,39.1 343.6,39.9 343.4,42.8 " />
+    <polygon id="Seychelles" points="370.9,129.8 369.6,132.0 369.8,130.5 370.6,129.1 370.9,129.8 " />
+    <polygon id="Seychelles" points="8.7,211.5 6.0,211.4 3.9,211.2 4.4,210.6 6.2,210.5 6.8,210.5 7.7,210.6 9.0,210.8 8.8,211.4 " />
+    <polygon id="Seychelles" points="12.2,212.9 11.0,213.8 10.1,213.9 8.9,213.7 8.0,213.8 5.7,214.4 3.4,215.3 2.3,215.1 1.7,214.8 1.3,214.2 1.1,213.7 1.0,213.0 2.3,213.8 3.2,214.1 4.6,214.0 6.9,213.5 9.1,212.5 9.9,211.1 10.7,211.1 11.2,211.3 12.1,211.6 12.7,212.3 12.2,212.9 " />
+    <polygon id="Seychelles" points="11.5,226.0 11.0,225.8 11.8,224.8 12.2,225.4 11.7,225.9 " />
+  </g>
+</svg>

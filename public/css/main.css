@@ -47,6 +47,7 @@ body {
         color: #EEEEEE;
         text-decoration: none;
         padding: 0.2em 0.5em 0.2em 0.5em;
+
         }
 
 #menu a:hover {
@@ -137,7 +138,8 @@ body {
 }
 
 #log {
-    max-width: 40em;
+   max-width: 37em;
+   float: left;
 }
 
 
@@ -151,9 +153,8 @@ body {
 	-khtml-border-radius: 10px;
 	border-radius: 10px; 
 	border-width: 0.05em;
-	margin-bottom: 6em;
+   margin: 2em 0 6em 0;
    position: relative;
-   top: 20px;
 }
 
 #logdetail_icons {
@@ -289,7 +290,7 @@ body {
 }
 #logcontent {
    padding:0 1.5em 1em 2em;
-   width: 40em;
+   width: 35em;
 }
 
 #logfooter {
@@ -300,7 +301,7 @@ body {
 }
 
 #pages {
-   display: block;
+   display: inline-block;
 	float: left;
 }
 
@@ -346,6 +347,14 @@ body {
     background-position:-25px -25px;
 }
 
+#map_svg {
+	 display:inline;
+	 float: left;
+	 z-index: 1;
+	 margin: 2em 0 0 3em;
+	 }
+
+
 
 #track {
     float: left;
@@ -358,8 +367,8 @@ body {
 #map {
     display: block;
 	 float: left;
-	 /*width: 60%;
-	 height: 100%;*/
+	 width: 100%;
+	 height: 80%;
     border: 0.05em solid #000000;
     border-width: 0.05em;
     color: #333333;
@@ -379,6 +388,7 @@ body {
 	 z-index: 1;
 	 margin-left: 3em;
 	 }
+
 
 #gallery a {
         border: None;

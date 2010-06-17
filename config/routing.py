@@ -22,12 +22,15 @@ def make_map():
     map.connect('log/', controller='log', action='index', startfromlog=0)
     map.connect('log/:startfromlog', controller='log', action='index', startfromlog=0)
     map.connect('log/index/:startfromlog', controller='log', action='index', startfromlog=0)
+    map.connect('log/tabbed/:startfromlog', controller='log', action='tabbed', startfromlog=0)
     map.connect('view/', controller='view', action='index', startfromimage=0)
     map.connect('view/index/:startfromimage', controller='view', action='index', startfromimage=0)
+    map.connect('view/tabbed/:startfromimage', controller='view', action='tabbed', startfromimage=0)
     map.connect('gallery/:infomarker/:startfromimg', controller='view', action='gallery')
     map.connect('view/gallery/:infomarker/:startfromimg', controller='view', action='gallery')
     map.connect('view/infomarker/:infomarker/:startfromimage', controller='view', action='infomarker')
     map.connect('track/simple/:trackpoint/:imageid', controller='track', action='simple')
+    #map.connect('track/tabbed/:trackpoint/:imageid', controller='track', action='tabbed')
     map.connect(':controller/:action/:id')
 
     return map

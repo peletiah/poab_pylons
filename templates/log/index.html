@@ -1,6 +1,7 @@
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
 <div id="content">
+${pages()}
     <div id="log" "clearfix">
             <!--highestlogid: ${c.highestlogid}<br />
             lowestlogid: ${c.lowestlogid}<br />
@@ -10,9 +11,8 @@
             startlogprevpage: ${c.startlogprevpage}-->
 
 
-${pages()}
         % for log in c.logdetails:
-                <div id="logdetail">
+            <div id="logdetail">
                 <table id="logheader">
                     <tbody>
                     <tr>
@@ -22,30 +22,32 @@ ${pages()}
                     </tbody>
                 </table>
                 <div id="logcontent">
-                <h2>${log.topic}</h2>
-                % if log.distance==None:
-                    
-                % else:
-                    <b>distance:</b> ${log.distance}<br>
-                % endif
-                % if log.timespan==None:
-                    
-                % else:
-                    <b>duration:</b> ${log.timespan}<br>
-                % endif
-                <div id="logdetail_icons">
-                ${log.gallerylink}
-                <span class="track_icon"><a title="Show route on map" href="/track/infomarker/${log.infomarkerid}"></a></span>
-                <span class="stats_icon"><a title="Show statistics for this day" href="/facts/stats/${log.infomarkerid}"></a></span></div><br><br>
-                ${log.content}
+                    <h2>${log.topic}</h2>
+                    % if log.distance==None:
+                        
+                    % else:
+                        <b>distance:</b> ${log.distance}<br>
+                    % endif
+                    % if log.timespan==None:
+                        
+                    % else:
+                        <b>duration:</b> ${log.timespan}<br>
+                    % endif
+                    <div id="logdetail_icons">
+                        ${log.gallerylink}
+                        <span class="track_icon"><a title="Show route on map" href="/track/infomarker/${log.infomarkerid}"></a></span>
+                        <span class="stats_icon"><a title="Show statistics for this day" href="/facts/stats/${log.infomarkerid}"></a></span>
+                    </div>
+                    <br>
+                    <br>
+                    ${log.content}
                 </div>
             </div>
         % endfor
-
-    ${pages()}
-
 </div>
-
+<div id="map_svg">        
+    </div>   
+  
 % if c.error:
     <div id="error">
         ${c.error}
@@ -70,14 +72,24 @@ ${pages()}
     </div>
 </%def>
 
-<script>
+<script type="text/javascript">
+var i=0;
 $(".caption").hide();
-$("div.imagecontainer").mouseover(function(){
+$("div.imagecontainer").mouseover(function(){ 
       $(".caption",this).show();
       width=($("img[id='inlineimage']",this).width())
       $('div.imagecontainer').css({width: width});
  }).mouseout(function(){
       $(".caption",this).hide();
     });
-
+function modParent(link) {
+    $(".menu").attr("href", function() {
+    i++
+    if (i==1) {
+        showSubcontent('/log/country_svg/'+link);
+    };
+    return(this.href.replace(/(.*\/)/, "$1country/"+link));
+    });
+}
+showSubcontent('/static/world_svg.html')
 </script>

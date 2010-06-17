@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="250" width="370" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+<g id="background">
+<rect id="" width="370" height="250" fill="#222222"/>
+</g>
+  <g id="638" style="stroke-miterlimit: 3; fill: #F1F1F1; stroke: #000000; stroke-opacity: 1; stroke-width: 0.05; stroke-linejoin: bevel; stroke-linecap: square">
+    <polygon id="None" points="268.9,68.4 285.8,97.2 304.4,119.3 306.2,120.9 312.5,125.1 322.4,129.1 331.3,130.8 334.1,131.6 336.1,133.0 337.2,135.3 338.0,150.8 324.7,223.7 323.9,226.2 322.5,228.3 315.7,234.4 309.1,238.3 306.3,239.0 274.6,245.4 251.5,250.0 244.4,249.9 183.5,240.7 132.5,220.3 95.9,202.0 91.7,199.1 67.6,169.1 36.8,106.3 34.8,99.0 32.0,82.8 32.8,80.1 68.1,31.5 121.6,6.0 126.3,4.4 142.7,0.0 146.2,0.1 201.6,10.9 221.6,15.6 243.5,21.9 245.9,22.8 249.4,26.2 258.1,34.6 262.9,43.2 265.4,47.6 266.7,52.9 268.9,68.4 " />
+  </g>
+</svg>

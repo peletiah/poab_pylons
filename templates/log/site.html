@@ -5,6 +5,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link href="/css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"/>
 	<title>${self.title()}</title>
+    <script type="text/javascript" >
+    function showSubcontent(contentlink) {
+        $.ajax({
+            url: contentlink,
+            cache: true,
+            success: function(response) { 
+            $("#map_svg").replaceWith('<div id="map_svg">' + response + '</div>');
+           }
+        
+        });
+    }
+</script>
     </head>
     <body>
       <!-- *** BEGIN page content *** -->

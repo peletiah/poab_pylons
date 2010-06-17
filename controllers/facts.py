@@ -72,3 +72,13 @@ data:['''
             c.distance=c.distance+'''['''+str(calendar.timegm(timestamp.timetuple()) * 1000)+''', '''+str(distance)+'''], '''
         c.distance=c.distance+''']}'''
         return c.distance
+
+    def tabbed(self,id):
+        c.infomarker=id
+        if id==None:
+            q=model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
+            trackpoint=q.first()
+            c.infomarker=trackpoint.id
+        return render("/facts/tabbed.html")
+
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="250" width="370" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+<g id="background">
+<rect id="" width="370" height="250" fill="#222222"/>
+</g>
+  <g id="831" style="stroke-miterlimit: 3; fill: #F1F1F1; stroke: #000000; stroke-opacity: 1; stroke-width: 0.05; stroke-linejoin: bevel; stroke-linecap: square">
+    <polygon id="United Kingdom" points="172.9,219.0 159.0,219.0 34.5,211.7 9.7,206.9 2.4,201.5 0.0,193.6 2.4,184.5 30.8,144.6 39.3,139.8 198.3,70.3 285.4,34.0 296.8,31.0 367.0,33.4 370.0,50.3 312.6,208.1 304.7,212.9 249.7,217.2 172.9,219.0 " />
+  </g>
+</svg>

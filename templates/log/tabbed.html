@@ -1,0 +1,79 @@
+<script type="text/javascript">
+            $(document).ready(function(){
+                $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
+});
+
+
+</script>
+    <div id="log" "clearfix">
+
+${pages()}
+
+        % for log in c.logdetails:
+                <div id="logdetail" style="max-width: 47em">
+                <table id="logheader">
+                    <tbody>
+                    <tr>
+                        <td class="leftcol">${log.createdate}</td>
+                        <td class="rightcol">${log.location}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="logcontent">
+                <h2>${log.topic}</h2>
+                % if log.distance==None:
+                    
+                % else:
+                    <b>distance:</b> ${log.distance}<br>
+                % endif
+                % if log.timespan==None:
+                    
+                % else:
+                    <b>duration:</b> ${log.timespan}<br>
+                % endif
+                <div id="logdetail_icons">
+                ${log.gallerylink}
+                <span class="track_icon"><a title="Show route on map" href="/track/infomarker/${log.infomarkerid}"></a></span>
+                <span class="stats_icon"><a title="Show statistics for this day" href="/facts/stats/${log.infomarkerid}"></a></span></div><br><br>
+                ${log.content}
+                </div>
+            </div>
+        % endfor
+
+    ${pages()}
+
+% if c.error:
+    <div id="error">
+        ${c.error}
+    </div>
+% endif
+</div>
+
+<%def name="pages()">
+    <div id="pages">
+        % if c.startlogprevpage >= c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
+            <span class="logpagelowest"><a class="oldlog" href="#" title="Jump to oldest entries" onclick='loadNewContent("/log/tabbed/${c.lowestlogid}")'>oldest</a></span>
+        % endif
+        % if c.startlogprevpage >= c.lowestlogid and c.lowestlogonpage != c.lowestlogid:
+            <span class="logpageprev"><a class="oldlog" href="#" title="Show older entries" onclick='loadNewContent("/log/tabbed/${c.startlogprevpage}")'>older</a></span>
+        % endif
+        % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
+            <span class="logpagenext"><a class="oldlog" href="#" title="Show newer entries" onclick='loadNewContent("/log/tabbed/${c.startlognextpage}")'>newer</a></span>
+        % endif
+        % if c.startlognextpage <= c.highestlogid and c.startfromlog != c.highestlogid:
+            <span class="logpagehighest"><a class="oldlog" href="#" title="Jump to newest entries" onclick='loadNewContent("/log/tabbed/${c.highestlogid}")'>newest</a></span>
+        % endif 
+    </div>
+</%def>
+
+<script>
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){
+      $(".caption",this).show();
+      width=($("img[id='inlineimage']",this).width())
+      $('div.imagecontainer').css({width: width});
+ }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+
+</script>

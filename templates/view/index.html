@@ -36,9 +36,14 @@ ${pages()}
             <br />
             ${viewdetail.trackpointinfo.location},
             % if viewdetail.trackpointinfo.temperature==None:
+            n/a,
+            % else:
+            ${viewdetail.trackpointinfo.temperature}&#8451,
+            % endif
+            % if viewdetail.trackpointinfo.altitude==None:
             n/a
             % else:
-            ${viewdetail.trackpointinfo.temperature}&#8451
+            ${viewdetail.trackpointinfo.altitude}m
             % endif
         </span>
         <span id="caption_right">

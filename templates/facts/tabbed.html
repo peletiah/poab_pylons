@@ -1,0 +1,61 @@
+
+<script type="text/javascript" src="/js/jquery-1.4.2.js"></script>
+<script src="/js/graph/flot_0.6/jquery.flot.js" type="text/javascript"> </script>
+
+<%inherit file="site.html" />
+
+<div id="content">
+
+
+<div id="placeholder" style="width:600px;height:300px;"></div>
+
+<script id="source" language="javascript" type="text/javascript">
+$(function () {
+    var options = {
+        lines: { show: true },
+        points: { show: false },
+        xaxis: { mode: "time", timeformat: "%H", monthNames: ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"] }
+    };
+    var data = [];
+    var placeholder = $("#placeholder");
+    
+    $.plot(placeholder, data, options);
+
+    
+    // fetch one series, adding to what we got
+    var alreadyFetched = {};
+    
+       function fetchData() {
+        // find the URL in the link right next to us 
+        //var dataurl = '/facts/infomarker/${c.infomarker}'
+        var dataurl = '/facts/distance/${c.infomarker}'
+        // then fetch the data with jQuery
+        function onDataReceived(series) {
+            // extract the first coordinate pair so you can see that
+            // data is now an ordinary Javascript object
+
+            // let's add it to our current data
+            if (!alreadyFetched[series.label]) {
+                alreadyFetched[series.label] = true;
+                data.push(series);
+            }
+            
+            // and plot all we got
+            $.plot(placeholder, data, options);
+         }
+        
+        $.ajax({
+            url: dataurl,
+            method: 'GET',
+            dataType: 'json',
+            success: onDataReceived
+        });
+    };
+fetchData();
+
+});
+</script>
+
+
+
+</div>

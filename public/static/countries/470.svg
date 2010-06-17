@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="250" width="370" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+<g id="background">
+<rect id="" width="370" height="250" fill="#222222"/>
+</g>
+  <g id="470" style="stroke-miterlimit: 3; fill: #F1F1F1; stroke: #000000; stroke-opacity: 1; stroke-width: 0.05; stroke-linejoin: bevel; stroke-linecap: square">
+    <polygon id="Malta" points="87.8,57.8 73.1,57.8 60.3,56.6 23.6,48.2 18.3,46.0 13.5,37.9 9.0,17.9 9.3,12.9 18.1,7.8 34.5,3.0 52.9,0.0 68.1,0.8 74.9,1.8 131.0,19.7 136.0,21.7 154.7,37.4 154.5,41.2 149.9,43.4 94.6,57.6 87.8,57.8 " />
+    <polygon id="Malta" points="355.7,231.6 317.1,250.0 230.0,233.1 189.8,209.6 185.5,206.8 178.2,200.2 160.3,184.1 153.2,177.5 150.4,173.7 147.4,163.6 140.1,92.9 141.3,87.4 146.9,85.4 173.4,76.0 179.5,75.0 185.5,76.5 247.6,104.3 308.5,136.1 343.1,166.2 357.2,179.3 362.8,186.9 361.0,223.2 359.0,228.0 355.7,231.6 " />
+  </g>
+</svg>

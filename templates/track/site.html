@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <link type="text/css" rel="Stylesheet" media="screen" href="/css/infoWindow.css"/>
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"
+    <script src="http://maps.google.com/maps?file=api&amp;v=3&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"
       type="text/javascript"> </script>
     <script src="/js/extinfowindow_packed.js" type="text/javascript" defer></script>
    <script defer>//<![CDATA[
@@ -98,7 +98,7 @@
 
    function trackoverlay() {
 	    markerlist = ${c.markerlist};
-            for (var n=0; n<markerlist.length; n++) {
+        for (var n=0; n<markerlist.length; n++) {
 	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].markerdate,markerlist[n].distance,markerlist[n].timespan,markerlist[n].gal,markerlist[n].log,n)
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
@@ -139,14 +139,15 @@
         map.addControl(ov);
         ov.hide(true);
         map.enableScrollWheelZoom();
-	trackoverlay();
+	     trackoverlay();
       }
     }
 
-    //]]></script>
+    //]]>
+</script>
    <title>${self.title()}</title>
   </head>
-  <body onload="load()" onunload="GUnload()">
+  <body>
   	${self.body()}
   </body>
 </html>

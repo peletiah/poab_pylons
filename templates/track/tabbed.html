@@ -1,0 +1,47 @@
+<head>
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=3&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"></script>
+<script type="text/javascript">
+
+    var map;
+    trackpolyline=new Array();
+   trackmarker=new Array();
+
+    function writegmarker(lat,lng,markerdate,distance,timespan,gallerylink,loglink,n) {
+        trackmarker[n] = new GMarker( new GLatLng(lat,lng) );
+        map.addOverlay(trackmarker[n]);
+     }
+
+
+    function trackoverlay() {
+       markerlist = ${c.markerlist};
+       for (var n=0; n<markerlist.length; n++) {
+         writegmarker(markerlist[n].lat,markerlist[n].lng,markerlist[n].markerdate,markerlist[n].distance,markerlist[n].timespan,markerlist[n].gal,markerlist[n].log,n);
+        }
+    };
+
+    function initialize() {
+   if (GBrowserIsCompatible()) {
+        map = new GMap2(document.getElementById("map_canvas"));
+        map.setCenter(new GLatLng('${c.infomarker.latitude}', '${c.infomarker.longitude}'), 9);
+        map.setMapType(G_PHYSICAL_MAP);
+        map.addControl(new GScaleControl()); //adds a small "legend" in the left lower corner
+        map.addControl(new GLargeMapControl()); //adds the standard zoom and pan-control
+        var topLeft = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(70,5));
+        map.addControl(new GNavLabelControl(),topLeft); //displays the current location(country/region/etc.)
+        var mapControl = new GHierarchicalMapTypeControl();
+        map.addMapType(G_PHYSICAL_MAP);
+        mapControl.clearRelationships();
+        mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
+        map.addControl(mapControl);
+        var ov = new GOverviewMapControl();
+        map.addControl(ov);
+        ov.hide(true);
+        map.enableScrollWheelZoom();
+        trackoverlay();
+      } 
+  }
+</script>
+</head>
+<body onload="initialize()">
+<div id="map_canvas" style="width:100%; height:80%">blabla</div>
+</body>

@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/js/jquery_plugins/autocomplete/autocomplete/lib/jquery.dimensions.js"></script>
 <script type="text/javascript" src="/js/jquery_plugins/autocomplete/jquery.autocomplete.min.js"></script>
 <script type="text/javascript" src="/js/jquery_plugins/colorbox/jquery.colorbox.js"></script>
-<script src="/js/graph/flot/jquery.flot.js" type="text/javascript"> </script>
+<script src="/js/graph/flot_0.6/jquery.flot.js" type="text/javascript"> </script>
 <!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.pack.js"></script><![endif]-->
 <script type="text/javascript">
             $(document).ready(function(){
@@ -16,13 +16,25 @@
                 $("a[rel='map_colorbox']").colorbox({transition:"fade", width:"952px", height:"584px", iframe:true});
         });
         </script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2205152-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 
 <div id="menu">
 	<ul id="menucontent" class="clearfix">
 	    <!--<li><span id="logo">poab</span></li>-->
-	    <li><a href="${h.rails.url_for(controller="/log", action="")}">log</a></li>
-	    <li><a href="${h.rails.url_for(controller="/track", action="")}">track</a></li>
-	    <li><a href="${h.rails.url_for(controller="/view", action="")}">view</a></li>
-	    <li><a href="${h.rails.url_for(controller="/facts", action="")}">facts</a></li>
+	    <li><a class="menu" href="${h.rails.url_for(controller="/log", action="")}">log</a></li>
+	    <li><a class="menu" href="${h.rails.url_for(controller="/track", action="")}">track</a></li>
+	    <li><a class="menu" href="${h.rails.url_for(controller="/view", action="")}">view</a></li>
+	    <li><a class="menu" href="${h.rails.url_for(controller="/facts", action="")}">facts</a></li>
 	</ul>
 </div>
