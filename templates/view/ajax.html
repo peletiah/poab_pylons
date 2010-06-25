@@ -1,0 +1,94 @@
+${pages()}
+<!--            highestimageid: ${c.highestimageid}<br />
+            lowestimageid: ${c.lowestimageid}<br />
+            startfromimage: ${c.startfromimage}<br />
+            lowestimageonpage: ${c.lowestimageonpage}<br />
+            startimagenextpage: ${c.startimagenextpage}<br />
+            startimageprevpage: ${c.startimageprevpage}<br />
+-->
+
+
+% for viewdetail in c.viewlist:
+
+<div class="imagecontainer">
+    <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}"><img id="image" src="${viewdetail.imgname}"></a>
+    <div class="caption">
+         <span id="caption_left">
+            <span>&#8594;</span>
+            <a href="http://www.flickr.com/peletiah/${viewdetail.flickrphotoid}" target="_blank">www.flickr.com</a><br />
+            <span>&#8594;</span>
+            <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}">view on map</a>
+        </span>
+        <span id="caption_center">
+                        % if viewdetail.description:
+                <a href="/log/${viewdetail.log_id}">${viewdetail.description}</a>
+            % else:
+                <a href="/log/${viewdetail.log_id}">&ldquo;${viewdetail.title}&rdquo;</a>
+            % endif            
+            <br />
+            ${viewdetail.trackpointinfo.location},
+            % if viewdetail.trackpointinfo.temperature==None:
+            n/a,
+            % else:
+            ${viewdetail.trackpointinfo.temperature}&#8451,
+            % endif
+            % if viewdetail.trackpointinfo.altitude==None:
+            n/a
+            % else:
+            ${viewdetail.trackpointinfo.altitude}m
+            % endif
+        </span>
+        <span id="caption_right">
+            ${viewdetail.localtime} (<a href="" title="${viewdetail.timezone.description}, ${viewdetail.utcoffset}">${viewdetail.timezone.abbreviation})</a><br />
+            ${viewdetail.focal_length}&nbsp;|&nbsp;${viewdetail.aperture}&nbsp;|&nbsp;${viewdetail.shutter}
+        </span>
+    
+
+    </div>
+
+% endfor
+
+${pages()}
+
+<%def name="pages()">
+    <div id="pages">
+        <% 
+            i=0
+            j=1
+        %>
+        % for page in c.pages:
+            % if i==c.curr_page:
+                <b>${j}</b>
+            % else:
+                <a href="#" title="Photos page ${j}" onclick='showContent("${c.country_id}/${i}");'>${j}</a>
+            % endif
+        <% 
+            i=i+1
+            j=j+1
+        %>
+        % endfor
+
+    <br>
+       &nbsp;
+    </div>
+</%def>
+
+
+<script>
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){
+      $(".caption",this).show();
+      width=($("img[id='image']",this).width())
+      $('div.imagecontainer').css({width: width});
+    }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+
+$(document).ready(function(){
+    $("a[rel='map_colorbox']").colorbox({transition:"fade", width:"952px", height:"584px", iframe:true});
+        });
+showNavigation('${c.navstring}');
+</script>
+
+
+

@@ -1,0 +1,95 @@
+
+    <div id="log" "clearfix">
+${pages()}
+            <!--highestlogid: ${c.highestlogid}<br />
+            lowestlogid: ${c.lowestlogid}<br />
+            startfromlog: ${c.startfromlog}<br />
+            lowestlogonpage: ${c.lowestlogonpage}<br />
+            startlognextpage: ${c.startlognextpage}<br />
+            startlogprevpage: ${c.startlogprevpage}-->
+
+
+        % for log in c.logdetails:
+            <div id="logdetail">
+                <table id="logheader">
+                    <tbody>
+                    <tr>
+                        <td class="leftcol">${log.createdate}</td>
+                        <td class="rightcol">${log.location}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="logcontent">
+                    <h2>${log.topic}</h2>
+                    % if log.distance==None:
+                        
+                    % else:
+                        <b>distance:</b> ${log.distance}<br>
+                    % endif
+                    % if log.timespan==None:
+                        
+                    % else:
+                        <b>duration:</b> ${log.timespan}<br>
+                    % endif
+                    <div id="logdetail_icons">
+                        ${log.gallerylink}
+                        <span class="track_icon"><a title="Show route on map" href="/track/infomarker/${log.infomarkerid}"></a></span>
+                        <span class="stats_icon"><a title="Show statistics for this day" href="/facts/stats/${log.infomarkerid}"></a></span>
+                    </div>
+                    <br>
+                    <br>
+                    ${log.content}
+                </div>
+            </div>
+        % endfor
+${pages()}
+</div>
+<div id="map_svg">
+</div> 
+% if c.error:
+    <div id="error">
+        ${c.error}
+    </div>
+% endif
+
+<%def name="pages()">
+    <div id="pages">
+        <% 
+            i=0
+            j=1
+        %>
+        % for page in c.pages:
+            % if i==c.curr_page:
+                <b>${j}</b>
+            % else:
+                <a href="#" title="Journal-entries page ${j}" onclick='showContent("${c.country_id}/${i}");'>${j}</a>
+            % endif
+        <% 
+            i=i+1
+            j=j+1
+        %>
+        % endfor
+        
+    <br>     
+       &nbsp; 
+    </div>
+</%def>
+
+<script type="text/javascript">
+var i=0;
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){ 
+      $(".caption",this).show();
+      width=($("img[id='inlineimage']",this).width())
+      $('div.imagecontainer').css({width: width});
+ }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+showSubcontent('/log/country_svg/'+${c.country_id});
+
+
+$(document).ready(function(){
+        $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
+    });
+showNavigation('${c.navstring}');
+</script>

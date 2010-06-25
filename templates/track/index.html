@@ -18,5 +18,15 @@
     </div>
 % endif
 </div>
-<script type="text/javascript" >window.onload(load())
-window.onunload(GUnload())</script>
+<script type="text/javascript" >
+//window.onload(load())
+//window.onunload(GUnload())
+function resetContent() {
+    window.location='/track'
+}
+function showContent(link) {
+    window.location=link
+}
+modMenu(${c.country_id})
+showNavigation('${c.navstring}');
+</script>

@@ -16,6 +16,32 @@
         
         });
     }
+    function showContent(country_id) {
+        if (country_id=='0') {
+            showNavigation('<li id="navigation"><a href="#" title="Journal-entries for all countries" onclick=resetContent();>All</a></li>');
+            resetMenu(country_id);
+        }
+        $.ajax({
+            url: '/log/country/'+country_id,
+            cache: true,
+            success: function(response) { 
+            $("#content").replaceWith('<div id="content">' + response + '</div>');
+           }
+        
+        });
+    }
+   
+    function modFromSVG(country_id) {
+        showContent(country_id);
+        $(".menu").attr("href", function() {
+            var re = new RegExp("(http://benko.login.cx:4000/[A-z]{1,}/)c/[0-9]{1,}");
+            return(this.href.replace(re, "$1c/"+country_id));
+        });
+    }
+    function resetContent() {
+        showContent(0);
+    }
+
 </script>
     </head>
     <body>

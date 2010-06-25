@@ -15,6 +15,40 @@
                 $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
                 $("a[rel='map_colorbox']").colorbox({transition:"fade", width:"952px", height:"584px", iframe:true});
         });
+function showNavigation(navcontent) {
+        $(navcontent).replaceAll("#navigation");
+    };
+
+function modMenu(country_id) {
+        $(".menu").attr("href", function() {
+            var re = new RegExp("(http://benko.login.cx:4000/[A-z]{1,}/)");
+            //var m = re.exec(this.href)
+            //alert(m); 
+            return(this.href.replace(re, "$1c/"+country_id));
+        });
+    }
+    
+    function resetMenu(country_id) {
+        $(".menu").attr("href", function() {
+            var re = new RegExp("(http://benko.login.cx:4000/[A-z]{1,}/)c/[0-9]{1,}");
+            return(this.href.replace(re, "$1c/0"));
+        });
+    }
+
+    function markMenu() {
+        var re = new RegExp("http://benko.login.cx:4000/([A-z]{1,})");
+        m = re.exec(document.URL)
+        $(".menu").attr("href", function() {
+            mm=re.exec(this.href)
+            if (m[1]==mm[1]) {
+                $(this).css("background","#00607f");
+                $(this).css("-webkit-border-radius","5px");
+                $(this).css("-moz-border-radius","5px");
+                $(this).css("border-radius","5px");
+            };
+        });
+        }
+
         </script>
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -26,15 +60,18 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
 </script>
 
 <div id="menu">
 	<ul id="menucontent" class="clearfix">
 	    <!--<li><span id="logo">poab</span></li>-->
-	    <li><a class="menu" href="${h.rails.url_for(controller="/log", action="")}">log</a></li>
-	    <li><a class="menu" href="${h.rails.url_for(controller="/track", action="")}">track</a></li>
-	    <li><a class="menu" href="${h.rails.url_for(controller="/view", action="")}">view</a></li>
-	    <li><a class="menu" href="${h.rails.url_for(controller="/facts", action="")}">facts</a></li>
+	    <li><a class="menu" href="${h.rails.url_for(controller="/log", action="")}">journal</a></li>
+	    <li><a class="menu" href="${h.rails.url_for(controller="/track", action="")}">map</a></li>
+	    <li><a class="menu" href="${h.rails.url_for(controller="/view", action="")}">photos</a></li>
+	    <li><a class="menu" href="${h.rails.url_for(controller="/facts", action="")}">stats</a></li>
+        <li id="navigation"><a href="#" title="Show all entries" onclick='resetContent();'>All</a></li>
 	</ul>
 </div>
+<script type="text/javascript">
+markMenu();
+</script>

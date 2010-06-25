@@ -10,6 +10,7 @@
    <script defer>//<![CDATA[
 
    var map;
+   var markerBounds = new GLatLngBounds();
    var i = false;
    trackpolyline=new Array();
    trackmarker=new Array();
@@ -54,7 +55,7 @@
                 );
                 dissectcontentlink(gallerylink);        
               });
-	map.addOverlay(trackmarker[n]);
+	 map.addOverlay(trackmarker[n]);
    }
 
     function writepolyline(encpts,enclvl,color,n) {
@@ -69,7 +70,11 @@
         });
 	map.addOverlay(trackpolyline[n]);
       }
-    
+   
+    function setBounds(lat,lng) {
+            markerBounds.extend( new GLatLng(lat,lng));
+    }
+ 
     function toggletrack(checkbox) {
 	    for (var n=0; n<markerlist.length; n++) {
 		if (checkbox.checked == true) {
@@ -100,6 +105,7 @@
 	    markerlist = ${c.markerlist};
         for (var n=0; n<markerlist.length; n++) {
 	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].markerdate,markerlist[n].distance,markerlist[n].timespan,markerlist[n].gal,markerlist[n].log,n)
+           setBounds(markerlist[n].lat,markerlist[n].lon)
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
     }
@@ -124,7 +130,7 @@
    function load() {
       if (GBrowserIsCompatible()) {
         map = new GMap2(document.getElementById("map"));
-        map.setCenter(new GLatLng('${c.infomarker.latitude}', '${c.infomarker.longitude}'), 9);
+        //map.setCenter(new GLatLng('${c.infomarker.latitude}', '${c.infomarker.longitude}'), 9);
         map.setMapType(G_PHYSICAL_MAP);
         map.addControl(new GScaleControl()); //adds a small "legend" in the left lower corner
         map.addControl(new GLargeMapControl()); //adds the standard zoom and pan-control
@@ -135,11 +141,9 @@
         mapControl.clearRelationships();
         mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
         map.addControl(mapControl);
-        var ov = new GOverviewMapControl();
-        map.addControl(ov);
-        ov.hide(true);
         map.enableScrollWheelZoom();
 	     trackoverlay();
+        map.setCenter(markerBounds.getCenter(), map.getBoundsZoomLevel(markerBounds));
       }
     }
 
@@ -147,7 +151,7 @@
 </script>
    <title>${self.title()}</title>
   </head>
-  <body>
+  <body onload=load()>
   	${self.body()}
   </body>
 </html>

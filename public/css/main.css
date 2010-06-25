@@ -10,6 +10,23 @@ body {
    height: 100%;
 }
 
+body a {
+    color: #CCCCCC;
+    text-decoration: underline;
+    }
+
+body a:hover {
+        color: #FFFFFF;
+	     padding: 0.2em
+	     border: solid #000000;
+        border-width: 0.05em;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 10px;
+        }
+
+
 .clearfix:after {
     content: ".";
     display: block;
@@ -33,8 +50,7 @@ body {
 
 #menu ul {
 	list-style: none;
-	border: solid #000000;
-   border-width: 0.05em;
+	border: none;
 	padding: 0.5em;
 	}
 
@@ -64,12 +80,6 @@ body {
         }
 
 
-#menu form {
-    margin : 0;
-    padding : 0;
-    display: inline;
-}
-
 #menu img {
    margin-left: 0.8em;
 	float: left;
@@ -81,31 +91,27 @@ body {
     background-color: #333333;
       
 }
-
-#menu toggledate {
-	z-index: 2;
-	margin: 0.2em;
-	 }
-
-#menu togglecountry {
-	z-index: 2;
-	margin: 0.2em;
-	 }
+#navigation {
+    color: #CCCCCC;
+    border: none;
+    }
 
 
-#menucontent {
-	      background:#444444; 
-	      border: solid #000000;
-	      border-width: 0.1em;
-	      -moz-border-radius: 0.7em;
-	      -webkit-border-radius: 0.7em;
-	      -khtml-border-radius: 0.7em;
-	      border-radius: 0.7em; 
-         font: normal 1em helvetica,sans-serif;
-	      color: #EEEEEE;
-	      width: 100%; 
-         height: 1.4em;
-	    }
+#navigation a {
+    background: #222222;
+    color: #CCCCCC;
+    text-decoration: none;
+    font-size:80%;
+    padding: 0.1em;
+}
+
+#navigation a:hover {
+        background: #222222;
+        text-decoration: underline;
+        color: #FFFFFF;
+        font-size:80%;
+        padding: 0.1em;
+}
 
 #viewbydate {
     display:inline;
@@ -153,7 +159,7 @@ body {
 	-khtml-border-radius: 10px;
 	border-radius: 10px; 
 	border-width: 0.05em;
-   margin: 2em 0 6em 0;
+   margin: 2em 0 2em 0;
    position: relative;
 }
 
@@ -277,7 +283,7 @@ body {
         -khtml-border-top-left-radius: 8px;
         border-radius-topleft: 8px;
         padding: 0.5em;
-        font-size: 120%;
+        font-size: 100%;
         width: 100%;
 }
 
@@ -303,6 +309,7 @@ body {
 #pages {
    display: inline-block;
 	float: left;
+    margin: 0 0 -2em 0;
 }
 
 .logpagenext a,.logpageprev a,.logpagelowest a,.logpagehighest a {
@@ -367,8 +374,8 @@ body {
 #map {
     display: block;
 	 float: left;
-	 width: 100%;
-	 height: 80%;
+	 width: 60%;
+	 height: 100%;
     border: 0.05em solid #000000;
     border-width: 0.05em;
     color: #333333;
