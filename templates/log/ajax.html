@@ -1,6 +1,7 @@
+<%namespace name="pages" file="/misc/pages.html"/>
 
     <div id="log" "clearfix">
-${pages()}
+${pages.pages()}
             <!--highestlogid: ${c.highestlogid}<br />
             lowestlogid: ${c.lowestlogid}<br />
             startfromlog: ${c.startfromlog}<br />
@@ -42,7 +43,7 @@ ${pages()}
                 </div>
             </div>
         % endfor
-${pages()}
+${pages.pages()}
 </div>
 <div id="map_svg">
 </div> 
@@ -51,32 +52,7 @@ ${pages()}
         ${c.error}
     </div>
 % endif
-
-<%def name="pages()">
-    <div id="pages">
-        <% 
-            i=0
-            j=1
-        %>
-        % for page in c.pages:
-            % if i==c.curr_page:
-                <b>${j}</b>
-            % else:
-                <a href="#" title="Journal-entries page ${j}" onclick='showContent("${c.country_id}/${i}");'>${j}</a>
-            % endif
-        <% 
-            i=i+1
-            j=j+1
-        %>
-        % endfor
-        
-    <br>     
-       &nbsp; 
-    </div>
-</%def>
-
 <script type="text/javascript">
-var i=0;
 $(".caption").hide();
 $("div.imagecontainer").mouseover(function(){ 
       $(".caption",this).show();

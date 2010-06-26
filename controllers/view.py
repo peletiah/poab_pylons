@@ -20,12 +20,12 @@ class ViewController(BaseController):
     def c(self,country_id,page):
         c.country_id=int(country_id)
         c.page=page
-        c.navstring=h.countryDetails(model,c.country_id)
         return render("/view/index.html")
 
     def country(self,country_id,page):
         c.curr_page=int(page)
         c.country_id=int(country_id)
+        c.navstring=h.countryDetails(model,c.country_id)
         if c.country_id==0:
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.country_id != None)
         else:
@@ -35,9 +35,21 @@ class ViewController(BaseController):
         for trackpoint in trackpoints:
             trkpt_list.append(trackpoint.id)
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.trackpoint_id.in_(trkpt_list))
-        c.images= q.order_by(desc(model.imageinfo.flickrdatetaken)).limit(10)
+        images= q.order_by(desc(model.imageinfo.flickrdatetaken)).all()
+        c.page=list()
+        c.pages=list()
+        i=0
+        for image in images:
+            c.page.append(image)
+            i=i+1
+            if i==10:
+                c.pages.append(c.page)
+                c.page=list()
+                i=0
+        if i<10 and i>0:
+            c.pages.append(c.page)
         c.viewlist=list()
-        for image in c.images:
+        for image in c.pages[c.curr_page]:
             #get info from related logentry
             #q = model.Session.query(model.log).filter(model.log.id==image.log_id)
             #c.loginfo=q.one()

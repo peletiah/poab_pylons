@@ -1,4 +1,6 @@
-${pages()}
+<%namespace name="pages" file="/misc/pages.html"/>
+
+${pages.pages()}
 <!--            highestimageid: ${c.highestimageid}<br />
             lowestimageid: ${c.lowestimageid}<br />
             startfromimage: ${c.startfromimage}<br />
@@ -11,13 +13,13 @@ ${pages()}
 % for viewdetail in c.viewlist:
 
 <div class="imagecontainer">
-    <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}"><img id="image" src="${viewdetail.imgname}"></a>
+    <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}" title="View photolocation on map"><img id="image" src="${viewdetail.imgname}"></a>
     <div class="caption">
          <span id="caption_left">
             <span>&#8594;</span>
-            <a href="http://www.flickr.com/peletiah/${viewdetail.flickrphotoid}" target="_blank">www.flickr.com</a><br />
+            <a href="http://www.flickr.com/peletiah/${viewdetail.flickrphotoid}" target="_blank" title="View photo on flickr">www.flickr.com</a><br />
             <span>&#8594;</span>
-            <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}">view on map</a>
+            <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}" title="View photolocation on map">view on map</a>
         </span>
         <span id="caption_center">
                         % if viewdetail.description:
@@ -45,36 +47,12 @@ ${pages()}
     
 
     </div>
-
+</div>
 % endfor
 
-${pages()}
+${pages.pages()}
 
-<%def name="pages()">
-    <div id="pages">
-        <% 
-            i=0
-            j=1
-        %>
-        % for page in c.pages:
-            % if i==c.curr_page:
-                <b>${j}</b>
-            % else:
-                <a href="#" title="Photos page ${j}" onclick='showContent("${c.country_id}/${i}");'>${j}</a>
-            % endif
-        <% 
-            i=i+1
-            j=j+1
-        %>
-        % endfor
-
-    <br>
-       &nbsp;
-    </div>
-</%def>
-
-
-<script>
+<script type="text/javascript">
 $(".caption").hide();
 $("div.imagecontainer").mouseover(function(){
       $(".caption",this).show();
