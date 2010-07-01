@@ -41,6 +41,7 @@
                   {beakOffset: 3}
                 );
 	map.addOverlay(trackmarker[n]);
+          trackmarker[n].closeExtInfoWindow(map)
    }
 
     function writepolyline(encpts,enclvl,color,n) {
@@ -82,6 +83,7 @@
         map.addControl(new GOverviewMapControl ());
         map.enableScrollWheelZoom();
 	trackoverlay();
+        GEvent.addListener(map, 'extinfowindowopen', function(){map.getExtInfoWindow().resize();});
       }
     }
 

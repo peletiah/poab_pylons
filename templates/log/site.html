@@ -6,17 +6,7 @@
         <link href="/css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"/>
 	<title>${self.title()}</title>
     <script type="text/javascript" >
-    function showSubcontent(contentlink) {
-        $.ajax({
-            url: contentlink,
-            cache: true,
-            success: function(response) { 
-            $("#map_svg").replaceWith('<div id="map_svg">' + response + '</div>');
-           }
-        
-        });
-    }
-    function showContent(country_id) {
+   function showContent(country_id) {
         if (country_id=='0') {
             showNavigation('<li id="navigation"><a href="#" title="Journal-entries for all countries" onclick=resetContent();>All</a></li>');
             resetMenu(country_id);

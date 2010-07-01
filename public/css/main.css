@@ -97,6 +97,10 @@ body a:hover {
     }
 
 
+#navigation span {
+    margin-left:2em;
+}
+
 #navigation a {
     background: #222222;
     color: #CCCCCC;
@@ -128,7 +132,7 @@ body a:hover {
 #content {
    min-width: 990px;
 	width: 94%;
-   height: 100%;
+   height: 88%;
 	color: #EEEEEE;
 	margin-left: auto;
    margin-right: auto;
@@ -367,7 +371,7 @@ body a:hover {
     float: left;
     display:block;
     width:100%;
-    height:80%;
+    height:95%;
     }
 
 
@@ -393,9 +397,12 @@ body a:hover {
 	 display:inline;
 	 float: left;
 	 z-index: 1;
-	 margin-left: 3em;
+	 margin: 2em 0 0 3em;
 	 }
 
+.sub_track {
+    margin: 0 0 0 1em;
+}
 
 #gallery a {
         border: None;

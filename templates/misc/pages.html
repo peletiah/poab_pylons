@@ -6,15 +6,17 @@
             pagestring=''
             fastrewind_page=''
             fastforward_page=''
-            if c.curr_page > 4:
+            if c.curr_page > 4 and len(c.pages)>9:
                 i=c.curr_page-4
                 j=c.curr_page-3
 
             if c.curr_page>4 and len(c.pages)>9:
                 pagestring=pagestring+'''<a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(1),c.country_id,str(1),str(1))
 
-###FASTREWIND 
-            if c.curr_page<10 and c.curr_page>4:
+###FASTREWIND
+            if len(c.pages)<9:
+                fastrewind_page='' 
+            elif c.curr_page<10 and c.curr_page>4:
                 fastrewind_page=''' <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(1),c.country_id,str(0))
             elif c.curr_page>4:
                 fastrewind_page=''' <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(c.curr_page-8),c.country_id,str(c.curr_page-9))

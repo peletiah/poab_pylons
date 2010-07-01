@@ -4,6 +4,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <link type="text/css" rel="Stylesheet" media="screen" href="/css/infoWindow.css"/>
+    <link href="/css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"/>
     <script src="http://maps.google.com/maps?file=api&amp;v=3&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"
       type="text/javascript"> </script>
     <script src="/js/extinfowindow_packed.js" type="text/javascript" defer></script>
@@ -12,32 +13,82 @@
    var map;
    var markerBounds = new GLatLngBounds();
    var i = false;
+   var markerclicked = false;
    trackpolyline=new Array();
    trackmarker=new Array();
 
 
 ///////////////////// OVERLAYS //////////////////////////////
 
-   function showSubcontent(contentlink) {
-	$.ajax({
-	    url: contentlink,
-	    cache: true,
-	    success: function(response) { 
-			$("#subcontent").replaceWith('<div id="subcontent">' + response + '</div>');
-		     }
-        
-	});
-    }
+function resetContent() {
+    showSubcontent('/misc/country_svg/0');
+    modFromSVG(0)
+    map_shrink();
+}
+function showContent(country_id) {
+    modFromSVG(country_id)
+}
 
+function modFromSVG(country_id) {
+    removeoverlay(markerlist);
+    $.ajax({
+            url: '/track/markerlist/'+country_id,
+            cache: true,
+            success: function(response) { 
+                var markerlist=''
+                markerlist=eval(response);
+                markerBounds = null
+                markerBounds = new GLatLngBounds();
+                trackoverlay(markerlist);
+            }
+    });
+    $.ajax({
+            url: '/misc/navstr/'+country_id,
+            cache: true,
+            success: function(response) {
+                navstring=response;
+                showNavigation(navstring);
+        }
+    });
+    showSubcontent('/misc/country_svg/'+country_id)
+    map_shrink();
+    $(".menu").attr("href", function() {
+            var re = new RegExp("(http://benko.login.cx:4000/[A-z]{1,}/)c/[0-9]{1,}");
+            return(this.href.replace(re, "$1c/"+country_id));
+        });
+    };
 
    function controllerlink(markerdate,distance,timespan,gallerylink,loglink) {
         return '<div id="map_marker_content_text"><b>date:</b> '+markerdate+'<br>'+distance+timespan+gallerylink+loglink+'</div>';
    }
 
+    function map_shrink() {
+        if ($("#map").css("width")==$("#content").css("width")) {
+            $("#map").width('55%')
+            }
+        else if ($("#map").css("width")=='100%') {
+            $("#map").width('55%')
+            }
+    map.checkResize();
+    }
 
-   function dissectcontentlink(contentlink) {
+    function map_grow() {
+        $("#map").width('100%')
+        map.checkResize();
+        $('<div id="subcontent"/>').replaceAll("#subcontent");
+    }
+
+    function recenter(lat,lng) {
+        map_shrink();
+        map.checkResize();
+        map.panTo(new GLatLng(lat,lng));
+}
+
+
+   function dissectcontentlink(lat,lng,contentlink) {
             if (contentlink != '') {
                 dissectedlink = contentlink.split('(\'')[1].split('\')')[0];
+                recenter(lat,lng);
                 showSubcontent(dissectedlink);
             };
         }
@@ -47,13 +98,14 @@
    function writegmarker(lat,lng,markerdate,distance,timespan,gallerylink,loglink,n) {
         trackmarker[n] = new GMarker( new GLatLng(lat,lng) );
                 GEvent.addListener(trackmarker[n], 'click', function(){
+                markerclicked=true;
                 trackmarker[n].openExtInfoWindow(
                   map,
                   "map_marker",
                   controllerlink(markerdate,distance,timespan,gallerylink,loglink),
                   {beakOffset: 3}
                 );
-                dissectcontentlink(gallerylink);        
+                dissectcontentlink(lat,lng,gallerylink);
               });
 	 map.addOverlay(trackmarker[n]);
    }
@@ -70,7 +122,9 @@
         });
 	map.addOverlay(trackpolyline[n]);
       }
-   
+  
+
+ 
     function setBounds(lat,lng) {
             markerBounds.extend( new GLatLng(lat,lng));
     }
@@ -101,14 +155,21 @@
     }
 
 
-   function trackoverlay() {
-	    markerlist = ${c.markerlist};
+   function trackoverlay(markerlist) {
         for (var n=0; n<markerlist.length; n++) {
 	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].markerdate,markerlist[n].distance,markerlist[n].timespan,markerlist[n].gal,markerlist[n].log,n)
            setBounds(markerlist[n].lat,markerlist[n].lon)
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
+        map.setCenter(markerBounds.getCenter(), map.getBoundsZoomLevel(markerBounds));
     }
+
+    function removeoverlay(markerlist) {
+        map.clearOverlays()
+        for (var n=0; n<markerlist.length; n++) {
+            map.removeOverlay(trackpolyline[n]);            
+        }
+    };
  
   var wikiOverlay; // global
   wikiOverlay = new GLayer("org.wikipedia.en")
@@ -142,9 +203,16 @@
         mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
         map.addControl(mapControl);
         map.enableScrollWheelZoom();
-	     trackoverlay();
-        map.setCenter(markerBounds.getCenter(), map.getBoundsZoomLevel(markerBounds));
-      }
+        markerlist = ${c.markerlist};
+        GEvent.addListener(map, 'click', function(){
+        if (markerclicked==false) {
+            map_grow();
+            }
+        markerclicked=false;
+        });
+	     trackoverlay(markerlist);
+        GEvent.addListener(map, 'extinfowindowclose', function(){map_grow();});
+    }
     }
 
     //]]>

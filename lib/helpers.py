@@ -12,7 +12,7 @@ def countryDetails(model,country_id):
         return navstring
     q = model.Session.query(model.country).filter(model.country.iso_numcode==country_id)
     country=q.one()
-    navstring='''<li id="navigation"><a href="#" title="Journal-entries for all countries" onclick="resetContent();">All</a>&#8594;<a href="#" title="Content for %s" onclick="showContent(\\'%s\\');">%s</a></li>''' % (country.iso_countryname,country.iso_numcode,country.iso_countryname)
+    navstring='''<li id="navigation"><a href="#" title="Journal-entries for all countries" onclick="resetContent\(\);">All</a>&#8594;<a href="#" title="Content for %s" onclick="showContent(\\'%s\\');">%s</a></li>''' % (country.iso_countryname,country.iso_numcode,country.iso_countryname)
     return navstring
     
     

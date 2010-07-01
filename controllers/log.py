@@ -15,7 +15,7 @@ class LogController(BaseController):
     def index(self,startfromlog):
         c.country_id=0
         c.page=0
-        c.navstring='''<li id="navigation"><a href="#" title="Show all entries" onclick="resetContent();">All</a></li>'''
+        c.navstring=h.countryDetails(model,c.country_id)
         return render("/log/index.html")
 
     def c(self,country_id,page):
@@ -155,11 +155,3 @@ class LogController(BaseController):
 
 
 
-    def country_svg(self,id):
-        if int(id)==0:
-            return render("/misc/world_svg.html")
-        country_id=int(id)
-        
-        q = model.Session.query(model.country).filter(model.country.iso_numcode==country_id)
-        c.country=q.one()
-        return render("/misc/country_svg.html")

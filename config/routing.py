@@ -28,6 +28,9 @@ def make_map():
     map.connect('log/c/:country_id/:page', controller='log', action='c', country_id=0, page=0)
     map.connect('track/c/', controller='track', action='c', country_id=0)
     map.connect('track/c/:country_id', controller='track', action='c', country_id=0)
+    map.connect('track/markerlist/', controller='track', action='markerlist', country_id=0)
+    map.connect('track/markerlist/:country_id', controller='track', action='markerlist', country_id=0)
+
     map.connect('view/c/', controller='view', action='c', country_id=0,page=0)
     map.connect('view/c/:country_id/:page', controller='view', action='c', country_id=0, page=0)
     map.connect('view/country/', controller='view', action='country', country_id=0, page=0)
@@ -38,6 +41,11 @@ def make_map():
     map.connect('view/gallery/:infomarker/:startfromimg', controller='view', action='gallery')
     map.connect('view/infomarker/:infomarker/:startfromimage', controller='view', action='infomarker')
     map.connect('track/simple/:trackpoint/:imageid', controller='track', action='simple')
+    map.connect('misc/navstr/', controller='misc', action='navstring', country_id=0)
+    map.connect('misc/navstr/:country_id/', controller='misc', action='navstring', country_id=0)
+    map.connect('misc/country_svg/', controller='misc', action='country_svg', country_id=0)
+    map.connect('misc/country_svg/:country_id/', controller='misc', action='country_svg', country_id=0)
+ 
     map.connect(':controller/:action/:id')
 
     return map

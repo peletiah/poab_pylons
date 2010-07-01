@@ -286,5 +286,6 @@ class ViewController(BaseController):
                 imagesprevpage = q.order_by(desc(model.imageinfo.id)).limit(23+c.imagecount)
             for image in imagesprevpage:
                     c.prevstartfromimg=image.id
+            #getting the lat-lng position of the infomarker
             return render("/view/gallery.html")
 
