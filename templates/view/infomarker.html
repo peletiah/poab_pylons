@@ -1,22 +1,14 @@
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
-
+<%namespace name="pages" file="/misc/pages.html"/>
 <!--<link href="css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"  />-->
 
 <div id="content">
-<!--            highestimageid: ${c.highestimageid}<br />
-            lowestimageid: ${c.lowestimageid}<br />
-            startfromimage: ${c.startfromimage}<br />
-            lowestimageonpage: ${c.lowestimageonpage}<br />
-            startimagenextpage: ${c.startimagenextpage}<br />
-            startimageprevpage: ${c.startimageprevpage}<br />
--->
 
-
-${pages()}
+${pages.pages()}
 
 % for viewdetail in c.viewlist:
-
+<div class="view">
 <div class="imagecontainer">
     
     <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}"><img id="image" src="${viewdetail.imgname}"></a>
@@ -66,23 +58,5 @@ $("div.imagecontainer").mouseover(function(){
 
 </script>
 
-${pages()}
+${pages.pages()}
 
-
-<%def name="pages()">
-    <div id="pages">
-            % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
-                <span class="logpagelowest"><a href="/view/infomarker/${c.infomarker_id}/${c.lowestimageid}" title="Jump to oldest photos"></a></span>
-            % endif
-            % if c.startimageprevpage >= c.lowestimageid and c.lowestimageonpage != c.lowestimageid:
-                <span class="logpageprev"><a href="/view/infomarker/${c.infomarker_id}/${c.startimageprevpage}" title="Show older photos"></a></span>
-            % endif
-            % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
-                <span class="logpagenext"><a href="/view/infomarker/${c.infomarker_id}/${c.startimagenextpage}" title="Show newer photos"></a></span>
-            % endif
-            % if c.startimagenextpage <= c.highestimageid and c.startfromimage != c.highestimageid:
-                <span class="logpagehighest"><a href="/view/infomarker/${c.infomarker_id}/${c.highestimageid}" title="Jump to newest photos"></a></span>
-            % endif
-        </div>
-
-</%def>

@@ -3,7 +3,6 @@ import logging
 from poab.lib.base import *
 from sqlalchemy import asc, desc, and_, or_
 import time, datetime, calendar
-import calc_distance
 
 log = logging.getLogger(__name__)
 
@@ -16,7 +15,14 @@ class FactsController(BaseController):
         now=datetime.datetime.now()
         c.age=(now-birthday).days/365
         return render("/facts/index.html")
- 
+    
+    def c(self,id):
+        q=model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
+        trackpoint=q.first()
+        c.infomarker=trackpoint.id
+        return render("/facts/stats.html")
+
+
     def stats(self,id):
         c.infomarker=id
         if id==None:
@@ -63,7 +69,7 @@ data:['''
                 pass
             else:
                 try:
-                    distance=distance+calc_distance.distance_on_unit_sphere(oldlat, oldlon, newlat, newlon)*6373
+                    distance=distance+h.distance_on_unit_sphere(oldlat, oldlon, newlat, newlon)*6373
                 except typeError:
                     return oldlat,oldlon,newlat,newlon
             oldlat=newlat

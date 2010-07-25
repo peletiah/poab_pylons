@@ -11,7 +11,7 @@ ${pages.pages()}
 
 
 % for viewdetail in c.viewlist:
-
+<div class="view">
 <div class="imagecontainer">
     <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}" title="View photolocation on map"><img id="image" src="${viewdetail.imgname}"></a>
     <div class="caption">
@@ -47,6 +47,7 @@ ${pages.pages()}
     
 
     </div>
+</div>
 </div>
 % endfor
 

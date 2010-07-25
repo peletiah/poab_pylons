@@ -6,6 +6,9 @@ log = logging.getLogger(__name__)
 
 class MiscController(BaseController):
 
+    def index(self):
+        return render("/misc/index.html")
+
     def navstring(self,country_id):
         c.navstring=h.countryDetails(model,int(country_id)).replace('\\','')
         return c.navstring

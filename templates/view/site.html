@@ -6,6 +6,13 @@
    <link href="/css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"/>
     <script type="text/javascript" >
    function showContent(country_id) {
+        var re = new RegExp("(http://poab.org:4000/view/infomarker/[0-9]{1,})/[0-9]{1,}");
+        var m = re.exec(location.href)
+        if (m!=null) {
+            var newurl = location.href.replace(re, "$1"+country_id)
+            window.location = newurl
+        }
+            
         if (country_id=='0') {
             showNavigation('<li id="navigation"><a href="#" title="Journal-entries for all countries" onclick=resetContent();>All</a></li>');
             resetMenu(country_id);
@@ -20,7 +27,14 @@
         });
     }
     function resetContent() {
+        
         showContent(0);
+        if ($(".imagecontainer").css("width")==$(".imagecontainer").css("width")) {
+            $(".imagecontainer").width('55%')
+            }
+        else if ($(".imagecontainer").css("width")=='100%') {
+            $(".imagecontainer").width('55%')
+            }
     }
 
 </script>

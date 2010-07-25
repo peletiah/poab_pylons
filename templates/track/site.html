@@ -5,8 +5,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <link type="text/css" rel="Stylesheet" media="screen" href="/css/infoWindow.css"/>
     <link href="/css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"/>
-    <script src="http://maps.google.com/maps?file=api&amp;v=3&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"
-      type="text/javascript"> </script>
+    <!--<script src="http://maps.google.com/maps?file=api&amp;v=3&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURSn1OJP2Pt8vYqZWM-35sBIxmB9uBQHOgv5D5ZMxzfS8sAQ4wI448OmqQ"-->
+    <script src="http://maps.google.com/maps?file=api&amp;v=3&amp;key=ABQIAAAAtBis1EsY3cr3r5-nc6tpURT9kc7KlpvIe7Y49kiN9oGT6-y-xxS_XIqlWBEpFQatfFPPmQJVe4JfOw" type="text/javascript"> </script>
     <script src="/js/extinfowindow_packed.js" type="text/javascript" defer></script>
    <script defer>//<![CDATA[
 
@@ -53,7 +53,7 @@ function modFromSVG(country_id) {
     showSubcontent('/misc/country_svg/'+country_id)
     map_shrink();
     $(".menu").attr("href", function() {
-            var re = new RegExp("(http://benko.login.cx:4000/[A-z]{1,}/)c/[0-9]{1,}");
+            var re = new RegExp("(http://poab.org:4000/[A-z]{1,}/)c/[0-9]{1,}");
             return(this.href.replace(re, "$1c/"+country_id));
         });
     };
@@ -74,8 +74,9 @@ function modFromSVG(country_id) {
 
     function map_grow() {
         $("#map").width('100%')
-        map.checkResize();
         $('<div id="subcontent"/>').replaceAll("#subcontent");
+        map.checkResize();
+        map.setCenter(markerBounds.getCenter(), map.getBoundsZoomLevel(markerBounds));
     }
 
     function recenter(lat,lng) {
@@ -203,12 +204,12 @@ function modFromSVG(country_id) {
         mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
         map.addControl(mapControl);
         map.enableScrollWheelZoom();
+        map.disableDoubleClickZoom();
         markerlist = ${c.markerlist};
         GEvent.addListener(map, 'click', function(){
-        if (markerclicked==false) {
-            map_grow();
-            }
-        markerclicked=false;
+            if (markerclicked==false) {
+                map_grow();
+                }
         });
 	     trackoverlay(markerlist);
         GEvent.addListener(map, 'extinfowindowclose', function(){map_grow();});

@@ -8,7 +8,7 @@
     <script type="text/javascript" >
    function showContent(country_id) {
         if (country_id=='0') {
-            showNavigation('<li id="navigation"><a href="#" title="Journal-entries for all countries" onclick=resetContent();>All</a></li>');
+            showNavigation('<li class="navigation"><ul><li class="navli"><a href="#" title="Show all entries" onclick="resetContent();">All</a></li></ul></li>');
             resetMenu(country_id);
         }
         $.ajax({
@@ -24,7 +24,7 @@
     function modFromSVG(country_id) {
         showContent(country_id);
         $(".menu").attr("href", function() {
-            var re = new RegExp("(http://benko.login.cx:4000/[A-z]{1,}/)c/[0-9]{1,}");
+            var re = new RegExp("(http://poab.org:4000/[A-z]{1,}/)c/[0-9]{1,}");
             return(this.href.replace(re, "$1c/"+country_id));
         });
     }
