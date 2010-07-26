@@ -11,7 +11,7 @@
                 j=c.curr_page-3
 
             if c.curr_page>4 and len(c.pages)>9:
-                pagestring=pagestring+'''<a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(1),c.country_id,str(1),str(1))
+                pagestring=pagestring+'''<a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(1),c.country_id,str(0),str(1))
 
 ###FASTREWIND
             if len(c.pages)<9:

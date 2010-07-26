@@ -14,13 +14,20 @@ class LogController(BaseController):
 
     def index(self,startfromlog):
         c.country_id=0
-        c.page=0
+        q = model.Session.query(model.log)
+        log_count = q.count()
+        c.page=log_count/3
         c.navstring=h.countryDetails(model,c.country_id)
         return render("/log/index.html")
 
     def c(self,country_id,page):
         c.country_id=int(country_id)
-        c.page=page
+        if c.country_id==0:
+            q = model.Session.query(model.log)
+            log_count = q.count()
+            c.page=log_count/3
+        else:
+            c.page=page
         c.navstring=h.countryDetails(model,c.country_id)
         return render("/log/index.html")
 
@@ -37,7 +44,7 @@ class LogController(BaseController):
         for trackpoint in trackpoints:
             trkpt_list.append(trackpoint.id)
         q = model.Session.query(model.log).filter(model.log.infomarker_id.in_(trkpt_list))
-        logs = q.order_by(desc(model.log.createdate)).all()
+        logs = q.order_by(asc(model.log.createdate)).all()
         c.page=list()
         c.pages=list()
         i=0
@@ -45,10 +52,12 @@ class LogController(BaseController):
             c.page.append(log)
             i=i+1
             if i==3:
+                c.page.reverse()
                 c.pages.append(c.page)
                 c.page=list()
                 i=0
         if i<3 and i>0:
+            c.page.reverse()
             c.pages.append(c.page)
         c.logdetails=list()       
         for c.log in c.pages[c.curr_page]:

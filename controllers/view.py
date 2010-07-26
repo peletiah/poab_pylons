@@ -12,14 +12,21 @@ class ViewController(BaseController):
 
     def index(self):
         c.country_id=0
-        c.page=0
+        q = model.Session.query(model.imageinfo)
+        image_count=q.count()
+        c.page=image_count/10
         c.navstring='''<li id="navigation"><a href="#" title="Show all entries" onclick="resetContent();">All</a></li>'''
         return render("/view/index.html")
 
 
     def c(self,country_id,page):
         c.country_id=int(country_id)
-        c.page=page
+        if c.country_id==0:
+            q = model.Session.query(model.imageinfo)
+            image_count=q.count()
+            c.page=image_count/10
+        else:
+            c.page=page
         return render("/view/index.html")
 
     def country(self,country_id,page):
@@ -35,7 +42,7 @@ class ViewController(BaseController):
         for trackpoint in trackpoints:
             trkpt_list.append(trackpoint.id)
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.trackpoint_id.in_(trkpt_list))
-        images= q.order_by(desc(model.imageinfo.flickrdatetaken)).all()
+        images= q.order_by(asc(model.imageinfo.flickrdatetaken)).all()
         c.page=list()
         c.pages=list()
         i=0
@@ -43,10 +50,12 @@ class ViewController(BaseController):
             c.page.append(image)
             i=i+1
             if i==10:
+                c.page.reverse()
                 c.pages.append(c.page)
                 c.page=list()
                 i=0
         if i<10 and i>0:
+            c.page.reverse()
             c.pages.append(c.page)
         c.viewlist=list()
         for image in c.pages[c.curr_page]:
@@ -92,10 +101,11 @@ class ViewController(BaseController):
 
     def infomarker(self,infomarker,page):
         c.curr_page=int(page)
-        c.infomarker=int(infomarker)
     #    c.navstring=h.countryDetails(model,c.country_id)
         q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.online==True,model.imageinfo.infomarker_id==c.infomarker))
-        images=q.order_by(desc(model.imageinfo.flickrdatetaken)).all()
+        images=q.order_by(asc(model.imageinfo.flickrdatetaken)).all()
+        c.infomarker=int(infomarker)
+
         c.page=list()
         c.pages=list()
         i=0
@@ -103,10 +113,12 @@ class ViewController(BaseController):
             c.page.append(image)
             i=i+1
             if i==10:
+                c.page.reverse()
                 c.pages.append(c.page)
                 c.page=list()
                 i=0
         if i<10 and i>0:
+            c.page.reverse()
             c.pages.append(c.page)
         c.viewlist=list()
         for image in c.pages[c.curr_page]:
