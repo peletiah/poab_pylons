@@ -7,7 +7,7 @@
     <title>poab.org - photos</title>
     <script type="text/javascript" >
    function showContent(country_id) {
-        var re = new RegExp("(http://poab.org:4000/view/infomarker/[0-9]{1,})/[0-9]{1,}");
+        var re = new RegExp("(http://w{0,3}\.{0,1}poab.org/view/infomarker/[0-9]{1,})/[0-9]{1,}");
         var m = re.exec(location.href)
         if (m!=null) {
             var newurl = location.href.replace(re, "$1"+country_id)

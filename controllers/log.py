@@ -22,7 +22,7 @@ class LogController(BaseController):
 
     def c(self,country_id,page):
         c.country_id=int(country_id)
-        if c.country_id==0:
+        if c.country_id==0 and page==0:
             q = model.Session.query(model.log)
             log_count = q.count()
             c.page=log_count/3
