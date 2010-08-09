@@ -101,6 +101,8 @@ body a:hover {
 .navigation {
     color: #CCCCCC;
     border: none;
+    font-size:80%;
+    padding: 0.1em;
     }
 
 .navigation ul {
@@ -109,24 +111,26 @@ body a:hover {
 	list-style: none;
 }
 
-.navigation span {
-    margin-left:2em;
-}
 
 .navigation a {
     color: #CCCCCC;
     text-decoration: none;
-    font-size:80%;
     padding: 0.1em;
 }
+
+
 
 .navigation a:hover {
         text-decoration: underline;
         color: #FFFFFF;
-        font-size:80%;
-        padding: 0.1em;
+    padding: 0.1em;
 }
 
+.navigation span {
+    color: #CCCCCC;
+    text-decoration: none;
+    padding: 0.1em;
+}
 .navli {
  /*   background: #3274D0 url(/images/menu/del_sprite_tagScopeNav.png) no-repeat scroll right -1200px */
    } 
@@ -250,6 +254,15 @@ body a:hover {
     height: 18px;
     background: url('/images/infowindow/stats_icon_red.png') no-repeat;   
 }
+
+.permalink {
+    font-size: 70%;
+    margin: 1em 0;
+    float: left;
+    display:block;
+    width: 100%;
+}
+
 #logdetail a {
         color: #CCCCCC;
         text-decoration: underline;
@@ -329,6 +342,15 @@ body a:hover {
     padding: 0 0 1em 0;
 }
 
+#logcontent h2 a {
+    text-decoration: none;
+    color: #EEEEEE;
+} 
+
+#logcontent h2 a:hover {
+   text-decoration: underline;
+    color: #FFFFFF;
+}
 #logfooter {
         height: 3em;
         padding: 3em;

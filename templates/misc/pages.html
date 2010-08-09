@@ -11,15 +11,15 @@
                 j=c.curr_page-3
 
             if c.curr_page>4 and len(c.pages)>9:
-                pagestring=pagestring+'''<a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(1),c.country_id,str(0),str(1))
+                pagestring=pagestring+'''<a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(0),str(1),c.country_id,str(0),str(1))
 
 ###FASTREWIND
             if len(c.pages)<9:
                 fastrewind_page='' 
             elif c.curr_page<10 and c.curr_page>4:
-                fastrewind_page=''' <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(1),c.country_id,str(0))
+                fastrewind_page=''' <a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(0),str(1),c.country_id,str(0))
             elif c.curr_page>4:
-                fastrewind_page=''' <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(c.curr_page-8),c.country_id,str(c.curr_page-9))
+                fastrewind_page=''' <a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(c.curr_page-9),str(c.curr_page-8),c.country_id,str(c.curr_page-9))
             pagestring=pagestring+fastrewind_page
 ###
 
@@ -30,12 +30,12 @@
                 elif i==c.curr_page:
                     pagestring=pagestring+''' <b>%s</b>'''% (str(j))
                 elif j<10:
-                    pagestring=pagestring+''' <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(j),c.country_id,str(i),str(j))
+                    pagestring=pagestring+''' <a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(i),str(j),c.country_id,str(i),str(j))
                 #don't display more than 5 extra pages
                 elif j> c.curr_page+5 and j>5:
                     continue
                 else:
-                    pagestring=pagestring+''' <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(j),c.country_id,str(i),str(j))
+                    pagestring=pagestring+''' <a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (str(i),str(j),c.country_id,str(i),str(j))
                 i=i+1
                 j=j+1
 
@@ -43,17 +43,17 @@
             if len(c.pages)<9:
                 fastforward_page=''
             elif c.curr_page+9<len(c.pages):
-                fastforward_page=''' <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(c.curr_page+10),c.country_id,str(c.curr_page+9))
+                fastforward_page=''' <a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(c.curr_page+9),str(c.curr_page+10),c.country_id,str(c.curr_page+9))
             #if we are less than 6 pages from the last page, we don't view a jump anymore
             elif c.curr_page+6==len(c.pages):
                 fastforward_page=''
             #if we are less than 9 pages from the last page, we jump to the last page
             else:
-                fastforward_page=''' <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(len(c.pages)),c.country_id,str(len(c.pages)-1))
+                fastforward_page=''' <a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>...</a>''' % (str(len(c.pages)-1),str(len(c.pages)),c.country_id,str(len(c.pages)-1))
 ###
 
             if c.curr_page+5<len(c.pages) and len(c.pages)>9:
-                pagestring=pagestring+'''%s <a href="#" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (fastforward_page,str(len(c.pages)),c.country_id,str(len(c.pages)-1),str(len(c.pages)))
+                pagestring=pagestring+'''%s <a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (fastforward_page,str(len(c.pages)-1),str(len(c.pages)),c.country_id,str(len(c.pages)-1),str(len(c.pages)))
         %>
         ${pagestring}
 

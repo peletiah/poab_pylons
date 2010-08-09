@@ -1,3 +1,4 @@
+<link rel="alternate" type="application/atom+xml" href="http://poab.org/feed" title="POAB.org - World Cycle Blog" />
 <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen">
 <link type="text/css" rel="Stylesheet" media="screen" href="/css/flora.datepicker.css"/>
 <link rel="stylesheet" href="/css/jquery.autocomplete.css" type="text/css" />
@@ -39,14 +40,22 @@ function modMenu(country_id) {
         m = re.exec(document.URL)
         $(".menu").attr("href", function() {
             mm=re.exec(this.href)
-            if (m!=null && m!=null) {
+            if (m!=null && mm!=null) {
               if (m[1]==mm[1]) {
                 $(this).css("background","#00607f");
                 $(this).css("-webkit-border-radius","5px");
                 $(this).css("-moz-border-radius","5px");
                 $(this).css("border-radius","5px");
+              };
+            }
+            else if (m==null && mm!=null) {
+                if (mm[1]=="log") {
+                  $(this).css("background","#00607f");
+                  $(this).css("-webkit-border-radius","5px");
+                  $(this).css("-moz-border-radius","5px");
+                  $(this).css("border-radius","5px");
+                };
             };
-          };
         });
         }
 

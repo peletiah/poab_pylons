@@ -1,15 +1,8 @@
-<%namespace name="pages" file="/misc/pages.html"/>
-
-    <div id="log" "clearfix">
-${pages.pages()}
-            <!--highestlogid: ${c.highestlogid}<br />
-            lowestlogid: ${c.lowestlogid}<br />
-            startfromlog: ${c.startfromlog}<br />
-            lowestlogonpage: ${c.lowestlogonpage}<br />
-            startlognextpage: ${c.startlognextpage}<br />
-            startlogprevpage: ${c.startlogprevpage}-->
-
-
+<%inherit file="site.html" />
+<%include file="/menu/menu.html" />
+<div id="content">
+  <div id="log" "clearfix">
+    
         % for log in c.logdetails:
             <div id="logdetail">
                 <table id="logheader">
@@ -21,7 +14,7 @@ ${pages.pages()}
                     </tbody>
                 </table>
                 <div id="logcontent">
-                    <h2><a href="/log/infomarker/${log.infomarkerid}">${log.topic}</a></h2>
+                    <h2>${log.topic}</h2>
                     % if log.distance==None:
                         
                     % else:
@@ -43,10 +36,10 @@ ${pages.pages()}
                 </div>
             </div>
         % endfor
-${pages.pages()}
 </div>
 <div id="subcontent">
 </div> 
+</div>
 % if c.error:
     <div id="error">
         ${c.error}
@@ -61,7 +54,7 @@ $("div.imagecontainer").mouseover(function(){
  }).mouseout(function(){
       $(".caption",this).hide();
     });
-showSubcontent('/misc/country_svg/'+${c.country_id});
+showSubcontent('/misc/country_svg/'+${c.country.iso_numcode});
 function captionSize(){
       width=($("#inlineimage").css("width"))
       $('div.imagecontainer').css({width: width});
@@ -70,6 +63,16 @@ function captionSize(){
 $(document).ready(function(){
         $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
     captionSize()
+    });
+showNavigation('${c.navstring}');
+var i=0;
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){ 
+      $(".caption",this).show();
+      width=($("img[id='inlineimage']",this).width())
+      $('div.imagecontainer').css({width: width});
+ }).mouseout(function(){
+      $(".caption",this).hide();
     });
 showNavigation('${c.navstring}');
 </script>
