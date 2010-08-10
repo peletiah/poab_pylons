@@ -5,3 +5,4 @@ credentials.ini
 *.dia~
 *.autosave
 *.swp
+templates/misc/hostname.html
