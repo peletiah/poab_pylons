@@ -174,7 +174,7 @@ body a:hover {
 }
 
 #log {
-   max-width: 37em;
+   max-width: 36em;
    float: left;
 }
 
@@ -334,7 +334,7 @@ body a:hover {
 }
 #logcontent {
    padding:1em 1.5em 1em 2em;
-   width: 35em;
+   width: 37em;
 }
 
 #logcontent h2 {
@@ -449,7 +449,7 @@ body a:hover {
 	 display:inline;
 	 float: left;
 	 z-index: 1;
-	 margin: 0 0 0 3em;
+	 margin: 0 0 0 6em;
 	 }
 
 .sub_track {

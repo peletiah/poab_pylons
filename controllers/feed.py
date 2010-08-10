@@ -24,8 +24,6 @@ class FeedController(BaseController):
             # ###query for last trackpoint
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.track_id==c.infomarker.track_id).order_by(asc(model.trackpoint.timestamp))
             c.lasttrkpt=q.first()
-            # ###query for startfromimg
-            q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
             # ###query for track
             q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
             if q.count() == 1:
@@ -58,11 +56,11 @@ class FeedController(BaseController):
                 q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageinfo_id)
                 imageinfo = q.one()
                 if imageinfo.flickrdescription==None:
-                    inlineimage='''<br /><div><a href="%s" title="%s"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><br /><br />
-    </div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle)
+                    inlineimage='''<br /><div><a href="/view/solo/%s" title="%s"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><br /><br />
+    </div>''' % (imageinfo.id,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle)
                 else:
-                    inlineimage='''<div><div><a href="%s" title="%s"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a>
-    </div><span>%s</span><br /><br /></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrdescription)
+                    inlineimage='''<div><div><a href="/view/solo/%s" title="%s"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a>
+    </div><span>%s</span><br /><br /></div>''' % (imageinfo.id,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrdescription)
                 c.log.content=c.log.content.replace(imgidtag,inlineimage)
             # ###create logdetails-class
             class logdetails:
@@ -82,6 +80,7 @@ class FeedController(BaseController):
                 continent=c.continent.name
                 location=c.lasttrkpt.location
                 infomarkerid=c.infomarker.id
+                id=c.log.id
                 gallerylink=c.gallerylink
             c.logdetails.append(logdetails)
         return render("/feed/index.html")

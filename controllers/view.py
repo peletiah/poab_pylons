@@ -14,7 +14,11 @@ class ViewController(BaseController):
         c.country_id=0
         q = model.Session.query(model.imageinfo)
         image_count=q.count()
-        c.page=image_count/10
+        page_fract=float(h.Fraction(str(image_count)+'/10'))
+        if int(str(page_fract).split('.')[1])==0:
+            c.page=int(str(page_fract).split('.')[0])-1
+        else:
+            c.page=str(page_fract).split('.')[0]
         c.navstring='''<li id="navigation"><a href="#" title="Show all entries" onclick="resetContent();">All</a></li>'''
         return render("/view/index.html")
 
@@ -24,7 +28,11 @@ class ViewController(BaseController):
         if c.country_id==0:
             q = model.Session.query(model.imageinfo)
             image_count=q.count()
-            c.page=image_count/10
+            page_fract=float(h.Fraction(str(image_count)+'/10'))
+            if int(str(page_fract).split('.')[1])==0:
+                c.page=int(str(page_fract).split('.')[0])-1
+            else:
+                c.page=str(page_fract).split('.')[0]
         else:
             c.page=page
         return render("/view/index.html")
@@ -161,6 +169,45 @@ class ViewController(BaseController):
             c.viewlist.append(viewdetail)
         return render("/view/infomarker.html")
 
+    def solo(self,id):
+        q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.online==True,model.imageinfo.id==id))
+        image=q.one()
+        if image.trackpoint_id:
+            trackpoint_id=image.trackpoint_id
+        else:
+            trackpoint_id=image.infomarker_id
+            c.prefix='near '
+        q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==trackpoint_id)
+        c.trackpointinfo=q.one()
+        #get timezone
+        q = model.Session.query(model.timezone).filter(model.timezone.id==c.trackpointinfo.timezone_id)
+        c.timezone = q.one()
+        c.localtime=image.flickrdatetaken+c.timezone.utcoffset
+        deltaseconds=round(c.timezone.utcoffset.days*86400+c.timezone.utcoffset.seconds)
+        class viewdetail:
+            photoid=image.id
+            flickrfarm=image.flickrfarm
+            flickrserver=image.flickrserver
+            flickrphotoid=image.flickrphotoid
+            flickrsecret=image.flickrsecret
+            title=image.flickrtitle
+            description=image.flickrdescription
+            imgname=image.imgname
+            aperture=image.aperture
+            shutter=image.shutter
+            focal_length=image.focal_length
+            iso=image.iso
+            log_id=image.log_id
+            #logdate=c.loginfo.createdate.strftime('%Y-%m-%d') #needed for the imagepath
+            trackpointinfo=c.trackpointinfo
+            localtime=c.localtime.strftime('%Y-%m-%d %H:%M:%S')
+            timezone=c.timezone
+            #calculate the offset in seconds
+            utcoffset=timediff.timediff(deltaseconds)
+        c.viewlist=list()
+        c.viewlist.append(viewdetail)
+        return render("/view/solo.html")
+            
 
     def gallery(self,infomarker,startfromimg):
             #first imageid

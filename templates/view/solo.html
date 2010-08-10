@@ -1,0 +1,60 @@
+<%inherit file="site.html" />
+<%include file="/menu/menu.html" />
+<%namespace name="pages" file="/misc/pages.html"/>
+<!--<link href="css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"  />-->
+
+<div id="content">
+
+% for viewdetail in c.viewlist:
+<div class="view">
+<div class="imagecontainer">
+    
+    <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}"><img id="image" src="${viewdetail.imgname}" /></a>
+    <div class="caption">
+         <span id="caption_left">
+            <span>&#8594;</span>
+            <a href="http://www.flickr.com/peletiah/${viewdetail.flickrphotoid}" target="_blank">www.flickr.com</a><br />
+            <span>&#8594;</span>
+            <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}">view on map</a>
+        </span>
+
+        <span id="caption_center">
+            % if viewdetail.description:
+                <a href="/log/${viewdetail.log_id}">${viewdetail.description}</a>
+            % else:
+                <a href="/log/${viewdetail.log_id}">&ldquo;${viewdetail.title}&rdquo;</a>
+            % endif
+            <br />
+            ${viewdetail.trackpointinfo.location},
+            % if viewdetail.trackpointinfo.temperature==None:
+            n/a
+            % else:
+            ${viewdetail.trackpointinfo.temperature}&#8451
+            % endif
+        </span>
+        <span id="caption_right">
+            ${viewdetail.localtime} (<a href="" title="${viewdetail.timezone.description}, ${viewdetail.utcoffset}">${viewdetail.timezone.abbreviation})</a><br />
+            ${viewdetail.focal_length}&nbsp;|&nbsp;${viewdetail.aperture}&nbsp;|&nbsp;${viewdetail.shutter}
+        </span>
+    
+
+    </div>
+</div>
+</div>
+
+% endfor
+
+<script>
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){
+      $(".caption",this).show();
+      width=($("img[id='image']",this).width())
+      $('div.imagecontainer').css({width: width});
+    }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+
+
+</script>
+
+

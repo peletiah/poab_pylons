@@ -54,9 +54,10 @@
 
             if c.curr_page+5<len(c.pages) and len(c.pages)>9:
                 pagestring=pagestring+'''%s <a href="#!page=%s" title="Photos page %s" onclick='showContent("%s/%s");'>%s</a>'''% (fastforward_page,str(len(c.pages)-1),str(len(c.pages)),c.country_id,str(len(c.pages)-1),str(len(c.pages)))
+            if len(c.pages)==1:
+                pagestring=""
         %>
         ${pagestring}
-
     <br>
        &nbsp;
     </div>

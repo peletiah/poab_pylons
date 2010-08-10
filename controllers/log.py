@@ -16,8 +16,14 @@ class LogController(BaseController):
         c.country_id=0
         q = model.Session.query(model.log)
         log_count = q.count()
-        c.page=log_count/3
         c.navstring=h.countryDetails(model,c.country_id)
+        page_fract=float(h.Fraction(str(log_count)+'/3'))
+        if int(str(page_fract).split('.')[1])==0:
+            #if we have a "full" page(3 log entries), 
+            #the "current" page is "full-page"-fraction minus 1
+            c.page=int(str(page_fract).split('.')[0])-1
+        else:
+            c.page=str(page_fract).split('.')[0]
         return render("/log/index.html")
 
     def c(self,country_id,page):
@@ -25,7 +31,12 @@ class LogController(BaseController):
         if c.country_id==0 and page==None:
             q = model.Session.query(model.log)
             log_count = q.count()
-            c.page=log_count/3
+            page_fract=float(h.Fraction(str(log_count)+'/3'))
+            if int(str(page_fract).split('.')[1])==0:
+                c.page=int(str(page_fract).split('.')[0])-1
+            else:               
+                c.page=str(page_fract).split('.')[0]
+            #c.page=log_count/3
         else:
             c.page=page
         c.navstring=h.countryDetails(model,c.country_id)
@@ -134,13 +145,14 @@ class LogController(BaseController):
                 continent=c.continent.name
                 location=c.lasttrkpt.location
                 infomarkerid=c.infomarker.id
+                id=c.log.id
                 gallerylink=c.gallerylink
             c.logdetails.append(logdetails)
         return render("/log/ajax.html")
 
-    def infomarker(self,infomarker_id):
+    def solo(self,log_id):
         c.logdetails=list()
-        q = model.Session.query(model.log).filter(model.log.infomarker_id==int(infomarker_id))
+        q = model.Session.query(model.log).filter(model.log.id==int(log_id))
         c.curr_page=0
         logs = q.order_by(asc(model.log.createdate)).all()
         c.page=list()
@@ -236,8 +248,9 @@ class LogController(BaseController):
             location=c.lasttrkpt.location
             infomarkerid=c.infomarker.id
             gallerylink=c.gallerylink
+            id=c.log.id
         c.logdetails.append(logdetails)
-        c.navstring='''<li class="navigation"><ul><li class="navli"><a href="#" title="Journal-entries for all countries" onclick="resetContent\(\);">All</a>&#8594; Marker &#8594;<a href="/log/infomarker/%s" title="Content for %s">%s</a></li></ul></li>''' % (c.infomarker.id,c.infomarker.id,c.infomarker.id)
+        c.navstring='''<li class="navigation"><ul><li class="navli"><a href="#" title="Journal-entries for all countries" onclick="resetContent\(\);">All</a>&#8594; Id &#8594;<a href="/log/solo/%s" title="Content for log-id %s">%s</a></li></ul></li>''' % (c.log.id,c.log.id,c.log.id)
         return render("/log/infomarker.html")
 
     def minimal(self,id):
