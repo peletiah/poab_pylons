@@ -33,6 +33,8 @@ class ViewController(BaseController):
                 c.page=int(str(page_fract).split('.')[0])-1
             else:
                 c.page=str(page_fract).split('.')[0]
+        elif page==None:
+            c.page=0
         else:
             c.page=page
         return render("/view/index.html")

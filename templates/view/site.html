@@ -1,3 +1,4 @@
+<%namespace name="hostname" file="/misc/hostname.html"/>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -6,8 +7,9 @@
     <link rel="shortcut icon" href="/images/bicycle.ico" />
     <title>poab.org - photos</title>
     <script type="text/javascript" >
+    hostname = "${hostname.hostname()}"
    function showContent(country_id) {
-        var re = new RegExp("(http://w{0,3}\.{0,1}poab.org/view/infomarker/[0-9]{1,})/[0-9]{1,}");
+        var re = new RegExp("(http://w{0,3}\.{0,1}"+hostname+"/view/infomarker/[0-9]{1,})/[0-9]{1,}");
         var m = re.exec(location.href)
         if (m!=null) {
             var newurl = location.href.replace(re, "$1"+country_id)

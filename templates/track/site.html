@@ -1,3 +1,4 @@
+<%namespace name="hostname" file="/misc/hostname.html"/>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -15,6 +16,7 @@
    var markerBounds = new GLatLngBounds();
    var i = false;
    var markerclicked = false;
+   hostname = "${hostname.hostname()}"
    trackpolyline=new Array();
    trackmarker=new Array();
 
@@ -54,7 +56,7 @@ function modFromSVG(country_id) {
     showSubcontent('/misc/country_svg/'+country_id)
     map_shrink();
     $(".menu").attr("href", function() {
-            var re = new RegExp("(http://w{0,3}\.{0,1}poab.org/[A-z]{1,}/)c/[0-9]{1,}");
+            var re = new RegExp("(http://w{0,3}\.{0,1}"+hostname+"/[A-z]{1,}/)c/[0-9]{1,}");
             return(this.href.replace(re, "$1c/"+country_id));
         });
     };

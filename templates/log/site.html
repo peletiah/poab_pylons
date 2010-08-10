@@ -1,3 +1,4 @@
+<%namespace name="hostname" file="/misc/hostname.html"/>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
 <html>
     <head>
@@ -6,6 +7,7 @@
         <link rel="shortcut icon" href="/images/bicycle.ico" />
 	<title>poab.org - journal</title>
     <script type="text/javascript" >
+    hostname = "${hostname.hostname()}"
    function showContent(country_id) {
         if (country_id=='0') {
             showNavigation('<li class="navigation"><ul><li class="navli"><a href="#" title="Show all entries" onclick="resetContent();">All</a></li></ul></li>');
@@ -24,7 +26,7 @@
     function modFromSVG(country_id) {
         showContent(country_id);
         $(".menu").attr("href", function() {
-            var re = new RegExp("(http://w{0,3}\.{0,1}poab.org/[A-z]{1,}/)c/[0-9]{1,}");
+            var re = new RegExp("(http://w{0,3}\.{0,1}"+hostname+"/[A-z]{1,}/)c/[0-9]{1,}");
             return(this.href.replace(re, "$1c/"+country_id));
         });
     }

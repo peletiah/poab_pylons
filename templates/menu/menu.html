@@ -1,3 +1,4 @@
+<%namespace name="hostname" file="/misc/hostname.html"/>
 <link rel="alternate" type="application/atom+xml" href="http://poab.org/feed" title="POAB.org - World Cycle Blog" />
 <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen">
 <link type="text/css" rel="Stylesheet" media="screen" href="/css/flora.datepicker.css"/>
@@ -10,6 +11,8 @@
 <script src="/js/graph/flot_0.6/jquery.flot.js" type="text/javascript"> </script>
 <!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.pack.js"></script><![endif]-->
 <script type="text/javascript">
+    
+hostname = "${hostname.hostname()}"
             $(document).ready(function(){
                 $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
                 $("a[rel='map_colorbox']").colorbox({transition:"fade", width:"952px", height:"584px", iframe:true});
@@ -20,7 +23,7 @@ function showNavigation(navcontent) {
 
 function modMenu(country_id) {
         $(".menu").attr("href", function() {
-            var re = new RegExp("(http://w{0,3}\.{0,1}poab.org/[A-z]{1,}/)");
+            var re = new RegExp("(http://w{0,3}\.{0,1}"+hostname+"/[A-z]{1,}/)");
             //var m = re.exec(this.href)
             //alert(m);
             //alert(this.href) 
@@ -30,13 +33,13 @@ function modMenu(country_id) {
     
     function resetMenu(country_id) {
         $(".menu").attr("href", function() {
-            var re = new RegExp("(http://w{0,3}\.{0,1}poab.org/[A-z]{1,}/)c/[0-9]{1,}");
+            var re = new RegExp("(http://w{0,3}\.{0,1}"+hostname+"/[A-z]{1,}/)c/[0-9]{1,}");
             return(this.href.replace(re, "$1c/0"));
         });
     }
 
     function markMenu() {
-        var re = new RegExp("http://w{0,3}\.{0,1}poab.org/([A-z]{1,})");
+        var re = new RegExp("http://w{0,3}\.{0,1}"+hostname+"/([A-z]{1,})");
         m = re.exec(document.URL)
         $(".menu").attr("href", function() {
             mm=re.exec(this.href)

@@ -36,7 +36,8 @@ class LogController(BaseController):
                 c.page=int(str(page_fract).split('.')[0])-1
             else:               
                 c.page=str(page_fract).split('.')[0]
-            #c.page=log_count/3
+        elif page==None:
+            c.page=0
         else:
             c.page=page
         c.navstring=h.countryDetails(model,c.country_id)
