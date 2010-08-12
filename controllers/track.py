@@ -5,6 +5,7 @@ from sqlalchemy import asc, desc, and_, or_
 
 import time, datetime
 from decimal import Decimal, ROUND_HALF_UP
+import re
 
 
 log = logging.getLogger(__name__)
@@ -32,6 +33,11 @@ class TrackController(BaseController):
             if q.count() > 0:
                 #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
                 loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
+                log=q.first()
+                p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
+                if p.search(log.topic):
+                    c.twitter=True
+                    loglink=''
             else:
                 loglink=''
 
@@ -57,7 +63,8 @@ class TrackController(BaseController):
                 trackpts=''
                 tracklevels=''
                 trackcolor=''
-            c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
+            if c.twitter!=True and c.infomarker.id!=1:
+                c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
         c.markerlist=(c.markerlist + '''];''').replace('},];','}];')
         return render("/track/index.html")
 
