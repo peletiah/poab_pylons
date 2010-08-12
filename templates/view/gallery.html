@@ -16,11 +16,12 @@ startfromimg: ${c.startfromimg}<br>
 imagecount: ${c.imagecount}<br>-->
 % for image in c.images:
  <div id="thumbIndv">
-<!--    <a rel="image_colorbox" href="http://poab.org:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_b" title="${image.flickrtitle}">
-	<img src="http://poab.org:8080/flickr/${image.flickrfarm}/${image.flickrserver}/${image.flickrphotoid}/${image.flickrsecret}/_s">-->
-    <a rel="image_colorbox" href="http://farm${image.flickrfarm}.static.flickr.com/${image.flickrserver}/${image.flickrphotoid}_${image.flickrsecret}_z.jpg" title="${image.flickrtitle}">
+    <a rel="image_colorbox" href="${image.imgname}" title="${image.flickrtitle}">
 	<img src="http://farm${image.flickrfarm}.static.flickr.com/${image.flickrserver}/${image.flickrphotoid}_${image.flickrsecret}_s.jpg">
 
+
+    <!--<a rel="image_colorbox" href="http://farm${image.flickrfarm}.static.flickr.com/${image.flickrserver}/${image.flickrphotoid}_${image.flickrsecret}_z.jpg" title="${image.flickrtitle}">
+	<img src="http://farm${image.flickrfarm}.static.flickr.com/${image.flickrserver}/${image.flickrphotoid}_${image.flickrsecret}_s.jpg">-->
 
     </a>
     </div>
