@@ -54,13 +54,13 @@ ${pages.pages()}
 ${pages.pages()}
 
 <script type="text/javascript">
-//$(".caption").hide();
+$(".caption").hide();
 $("div.imagecontainer").mouseover(function(){
       $(".caption",this).show();
       width=($("img[id='image']",this).width())
       $('div.imagecontainer').css({width: width});
     }).mouseout(function(){
-  //    $(".caption",this).hide();
+      $(".caption",this).hide();
     });
 
 $(document).ready(function(){
