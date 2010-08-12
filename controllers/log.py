@@ -73,8 +73,8 @@ class LogController(BaseController):
             c.pages.append(c.page)
         c.logdetails=list()       
         for c.log in c.pages[c.curr_page]:
-            twitter=False
-            guid=None
+            c.twitter=False
+            c.guid=None
             # ###query for infomarker
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==c.log.infomarker_id)
             c.infomarker=q.one()
@@ -168,8 +168,8 @@ class LogController(BaseController):
         c.page=list()
         c.pages=list()
         i=0
-        twitter=False
-        guid=None
+        c.twitter=False
+        c.guid=None
         for log in logs:
             c.page.append(log)
             i=i+1
@@ -192,6 +192,7 @@ class LogController(BaseController):
         # ###query for last trackpoint
         q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.track_id==c.infomarker.track_id,model.trackpoint.id==c.infomarker.id)).order_by(asc(model.trackpoint.timestamp))
         c.lasttrkpt=q.first()
+        return c.lasttrkpt.id
         # ###query for startfromimg
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
         if q.count() > 0:
