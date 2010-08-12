@@ -192,7 +192,6 @@ class LogController(BaseController):
         # ###query for last trackpoint
         q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.track_id==c.infomarker.track_id,model.trackpoint.id==c.infomarker.id)).order_by(asc(model.trackpoint.timestamp))
         c.lasttrkpt=q.first()
-        return c.lasttrkpt.id
         # ###query for startfromimg
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
         if q.count() > 0:
