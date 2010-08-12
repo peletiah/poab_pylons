@@ -4,24 +4,34 @@
   <div id="log" "clearfix">
     
         % for log in c.logdetails:
+            % if log.twitter==True:
+                <div class="twitter">
+                    <div class="logheader">
+                        <span id="logheader_left">${log.createdate}</span>
+                        <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
+                    </div>
+                    <div class="twittercontent">
+                         ${log.content}
+                    </div>
+                    <span class="twitter_icon">
+                         <a href="http://twitter.com/derreisende/statuses/${log.guid}" target="_blank"></a>
+                    </span>
+                </div>
+            % else:
             <div id="logdetail">
-                <table id="logheader">
-                    <tbody>
-                    <tr>
-                        <td class="leftcol">${log.createdate}</td>
-                        <td class="rightcol">${log.location}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="logheader">
+                    <span id="logheader_left">${log.createdate}</span>
+                    <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
+                </div>
                 <div id="logcontent">
-                    <h2>${log.topic}</h2>
+                    <h2><a href="/log/solo/${log.id}" title="Permanent link to this journal-entry">${log.topic}</a></h2>
                     % if log.distance==None:
-                        
+
                     % else:
                         <b>distance:</b> ${log.distance}<br>
                     % endif
                     % if log.timespan==None:
-                        
+
                     % else:
                         <b>duration:</b> ${log.timespan}<br>
                     % endif
@@ -34,7 +44,11 @@
                     <br>
                     ${log.content}
                 </div>
+                <span class="txt_icon">
+                    <a href="/log/solo/${log.id}" title="Permanent link to this journal-entry"></a>
+                </span>
             </div>
+            % endif
         % endfor
 </div>
 <div id="subcontent">

@@ -16,9 +16,6 @@
   background:url(/images/caption/black60.png);
   behavior: url(/css/iepngfix.htc);
   font-size: 80%;
-}
-
-.caption {
   display: block;
   font-style: None;
   color: #aaa;

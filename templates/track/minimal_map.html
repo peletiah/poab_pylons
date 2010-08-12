@@ -19,27 +19,29 @@
 ///////////////////// OVERLAYS //////////////////////////////
 
    function photoinfowindow(altitude,lat,lon,location,flickrthumb) {
-        return '<div id="map_marker_content_img"><img src="'+flickrthumb+'"></div><div id="map_marker_content_text"><b>alt:</b>'+altitude+'m<br />'+location+'</div>';
+        if (flickrthumb=="") {
+            return '<div id="map_marker_content_text"><b>alt:</b>'+location+'</div>';
+            }
+        else {
+            return '<div id="map_marker_content_img"><img src="'+flickrthumb+'"></div><div id="map_marker_content_text"><b>alt:</b>'+altitude+'m<br />'+location+'</div>';
+        };
+            
    }
               
 
 
    function writegmarker(lat,lon,altitude,location,flickrthumb,n) {
         trackmarker[n] = new GMarker( new GLatLng(lat,lon) );
-                GEvent.addListener(trackmarker[n], 'click', function(){
-                trackmarker[n].openExtInfoWindow(
-                  map,
-                  "map_marker",
-                  photoinfowindow(altitude,lat,lon,location,flickrthumb),
-                  {beakOffset: 3}
-                );
-              });
-              trackmarker[n].openExtInfoWindow(
-                  map,
-                  "map_marker",
-                  photoinfowindow(altitude,lat,lon,location,flickrthumb),
-                  {beakOffset: 3}
-                );
+                if (flickrthumb!=""){
+                    GEvent.addListener(trackmarker[n], 'click', function(){
+                    trackmarker[n].openExtInfoWindow(
+                        map,
+                        "map_marker",
+                        photoinfowindow(altitude,lat,lon,location,flickrthumb),
+                    {beakOffset: 3}
+                    );
+                    });
+                }
 	map.addOverlay(trackmarker[n]);
           trackmarker[n].closeExtInfoWindow(map)
    }
@@ -70,7 +72,7 @@
    function load() {
       if (GBrowserIsCompatible()) {
         map = new GMap2(document.getElementById("map_simple"));
-        map.setCenter(new GLatLng('${c.trackpoint.latitude}', '${c.trackpoint.longitude}'), 6);
+        map.setCenter(new GLatLng('${c.trackpoint.latitude}', '${c.trackpoint.longitude}'), 8);
         map.setMapType(G_PHYSICAL_MAP);
         map.addControl(new GScaleControl()); //adds a small "legend" in the left lower corner
         map.addControl(new GSmallZoomControl3D()); //adds the standard zoom and pan-control

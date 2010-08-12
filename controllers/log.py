@@ -73,11 +73,13 @@ class LogController(BaseController):
             c.pages.append(c.page)
         c.logdetails=list()       
         for c.log in c.pages[c.curr_page]:
+            twitter=False
+            guid=None
             # ###query for infomarker
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==c.log.infomarker_id)
             c.infomarker=q.one()
             # ###query for last trackpoint
-            q = model.Session.query(model.trackpoint).filter(model.trackpoint.track_id==c.infomarker.track_id).order_by(asc(model.trackpoint.timestamp))
+            q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.track_id==c.infomarker.track_id,model.trackpoint.id==c.infomarker.id)).order_by(asc(model.trackpoint.timestamp))
             c.lasttrkpt=q.first()
             # ###query for startfromimg
             q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
@@ -111,6 +113,11 @@ class LogController(BaseController):
             c.country=q.one()
             q = model.Session.query(model.continent).filter(model.continent.id==c.country.continent_id)
             c.continent=q.one()
+            # ###set flag for irregular posts(like tweets)
+            p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
+            if p.search(c.log.topic):
+                c.guid=p.search(c.log.topic).group("guid")
+                c.twitter=True
             # ###convert 'imgid'-tags to embedded images
             imgidtags=re.findall('\[imgid[0-9]*\]',c.log.content)
             for imgidtag in imgidtags:
@@ -131,6 +138,8 @@ class LogController(BaseController):
             # ###create logdetails-class
             class logdetails:
                 topic=c.log.topic
+                twitter=c.twitter
+                guid=c.guid
                 createdate=localtime.strftime('%B %d, %Y')
                 content=c.log.content
                 try:
@@ -159,6 +168,8 @@ class LogController(BaseController):
         c.page=list()
         c.pages=list()
         i=0
+        twitter=False
+        guid=None
         for log in logs:
             c.page.append(log)
             i=i+1
@@ -179,7 +190,7 @@ class LogController(BaseController):
         q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==c.log.infomarker_id)
         c.infomarker=q.one()
         # ###query for last trackpoint
-        q = model.Session.query(model.trackpoint).filter(model.trackpoint.track_id==c.infomarker.track_id).order_by(asc(model.trackpoint.timestamp))
+        q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.track_id==c.infomarker.track_id,model.trackpoint.id==c.infomarker.id)).order_by(asc(model.trackpoint.timestamp))
         c.lasttrkpt=q.first()
         # ###query for startfromimg
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
@@ -213,6 +224,11 @@ class LogController(BaseController):
         c.country=q.one()
         q = model.Session.query(model.continent).filter(model.continent.id==c.country.continent_id)
         c.continent=q.one()
+        # ###set flag for irregular posts(like tweets)
+        p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
+        if p.search(c.log.topic):
+            c.guid=p.search(c.log.topic).group("guid")
+            c.twitter=True
         # ###convert 'imgid'-tags to embedded images
         imgidtags=re.findall('\[imgid[0-9]*\]',c.log.content)
         for imgidtag in imgidtags:
@@ -235,6 +251,8 @@ class LogController(BaseController):
             topic=c.log.topic
             createdate=localtime.strftime('%B %d, %Y')
             content=c.log.content
+            twitter=c.twitter
+            guid=c.guid
             try:
                 distance=rounded_distance
             except NameError:

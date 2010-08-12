@@ -11,15 +11,25 @@ ${pages.pages()}
 
 
         % for log in c.logdetails:
+            % if log.twitter==True:
+                <div class="twitter">
+                    <div class="logheader">
+                        <span id="logheader_left">${log.createdate}</span>
+                        <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
+                    </div>
+                    <div class="twittercontent">
+                         ${log.content}
+                    </div>
+                    <span class="twitter_icon">
+                         <a href="http://twitter.com/derreisende/statuses/${log.guid}" target="_blank"></a>
+                    </span>
+                </div>
+            % else:
             <div id="logdetail">
-                <table id="logheader">
-                    <tbody>
-                    <tr>
-                        <td class="leftcol">${log.createdate}</td>
-                        <td class="rightcol">${log.location}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="logheader">
+                    <span id="logheader_left">${log.createdate}</span>
+                    <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
+                </div>
                 <div id="logcontent">
                     <h2><a href="/log/solo/${log.id}" title="Permanent link to this journal-entry">${log.topic}</a></h2>
                     % if log.distance==None:
@@ -41,7 +51,11 @@ ${pages.pages()}
                     <br>
                     ${log.content}
                 </div>
+                <span class="txt_icon">
+                    <a href="/log/solo/${log.id}" title="Permanent link to this journal-entry"></a>
+                </span>
             </div>
+            % endif
         % endfor
 ${pages.pages()}
 </div>
@@ -71,5 +85,8 @@ $(document).ready(function(){
         $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
     captionSize()
     });
+$(document).ready(function(){
+    $("a[rel='map_colorbox']").colorbox({transition:"fade", width:"952px", height:"584px", iframe:true});
+        });
 showNavigation('${c.navstring}');
 </script>

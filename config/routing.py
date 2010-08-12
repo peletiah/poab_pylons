@@ -44,7 +44,7 @@ def make_map():
     map.connect('gallery/:infomarker/:startfromimg', controller='view', action='gallery')
     map.connect('view/gallery/:infomarker/:startfromimg', controller='view', action='gallery')
     map.connect('view/infomarker/:infomarker/:page', controller='view', action='infomarker',infomarker=0,page=0)
-    map.connect('track/simple/:trackpoint/:imageid', controller='track', action='simple')
+    map.connect('track/simple/:trackpoint/:imageid', controller='track', action='simple',imageid=None)
     map.connect('misc/navstr/', controller='misc', action='navstring', country_id=0)
     map.connect('misc/navstr/:country_id/', controller='misc', action='navstring', country_id=0)
     map.connect('misc/country_svg/', controller='misc', action='country_svg', country_id=0)

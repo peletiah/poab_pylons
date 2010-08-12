@@ -242,9 +242,16 @@ class TrackController(BaseController):
             trackpts=''
             tracklevels=''
             trackcolor=''
-        q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageid)
-        c.imageinfo=q.one()
-        flickrthumb='http://farm%s.static.flickr.com/%s/%s_%s_t.jpg' % (c.imageinfo.flickrfarm,c.imageinfo.flickrserver,c.imageinfo.flickrphotoid,c.imageinfo.flickrsecret)
-        c.markerlist='''[{'lat':%s, 'lon':%s, 'altitude':%s, 'markerdate':"%s", 'location':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s", 'flickrthumb':"%s"}];''' % (c.trackpoint.latitude,c.trackpoint.longitude,c.trackpoint.altitude,date,location,timespan,trackpts,tracklevels,trackcolor,flickrthumb)
+        if c.trackpoint.altitude==None:
+            altitude=""
+        else:
+            altitude=c.trackpoint.altitude
+        if imageid!=None:
+            q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageid)
+            c.imageinfo=q.one()
+            flickrthumb='http://farm%s.static.flickr.com/%s/%s_%s_t.jpg' % (c.imageinfo.flickrfarm,c.imageinfo.flickrserver,c.imageinfo.flickrphotoid,c.imageinfo.flickrsecret)
+        else:
+            flickrthumb=""
+        c.markerlist='''[{'lat':%s, 'lon':%s, 'altitude':"%s", 'markerdate':"%s", 'location':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s", 'flickrthumb':"%s"}];''' % (c.trackpoint.latitude,c.trackpoint.longitude,altitude,date,location,timespan,trackpts,tracklevels,trackcolor,flickrthumb)
         return render("/track/minimal_map.html")
 

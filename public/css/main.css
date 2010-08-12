@@ -26,10 +26,10 @@ body a:hover {
 	     padding: 0.2em
 	     border: solid #000000;
         border-width: 0.05em;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-        -khtml-border-radius: 10px;
-        border-radius: 10px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -khtml-border-radius: 8px;
+        border-radius: 8px;
         }
 
 
@@ -184,13 +184,14 @@ body a:hover {
 	float: left;
    background-color: #444444;
    border: solid #000000;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-khtml-border-radius: 10px;
-	border-radius: 10px; 
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px; 
 	border-width: 0.05em;
    margin: 2em 0 2em 0;
    position: relative;
+   width: 580px;
 }
 
 #logdetail_icons {
@@ -274,10 +275,10 @@ body a:hover {
 	     padding: 0.2em
 	     border: solid #000000;
         border-width: 0.05em;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-        -khtml-border-radius: 10px;
-        border-radius: 10px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -khtml-border-radius: 8px;
+        border-radius: 8px;
         }
 
 .imagedescription {
@@ -332,9 +333,46 @@ body a:hover {
 .rightcol {
         text-align: right;
 }
+
+.logheader {
+    background: #00607f;
+    color: #CCCCCC;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 6px;
+    -khtml-border-top-right-radius: 6px;
+    border-radius-topright: 5px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 6px;
+    -khtml-border-top-left-radius: 6px;
+    border-radius-topleft: 5px;
+    padding: 0.5em 0;
+    font-size: 100%;
+    width: 100%;
+    position:absolute;
+    left:0; top:0;
+    overflow:hidden;
+    display:block;
+}
+
+#logheader_right {
+        float:right;
+    padding: 0 0.5em 0 0;
+    /*width: 290px;*/
+    text-align: right;
+}
+
+#logheader_left {
+    float:left;
+    padding: 0 0 0 2em;
+    text-align: center;
+    /*width:390px;*/
+    margin: 0;
+}
+
 #logcontent {
    padding:1em 1.5em 1em 2em;
    width: 37em;
+   margin: 2.5em 0 0 0;
 }
 
 #logcontent h2 {
@@ -358,10 +396,63 @@ body a:hover {
         display: block;
 }
 
+.twitter {
+    background: none no-repeat scroll 0 0 #EEEEEE;
+    display: block;
+    float: left;
+    border: solid #000000 1px;
+    margin: 1.5em 0;
+    position: relative;
+    color: #000000;
+    width: 580px;
+    border: solid #000000;
+   -moz-border-radius: 8px;
+   -webkit-border-radius: 8px;
+   -khtml-border-radius: 8px;
+   border-radius: 8px;
+   border-width: 0.05em;
+    
+}
+
+.twittercontent {
+    padding: 1em 1.5em 1em 2em;
+    margin: 2em 0 0 0;
+}
+
+.twittercontent a {
+    color: #444444
+}
+
+.twittercontent a:hover {
+    color: #111111
+}
+
+.twitter_icon a{
+    background: url(/images/log/twitter.png) no-repeat scroll 0 0;
+    background-position:left center;
+    background-repeat:no-repeat;
+    height:16px;
+    width:16px;
+    position: absolute;
+    top: 0.5em;
+    left: 0.3em;
+}
+
+.txt_icon a{
+    background: url(/images/infowindow/log_icon.png) no-repeat scroll 0 0;
+    background-position:left center;
+    background-repeat:no-repeat;
+    height:18px;
+    width:18px;
+    position: absolute;
+    top: 0.5em;
+    left: 0.3em;
+}
+
 #pages {
    display: inline-block;
 	float: left;
-    margin: 0 0 -2em 0;
+   margin: 0 0 -1.5em 0;
 }
 
 .logpagenext a,.logpageprev a,.logpagelowest a,.logpagehighest a {
@@ -588,10 +679,10 @@ height : auto;
     font-size:90%;
    background-color: #444444;
    border: solid #000000;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-khtml-border-radius: 10px;
-	border-radius: 10px; 
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px; 
 	border-width: 0.05em;
    margin: 2em 0 2em 0;
    position: relative;
@@ -602,14 +693,14 @@ height : auto;
     font-size: 110%;
     background: #00607f;
     color: #CCCCCC;
-    -moz-border-radius-topright: 8px;
-    -webkit-border-top-right-radius: 8px;
-    -khtml-border-top-right-radius: 8px;
-    border-radius-topright: 8px;
-    -moz-border-radius-topleft: 8px;
-    -webkit-border-top-left-radius: 8px;
-    -khtml-border-top-left-radius: 8px;
-    border-radius-topleft: 8px;
+    -moz-border-radius-topright: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -khtml-border-top-right-radius: 6px;
+    border-radius-topright: 5px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 6px;
+    -khtml-border-top-left-radius: 6px;
+    border-radius-topleft: 5px;
     padding: 0.5em;
     margin: 0;
 }
