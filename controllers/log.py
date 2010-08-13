@@ -12,7 +12,8 @@ log = logging.getLogger(__name__)
 
 class LogController(BaseController):
 
-    def index(self,startfromlog):
+    def index(self):
+        redirect_to(action='c')
         c.country_id=0
         q = model.Session.query(model.log)
         log_count = q.count()
@@ -24,10 +25,11 @@ class LogController(BaseController):
             c.page=int(str(page_fract).split('.')[0])-1
         else:
             c.page=str(page_fract).split('.')[0]
+        c.navstring='''<li id="navigation"><a href="#" title="Show all entries" onclick="resetContent();">All</a></li>'''
         return render("/log/index.html")
 
-    def c(self,country_id,page):
-        c.country_id=int(country_id)
+    def c(self,id1,page):
+        c.country_id=int(id1)
         if c.country_id==0 and page==None:
             q = model.Session.query(model.log)
             log_count = q.count()
@@ -41,11 +43,7 @@ class LogController(BaseController):
         else:
             c.page=page
         c.navstring=h.countryDetails(model,c.country_id)
-        return render("/log/index.html")
-
-    def country(self,country_id,page):
-        c.curr_page=int(page)
-        c.country_id=int(country_id)
+        c.curr_page=int(c.page)
         c.navstring=h.countryDetails(model,c.country_id)
         if c.country_id==0:
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
@@ -81,11 +79,11 @@ class LogController(BaseController):
             # ###query for last trackpoint
             q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.track_id==c.infomarker.track_id,model.trackpoint.id==c.infomarker.id)).order_by(asc(model.trackpoint.timestamp))
             c.lasttrkpt=q.first()
-            # ###query for startfromimg
+            # ###query if images exist for the log
             q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
             if q.count() > 0:
                 #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                c.gallerylink="""<span class="image_icon"><a title="Show large images of this day" href="/view/infomarker/%s/0"></a></span>""" % (c.infomarker.id)
+                c.gallerylink="""<span class="image_icon"><a title="Show large images related to this entry" href="/view/infomarker/%s/0"></a></span>""" % (c.infomarker.id)
             else:
                 c.gallerylink=''
             # ###query for track
@@ -158,9 +156,9 @@ class LogController(BaseController):
                 id=c.log.id
                 gallerylink=c.gallerylink
             c.logdetails.append(logdetails)
-        return render("/log/ajax.html")
+        return render("/log/index.html")
 
-    def solo(self,log_id):
+    def id(self,log_id):
         c.logdetails=list()
         q = model.Session.query(model.log).filter(model.log.id==int(log_id))
         c.curr_page=0
@@ -269,7 +267,7 @@ class LogController(BaseController):
             gallerylink=c.gallerylink
             id=c.log.id
         c.logdetails.append(logdetails)
-        c.navstring='''<li class="navigation"><ul><li class="navli"><a href="#" title="Journal-entries for all countries" onclick="resetContent\(\);">All</a>&#8594; Id &#8594;<a href="/log/solo/%s" title="Content for log-id %s">%s</a></li></ul></li>''' % (c.log.id,c.log.id,c.log.id)
+        c.navstring='''<li class="navigation"><ul><li class="navli"><a href="#" title="Journal-entries for all countries" onclick="resetContent\(\);">All</a>&#8594; Id &#8594;<a href="/log/id/%s" title="Content for log-id %s">%s</a></li></ul></li>''' % (c.log.id,c.log.id,c.log.id)
         return render("/log/infomarker.html")
 
     def minimal(self,id):

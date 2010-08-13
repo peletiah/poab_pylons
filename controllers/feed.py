@@ -63,10 +63,10 @@ class FeedController(BaseController):
                 q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageinfo_id)
                 imageinfo = q.one()
                 if imageinfo.flickrdescription==None:
-                    inlineimage='''<br /><div><a href="/view/solo/%s" title="%s"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><br /><br />
+                    inlineimage='''<br /><div><a href="/view/id/%s" title="%s"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><br /><br />
     </div>''' % (imageinfo.id,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle)
                 else:
-                    inlineimage='''<div><div><a href="/view/solo/%s" title="%s"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a>
+                    inlineimage='''<div><div><a href="/view/id/%s" title="%s"><img src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a>
     </div><span>%s</span><br /><br /></div>''' % (imageinfo.id,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrdescription)
                 c.log.content=c.log.content.replace(imgidtag,inlineimage)
             # ###create logdetails-class

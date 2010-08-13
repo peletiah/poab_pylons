@@ -24,7 +24,7 @@
                     <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
                 </div>
                 <div id="logcontent">
-                    <h2><a href="/log/solo/${log.id}" title="Permanent link to this journal-entry">${log.topic}</a></h2>
+                    <h2><a href="/log/id/${log.id}" title="Permanent link to this journal-entry">${log.topic}</a></h2>
                     % if log.distance==None:
 
                     % else:
@@ -45,7 +45,7 @@
                     ${log.content}
                 </div>
                 <span class="txt_icon">
-                    <a href="/log/solo/${log.id}" title="Permanent link to this journal-entry"></a>
+                    <a href="/log/id/${log.id}" title="Permanent link to this journal-entry"></a>
                 </span>
             </div>
             % endif

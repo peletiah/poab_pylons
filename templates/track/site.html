@@ -35,7 +35,7 @@ function showContent(country_id) {
 function modFromSVG(country_id) {
     removeoverlay(markerlist);
     $.ajax({
-            url: '/track/markerlist/'+country_id,
+            url: '/track/markerbounds/'+country_id,
             cache: true,
             success: function(response) { 
                 var markerlist=''

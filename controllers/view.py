@@ -11,11 +11,14 @@ log = logging.getLogger(__name__)
 class ViewController(BaseController):
 
     def index(self):
+        redirect_to(action='c')
         c.country_id=0
         q = model.Session.query(model.imageinfo)
         image_count=q.count()
         page_fract=float(h.Fraction(str(image_count)+'/10'))
         if int(str(page_fract).split('.')[1])==0:
+            #if we have a "full" page(10 image entries), 
+            #the "current" page is "full-page"-fraction minus 1
             c.page=int(str(page_fract).split('.')[0])-1
         else:
             c.page=str(page_fract).split('.')[0]
@@ -23,9 +26,9 @@ class ViewController(BaseController):
         return render("/view/index.html")
 
 
-    def c(self,country_id,page):
-        c.country_id=int(country_id)
-        if c.country_id==0:
+    def c(self,id1,page):
+        c.country_id=int(id1)
+        if c.country_id==0 and page==None:
             q = model.Session.query(model.imageinfo)
             image_count=q.count()
             page_fract=float(h.Fraction(str(image_count)+'/10'))
@@ -37,12 +40,8 @@ class ViewController(BaseController):
             c.page=0
         else:
             c.page=page
-        return render("/view/index.html")
-
-    def country(self,country_id,page):
-        c.curr_page=int(page)
-        c.country_id=int(country_id)
         c.navstring=h.countryDetails(model,c.country_id)
+        c.curr_page=int(c.page)
         if c.country_id==0:
             q = model.Session.query(model.trackpoint).filter(model.trackpoint.country_id != None)
         else:
@@ -106,15 +105,15 @@ class ViewController(BaseController):
                 #calculate the offset in seconds
                 utcoffset=timediff.timediff(deltaseconds)
             c.viewlist.append(viewdetail)
-        return render("/view/ajax.html")
+        return render("/view/index.html")
 
 
-    def infomarker(self,infomarker,page):
+    def infomarker(self,id1,page):
+        c.infomarker=int(id1)
         c.curr_page=int(page)
     #    c.navstring=h.countryDetails(model,c.country_id)
         q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.online==True,model.imageinfo.infomarker_id==c.infomarker))
         images=q.order_by(asc(model.imageinfo.flickrdatetaken)).all()
-        c.infomarker=int(infomarker)
 
         c.page=list()
         c.pages=list()
@@ -171,7 +170,7 @@ class ViewController(BaseController):
             c.viewlist.append(viewdetail)
         return render("/view/infomarker.html")
 
-    def solo(self,id):
+    def id(self,id):
         q = model.Session.query(model.imageinfo).filter(and_(model.imageinfo.online==True,model.imageinfo.id==id))
         image=q.one()
         if image.trackpoint_id:

@@ -1,6 +1,74 @@
+<%namespace name="pages" file="/misc/pages.html"/>
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
 <div id="content">
+    <div id="log" "clearfix">
+${pages.pages()}
+            <!--highestlogid: ${c.highestlogid}<br />
+            lowestlogid: ${c.lowestlogid}<br />
+            startfromlog: ${c.startfromlog}<br />
+            lowestlogonpage: ${c.lowestlogonpage}<br />
+            startlognextpage: ${c.startlognextpage}<br />
+            startlogprevpage: ${c.startlogprevpage}-->
+
+
+        % for log in c.logdetails:
+            % if log.twitter==True:
+                <div class="twitter">
+                    <div class="logheader">
+                        <span id="logheader_left">${log.createdate}</span>
+                        <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
+                    </div>
+                    <div class="twittercontent">
+                         ${log.content}
+                    </div>
+                    <span class="twitter_icon">
+                         <a href="http://twitter.com/derreisende/statuses/${log.guid}" target="_blank"></a>
+                    </span>
+                </div>
+            % else:
+            <div id="logdetail">
+                <div class="logheader">
+                    <span id="logheader_left">${log.createdate}</span>
+                    <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
+                </div>
+                <div id="logcontent">
+                    <h2><a href="/log/id/${log.id}" title="Permanent link to this journal-entry">${log.topic}</a></h2>
+                    % if log.distance==None:
+                        
+                    % else:
+                        <b>distance:</b> ${log.distance}<br>
+                    % endif
+                    % if log.timespan==None:
+                        
+                    % else:
+                        <b>duration:</b> ${log.timespan}<br>
+                    % endif
+                    <div id="logdetail_icons">
+                        ${log.gallerylink}
+                        <span class="track_icon"><a title="Show route on map" href="/track/infomarker/${log.infomarkerid}"></a></span>
+                        <span class="stats_icon"><a title="Show statistics for this day" href="/facts/stats/${log.infomarkerid}"></a></span>
+                    </div>
+                    <br>
+                    <br>
+                    ${log.content}
+                </div>
+                <span class="txt_icon">
+                    <a href="/log/id/${log.id}" title="Permanent link to this journal-entry"></a>
+                </span>
+            </div>
+            % endif
+        % endfor
+${pages.pages()}
+</div>
+<div id="subcontent">
+</div> 
+% if c.error:
+    <div id="error">
+        ${c.error}
+    </div>
+% endif
+
 </div>
 
 <script type="text/javascript">
@@ -13,7 +81,28 @@ $("div.imagecontainer").mouseover(function(){
  }).mouseout(function(){
       $(".caption",this).hide();
     });
-showContent('${c.country_id}/${c.page}');
 modMenu(${c.country_id});
+showNavigation('${c.navstring}');
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){ 
+      $(".caption",this).show();
+      width=($("img[id='inlineimage']",this).width())
+      $('div.imagecontainer').css({width: width});
+ }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+showSubcontent('/misc/country_svg/'+${c.country_id});
+function captionSize(){
+      width=($("#inlineimage").css("width"))
+      $('div.imagecontainer').css({width: width});
+};
+
+$(document).ready(function(){
+        $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
+    captionSize()
+    });
+$(document).ready(function(){
+    $("a[rel='map_colorbox']").colorbox({transition:"fade", width:"952px", height:"584px", iframe:true});
+        });
 showNavigation('${c.navstring}');
 </script>

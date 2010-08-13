@@ -8,32 +8,21 @@
 	<title>poab.org - journal</title>
     <script type="text/javascript" >
     hostname = "${hostname.hostname()}"
-   function showContent(country_id) {
-        if (country_id=='0') {
-            showNavigation('<li class="navigation"><ul><li class="navli"><a href="#" title="Show all entries" onclick="resetContent();">All</a></li></ul></li>');
-            resetMenu(country_id);
-        }
-        $.ajax({
-            url: '/log/country/'+country_id,
-            cache: true,
-            success: function(response) { 
-            $("#content").replaceWith('<div id="content">' + response + '</div>');
-           }
-        
-        });
-    }
-   
+  
     function modFromSVG(country_id) {
-        showContent(country_id);
+        window.location = '/log/c/'+country_id
         $(".menu").attr("href", function() {
             var re = new RegExp("(http://w{0,3}\.{0,1}"+hostname+"/[A-z]{1,}/)c/[0-9]{1,}");
             return(this.href.replace(re, "$1c/"+country_id));
         });
     }
-    function resetContent() {
-        showContent(0);
-    }
 
+    function resetContent() {
+        window.location = '/log'
+    }
+    function showContent(country_id) {
+        modFromSVG(country_id)
+    }
 </script>
     </head>
     <body>

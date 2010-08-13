@@ -1,6 +1,63 @@
+<%namespace name="pages" file="/misc/pages.html"/>
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
 <div id="content">
+
+${pages.pages()}
+<!--            highestimageid: ${c.highestimageid}<br />
+            lowestimageid: ${c.lowestimageid}<br />
+            startfromimage: ${c.startfromimage}<br />
+            lowestimageonpage: ${c.lowestimageonpage}<br />
+            startimagenextpage: ${c.startimagenextpage}<br />
+            startimageprevpage: ${c.startimageprevpage}<br />
+-->
+
+
+% for viewdetail in c.viewlist:
+<div class="view">
+<div class="imagecontainer">
+    <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}" title="View photolocation on map"><img id="image" src="${viewdetail.imgname}" /></a>
+    <div class="caption">
+         <span id="caption_left">
+            <span>&#8594;</span>
+            <a href="http://www.flickr.com/peletiah/${viewdetail.flickrphotoid}" target="_blank" title="View photo on flickr">www.flickr.com</a><br />
+            <span>&#8594;</span>
+            <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}" title="View photolocation on map">view on map</a>
+        </span>
+        <span id="caption_center">
+                        % if viewdetail.description:
+                <a href="/log/${viewdetail.log_id}" title="Supposed to view the related single journal-entry, doesn't work as of now">${viewdetail.description}</a>
+            % else:
+                <a href="/log/${viewdetail.log_id}" title="Supposed to view the related single journal-entry, doesn't work as of now">&ldquo;${viewdetail.title}&rdquo;</a>
+            % endif            
+            <br />
+            ${viewdetail.trackpointinfo.location},
+            % if viewdetail.trackpointinfo.temperature==None:
+            n/a,
+            % else:
+            ${viewdetail.trackpointinfo.temperature}&#8451,
+            % endif
+            % if viewdetail.trackpointinfo.altitude==None:
+            n/a
+            % else:
+            ${viewdetail.trackpointinfo.altitude}m
+            % endif
+        </span>
+        <span id="caption_right">
+            ${viewdetail.localtime} (<a href="" title="${viewdetail.timezone.description}, ${viewdetail.utcoffset}">${viewdetail.timezone.abbreviation})</a><br />
+            ${viewdetail.focal_length}&nbsp;|&nbsp;${viewdetail.aperture}&nbsp;|&nbsp;${viewdetail.shutter}
+        </span>
+    
+
+    </div>
+</div>
+</div>
+% endfor
+
+${pages.pages()}
+
+
+
 </div>
 <script>
 $(".caption").hide();
@@ -11,8 +68,21 @@ $("div.imagecontainer").mouseover(function(){
     }).mouseout(function(){
       $(".caption",this).hide();
     });
-showContent('${c.country_id}/${c.page}')
 modMenu(${c.country_id});
+$(".caption").hide();
+$("div.imagecontainer").mouseover(function(){
+      $(".caption",this).show();
+      width=($("img[id='image']",this).width())
+      $('div.imagecontainer').css({width: width});
+    }).mouseout(function(){
+      $(".caption",this).hide();
+    });
+
+$(document).ready(function(){
+    $("a[rel='map_colorbox']").colorbox({transition:"fade", width:"952px", height:"584px", iframe:true});
+        });
+showNavigation('${c.navstring}');
 </script>
+
 
 
