@@ -430,10 +430,18 @@ body a:hover {
     left: 0.3em;
 }
 
-#pages {
+.pages {
    display: inline-block;
 	float: left;
    margin: 0 0 -1.5em 0;
+}
+
+.pages a {
+    text-decoration: none;
+}
+
+.page_arrow {
+    text-decoration: none;
 }
 
 .logpagenext a,.logpageprev a,.logpagelowest a,.logpagehighest a {

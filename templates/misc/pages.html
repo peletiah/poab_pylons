@@ -1,5 +1,5 @@
 <%def name="pages()">
-    <div id="pages">
+    <div class="pages">
         <%
             controller=request.environ['pylons.routes_dict']['controller']
             action=request.environ['pylons.routes_dict']['action']
@@ -12,12 +12,18 @@
                 i=c.curr_page-4
                 j=c.curr_page-3
 
+            prev_page='''<a href="/%s/%s/%s/%s" class="page_arrow" title="older entries" >&#8592;</a> '''% (controller,action,c.id1,str(c.curr_page-1))
+            next_page=''' <a href="/%s/%s/%s/%s" class="page_arrow" title="newer entries" >&#8594;</a>'''% (controller,action,c.id1,str(c.curr_page+1))
+
+            if c.curr_page>0:
+                pagestring=pagestring+prev_page
+
             if c.curr_page>4 and len(c.pages)>9:
                 pagestring=pagestring+'''<a href="/%s/%s/%s/%s" title="Photos page %s" >%s</a>'''% (controller,action,c.id1,str(0),str(1),str(1))
 
 ###FASTREWIND
             if len(c.pages)<=9:
-                fastrewind_page='' 
+                fastrewind_page=''
             elif c.curr_page<10 and c.curr_page>4:
                 fastrewind_page=''' <a href="/%s/%s/%s/%s" title="Photos page %s" >...</a>''' % (controller,action,c.id1,str(0),str(1))
             elif c.curr_page>4:
@@ -57,7 +63,12 @@
             if c.curr_page+5<len(c.pages) and len(c.pages)>9:
                 pagestring=pagestring+'''%s <a href="/%s/%s/%s/%s" title="Photos page %s" >%s</a>'''% (fastforward_page,controller,action,c.id1,str(len(c.pages)-1),str(len(c.pages)),str(len(c.pages)))
             if len(c.pages)==1:
-                pagestring=""
+                pagestring=''
+            
+            if c.curr_page<(len(c.pages)-1):
+                pagestring=pagestring+next_page
+
+
         %>
         ${pagestring}
     <br>
