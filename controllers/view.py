@@ -207,7 +207,8 @@ class ViewController(BaseController):
             utcoffset=timediff.timediff(deltaseconds)
         c.viewlist=list()
         c.viewlist.append(viewdetail)
-        return render("/view/solo.html")
+        c.navstring='''<li class="navigation"><ul><li class="navli"><a href="#" title="Journal-entries for all countries" onclick="resetContent\(\);">All</a>&#8594; Id &#8594;<a href="/view/id/%s" title="View image %s alone">%s</a></li></ul></li>''' % (id,id,id)
+        return render("/view/id.html")
             
 
     def gallery(self,infomarker,startfromimg):
