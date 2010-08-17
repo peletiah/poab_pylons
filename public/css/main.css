@@ -61,6 +61,10 @@ body a:hover {
 	list-style: none;
 }
 
+.menucontent img {
+    border: none;
+}
+
 .menucontent ul {
 	border: none;
 	padding: 0.5em;
@@ -72,11 +76,10 @@ body a:hover {
 }
 
 .menucontent a {
-        color: #EEEEEE;
-        text-decoration: none;
-        padding: 0.2em 0.5em 0.2em 0.5em;
-
-        }
+    color: #EEEEEE;
+    text-decoration: none;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+}
 
 .menucontent a:hover {
         background: #00607f;
@@ -88,14 +91,15 @@ body a:hover {
         -webkit-border-radius: 5px;
         -khtml-border-radius: 5px;
         border-radius: 5px;
+}
 
-        }
+.menucli a:hover {
+	 background-color: #222222;
+}        
 
 
-
-
-#menu_nodecoration a:hover {
-    background-color: #333333;
+.menu_nodecoration a:hover {
+    background-color: #222222;
       
 }
 .navigation {
@@ -123,7 +127,9 @@ body a:hover {
 .navigation a:hover {
         text-decoration: underline;
         color: #FFFFFF;
-    padding: 0.1em;
+        padding: 0.1em;
+	     background-color: #222222;
+        
 }
 
 .navigation span {

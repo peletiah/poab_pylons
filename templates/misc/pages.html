@@ -16,7 +16,7 @@
                 pagestring=pagestring+'''<a href="/%s/%s/%s/%s" title="Photos page %s" >%s</a>'''% (controller,action,c.id1,str(0),str(1),str(1))
 
 ###FASTREWIND
-            if len(c.pages)<9:
+            if len(c.pages)<=9:
                 fastrewind_page='' 
             elif c.curr_page<10 and c.curr_page>4:
                 fastrewind_page=''' <a href="/%s/%s/%s/%s" title="Photos page %s" >...</a>''' % (controller,action,c.id1,str(0),str(1))
