@@ -2,10 +2,12 @@
 <%include file="/menu/menu.html" />
 <div id="content">
   <div id="log" "clearfix">
-    
+        <% i=1 %>    
         % for log in c.logdetails:
             % if log.twitter==True:
                 <div class="twitter">
+                    <a name='${i}'></a>
+                    <% i=i+1 %>
                     <div class="logheader">
                         <span id="logheader_left">${log.createdate}</span>
                         <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
@@ -19,6 +21,8 @@
                 </div>
             % else:
             <div id="logdetail">
+                <a name='${i}'></a>
+                <% i=i+1 %>
                 <div class="logheader">
                     <span id="logheader_left">${log.createdate}</span>
                     <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>

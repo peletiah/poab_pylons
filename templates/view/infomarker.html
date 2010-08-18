@@ -7,8 +7,11 @@
 
 ${pages.pages()}
 
+<% i=1 %>
 % for viewdetail in c.viewlist:
 <div class="view">
+<a name='${i}'></a>
+<% i=i+1 %>
 <div class="imagecontainer">
     
     <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}"><img id="image" src="${viewdetail.imgname}" /></a>

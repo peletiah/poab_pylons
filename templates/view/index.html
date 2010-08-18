@@ -12,9 +12,11 @@ ${pages.pages()}
             startimageprevpage: ${c.startimageprevpage}<br />
 -->
 
-
+<% i=1 %>
 % for viewdetail in c.viewlist:
 <div class="view">
+<a name='${i}'></a>
+<% i=i+1 %>
 <div class="imagecontainer">
     <a href="/view/id/${viewdetail.photoid}" title="View photo by itself"><img id="image" src="${viewdetail.imgname}" /></a>
     <div class="caption">
