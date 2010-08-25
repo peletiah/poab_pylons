@@ -3,7 +3,7 @@
 <%namespace name="pages" file="/misc/pages.html"/>
 <!--<link href="css/caption.css" media="screen" rel="stylesheet" title="" type="text/css"  />-->
 
-<div id="content">
+<div class="content">
 
 ${pages.pages()}
 
@@ -14,16 +14,16 @@ ${pages.pages()}
 <% i=i+1 %>
 <div class="imagecontainer">
     
-    <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}"><img id="image" src="${viewdetail.imgname}" /></a>
+    <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}"><img class="image" src="${viewdetail.imgname}" /></a>
     <div class="caption">
-         <span id="caption_left">
+         <span class="caption_left">
             <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/${viewdetail.flickrphotoid}" target="_blank">www.flickr.com</a><br />
             <span>&#8594;</span>
             <a rel="map_colorbox" href="/track/simple/${viewdetail.trackpointinfo.id}/${viewdetail.photoid}">view on map</a>
         </span>
 
-        <span id="caption_center">
+        <span class="caption_center">
             % if viewdetail.description:
                 <a href="/log/${viewdetail.log_id}">${viewdetail.description}</a>
             % else:
@@ -37,7 +37,7 @@ ${pages.pages()}
             ${viewdetail.trackpointinfo.temperature}&#8451
             % endif
         </span>
-        <span id="caption_right">
+        <span class="caption_right">
             ${viewdetail.localtime} (<a href="" title="${viewdetail.timezone.description}, ${viewdetail.utcoffset}">${viewdetail.timezone.abbreviation})</a><br />
             ${viewdetail.focal_length}&nbsp;|&nbsp;${viewdetail.aperture}&nbsp;|&nbsp;${viewdetail.shutter}
         </span>
@@ -55,7 +55,7 @@ ${pages.pages()}
 $(".caption").hide();
 $("div.imagecontainer").mouseover(function(){
       $(".caption",this).show();
-      width=($("img[id='image']",this).width())
+      width=($("img[class='image']",this).width())
       $('div.imagecontainer').css({width: width});
     }).mouseout(function(){
       $(".caption",this).hide();

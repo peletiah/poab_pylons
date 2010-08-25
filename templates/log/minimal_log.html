@@ -11,11 +11,11 @@
 </div>
 <script>
 $(".caption").hide();
-width=($("img[id='inlineimage']").width())
+width=($("img[class='inlineimage']").width())
 $('div.imagecontainer').css({width: width});
 $("div.imagecontainer").mouseover(function(){
       $(".caption",this).show();
-      width=($("img[id='inlineimage']",this).width())
+      width=($("img[class='inlineimage']",this).width())
       $('div.imagecontainer').css({width: width});
  }).mouseout(function(){
       $(".caption",this).hide();

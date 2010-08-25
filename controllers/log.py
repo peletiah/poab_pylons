@@ -29,9 +29,10 @@ class LogController(BaseController):
         return render("/log/index.html")
 
     def c(self,id1,page):
+        older_createdate='2008-02-01'
         c.country_id=int(id1)
         if c.country_id==0 and page==None:
-            q = model.Session.query(model.log)
+            q = model.Session.query(model.log).filter(model.log.createdate>older_createdate)
             log_count = q.count()
             page_fract=float(h.Fraction(str(log_count)+'/3'))
             if int(str(page_fract).split('.')[1])==0:
@@ -53,7 +54,7 @@ class LogController(BaseController):
         trkpt_list=list()
         for trackpoint in trackpoints:
             trkpt_list.append(trackpoint.id)
-        q = model.Session.query(model.log).filter(model.log.infomarker_id.in_(trkpt_list))
+        q = model.Session.query(model.log).filter(and_(model.log.infomarker_id.in_(trkpt_list),model.log.createdate>older_createdate))
         logs = q.order_by(asc(model.log.createdate)).all()
         c.page=list()
         c.pages=list()
@@ -69,6 +70,7 @@ class LogController(BaseController):
         if i<3 and i>0:
             c.page.reverse()
             c.pages.append(c.page)
+        #c.pages.reverse()
         c.logdetails=list()       
         for c.log in c.pages[c.curr_page]:
             c.twitter=False
@@ -123,12 +125,12 @@ class LogController(BaseController):
                 q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageinfo_id)
                 imageinfo = q.one()
                 if imageinfo.flickrdescription==None:
-                    inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><div class="caption">
+                    inlineimage='''<div class="log_inlineimage"> <div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox"><img class="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
     </div></div></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrphotoid)
                 else:
-                    inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><div class="caption">
+                    inlineimage='''<div class="log_inlineimage"><div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox" ><img class="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
     </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrphotoid,imageinfo.flickrdescription)
@@ -234,12 +236,12 @@ class LogController(BaseController):
             q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageinfo_id)
             imageinfo = q.one()
             if imageinfo.flickrdescription==None:
-                inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><div class="caption">
+                inlineimage='''<div class="log_inlineimage"> <div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox"><img class="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
     </div></div></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrphotoid)
             else:
-                inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><div class="caption">
+                inlineimage='''<div class="log_inlineimage"><div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox" ><img class="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s.jpg" alt="%s" /></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
     </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrphotoid,imageinfo.flickrdescription)
@@ -280,12 +282,12 @@ class LogController(BaseController):
             q = model.Session.query(model.imageinfo).filter(model.imageinfo.id==imageinfo_id)
             imageinfo = q.one()
             if imageinfo.flickrdescription==None:
-                    inlineimage='''<div id="log_inlineimage"> <div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox"><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s_m.jpg" /></a><div class="caption">
+                    inlineimage='''<div class="log_inlineimage"> <div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox"><img class="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s_m.jpg" /></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
     </div></div></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid)
             else:
-                inlineimage='''<div id="log_inlineimage"><div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox" ><img id="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s_m.jpg" /></a><div class="caption">
+                inlineimage='''<div class="log_inlineimage"><div class="imagecontainer"><a href="%s" title="%s" rel="image_colorbox" ><img class="inlineimage" src="http://farm%s.static.flickr.com/%s/%s_%s_m.jpg" /></a><div class="caption">
         <span>&#8594;</span>
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
     </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrphotoid,imageinfo.flickrdescription)

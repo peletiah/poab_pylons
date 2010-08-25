@@ -38,7 +38,7 @@ body {
 }
 
 
-#map_marker_content_text {
+.map_marker_content_text {
     margin-left: 0.5em;
     margin-right: 0.5em;
     font-size: 75%;

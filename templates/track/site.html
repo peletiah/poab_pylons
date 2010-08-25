@@ -1,4 +1,5 @@
 <%namespace name="hostname" file="/misc/hostname.html"/>
+<%namespace name="google" file="/misc/google.html"/>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -62,29 +63,28 @@ function modFromSVG(country_id) {
     };
 
    function controllerlink(markerdate,distance,timespan,gallerylink,loglink) {
-        return '<div id="map_marker_content_text"><b>date:</b> '+markerdate+'<br>'+distance+timespan+gallerylink+loglink+'</div>';
+        return '<div class="map_marker_content_text"><b>date:</b> '+markerdate+'<br>'+distance+timespan+gallerylink+loglink+'</div>';
    }
 
     function map_shrink() {
-        if ($("#map").css("width")==$("#content").css("width")) {
-            $("#map").width('55%')
+        if ($("#map").css("width")==$("#track").css("width")) {
+            $("#map").width('66%')
             }
         else if ($("#map").css("width")=='100%') {
-            $("#map").width('55%')
+            $("#map").width('66%')
             }
-    map.checkResize();
+        map.checkResize();
     }
 
     function map_grow() {
         $("#map").width('100%')
-        $('<div id="subcontent"/>').replaceAll("#subcontent");
+        $('<div class="subcontent"/>').replaceAll(".subcontent");
         map.checkResize();
         map.setCenter(markerBounds.getCenter(), map.getBoundsZoomLevel(markerBounds));
     }
 
     function recenter(lat,lng) {
         map_shrink();
-        map.checkResize();
         map.panTo(new GLatLng(lat,lng));
 }
 
@@ -207,15 +207,15 @@ function modFromSVG(country_id) {
         mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
         map.addControl(mapControl);
         map.enableScrollWheelZoom();
-        map.disableDoubleClickZoom();
+        //map.disableDoubleClickZoom();
         markerlist = ${c.markerlist};
-        GEvent.addListener(map, 'click', function(){
-            if (markerclicked==false) {
-                map_grow();
-                }
-        });
+        //GEvent.addListener(map, 'click', function(){
+        //    if (markerclicked==false) {
+        //        //map_grow();
+        //        }
+        //});
 	     trackoverlay(markerlist);
-        GEvent.addListener(map, 'extinfowindowclose', function(){map_grow();});
+        //GEvent.addListener(map, 'extinfowindowclose', function(){map_grow();});
     }
     }
 
@@ -224,5 +224,6 @@ function modFromSVG(country_id) {
   </head>
   <body onload=load()>
   	${self.body()}
+  ${google.google()}
   </body>
 </html>

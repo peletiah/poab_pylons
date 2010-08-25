@@ -67,28 +67,12 @@ function showSubcontent(contentlink) {
        url: contentlink,
        cache: true,
        success: function(response) { 
-         $("#subcontent").replaceWith('<div id="subcontent">' + response + '</div>');
+         $(".subcontent").replaceWith('<div class="subcontent">' + response + '</div>');
            }
         
    });
     }
         </script>
-
-    <script type="text/javascript">
-    
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-2205152-6']);
-      _gaq.push(['_trackPageview']);
-    
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    
-    </script>
-
-
 <div id="menublock">
 	<ul class="menucontent" class="clearfix">
 	    <li class="menuli"><a class="menu" href="${h.rails.url_for(controller="/log", action="")}">journal</a></li>

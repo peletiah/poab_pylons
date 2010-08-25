@@ -1,7 +1,10 @@
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
-<div id="content">
-  <div id="log" "clearfix">
+<div class="content">
+  <div class="subcontent">
+  </div> 
+
+  <div class="log" "clearfix">
         <% i=1 %>    
         % for log in c.logdetails:
             % if log.twitter==True:
@@ -9,8 +12,8 @@
                     <a name='${i}'></a>
                     <% i=i+1 %>
                     <div class="logheader">
-                        <span id="logheader_left">${log.createdate}</span>
-                        <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
+                        <span class="logheader_left">${log.createdate}</span>
+                        <span class="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
                     </div>
                     <div class="twittercontent">
                          ${log.content}
@@ -20,15 +23,16 @@
                     </span>
                 </div>
             % else:
-            <div id="logdetail">
+            <div class="logdetail">
                 <a name='${i}'></a>
                 <% i=i+1 %>
                 <div class="logheader">
-                    <span id="logheader_left">${log.createdate}</span>
-                    <span id="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
+                    <span class="logheader_left">${log.createdate}</span>
+                    <span class="logheader_right"><a  rel="map_colorbox" href="/track/simple/${log.infomarkerid}" title="View location of this entry on a map">${log.location}</a></span>
                 </div>
-                <div id="logcontent">
+                <div class="logcontent">
                     <h2><a href="/log/id/${log.id}" title="Permanent link to this journal-entry">${log.topic}</a></h2>
+                    <h3>
                     % if log.distance==None:
 
                     % else:
@@ -39,7 +43,8 @@
                     % else:
                         <b>duration:</b> ${log.timespan}<br>
                     % endif
-                    <div id="logdetail_icons">
+                    </h3>
+                    <div class="logdetail_icons">
                         ${log.gallerylink}
                         <span class="track_icon"><a title="Show route on map" href="/track/infomarker/${log.infomarkerid}"></a></span>
                         <span class="stats_icon"><a title="Show statistics for this day" href="/facts/stats/${log.infomarkerid}"></a></span>
@@ -55,11 +60,9 @@
             % endif
         % endfor
 </div>
-<div id="subcontent">
-</div> 
 </div>
 % if c.error:
-    <div id="error">
+    <div class="error">
         ${c.error}
     </div>
 % endif
@@ -67,14 +70,14 @@
 $(".caption").hide();
 $("div.imagecontainer").mouseover(function(){ 
       $(".caption",this).show();
-      width=($("img[id='inlineimage']",this).width())
+      width=($("img[class='inlineimage']",this).width())
       $('div.imagecontainer').css({width: width});
  }).mouseout(function(){
       $(".caption",this).hide();
     });
 showSubcontent('/misc/country_svg/'+${c.country.iso_numcode});
 function captionSize(){
-      width=($("#inlineimage").css("width"))
+      width=($(".inlineimage").css("width"))
       $('div.imagecontainer').css({width: width});
 };
 
@@ -84,13 +87,4 @@ $(document).ready(function(){
     });
 showNavigation('${c.navstring}');
 var i=0;
-$(".caption").hide();
-$("div.imagecontainer").mouseover(function(){ 
-      $(".caption",this).show();
-      width=($("img[id='inlineimage']",this).width())
-      $('div.imagecontainer').css({width: width});
- }).mouseout(function(){
-      $(".caption",this).hide();
-    });
-showNavigation('${c.navstring}');
 </script>

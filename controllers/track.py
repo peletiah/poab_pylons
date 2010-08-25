@@ -26,13 +26,13 @@ class TrackController(BaseController):
                 firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
                 for image in firstimage:
                     #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
+                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
             else:
                 gallerylink=''
             q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
             if q.count() > 0:
                 #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
-                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
+                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
                 log=q.first()
                 p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
                 if p.search(log.topic):
@@ -86,13 +86,13 @@ class TrackController(BaseController):
                 firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
                 for image in firstimage:
                     #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
+                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
             else:
                 gallerylink=''
             q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
             if q.count() > 0:
                 #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
-                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
+                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
                 log=q.first()
                 p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
                 if p.search(log.topic):
@@ -138,13 +138,13 @@ class TrackController(BaseController):
             firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
             for image in firstimage:
                 #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
+                gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
         else:
             gallerylink=''
         q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
         if q.count() > 0:
             #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed):
-            loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
+            loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
         else:
             loglink=''
         q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
@@ -230,13 +230,13 @@ class TrackController(BaseController):
                 firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
                 for image in firstimage:
                     #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
+                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
             else:
                 gallerylink=''
             q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
             if q.count() > 0:
                 #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
-                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
+                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
                 log=q.first()
                 p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
                 if p.search(log.topic):

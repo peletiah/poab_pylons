@@ -35,24 +35,24 @@
   text-decoration: none;
 }
 
-#caption_right {
+.caption_right {
     float:right;
     padding: 0 10px 0 0;
     width: 290px;
     text-align: right;
 }
-#caption_center {
+.caption_center {
     float:left;
     padding: 0;
     text-align: center;
-    width:390px;
+    width:370px;
     margin: 0 auto;
 }
-#caption_center a {
+.caption_center a {
     text-decoration:none;
 }
     
-#caption_left {
+.caption_left {
     float:left;
     padding: 0 0 0 10px;
     width: 290px;

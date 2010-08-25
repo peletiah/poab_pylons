@@ -1,15 +1,15 @@
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
-<div id="content">
+<div class="content">
     <div id="track">
         <div id="map">
         </div>
-        <div id="subcontent" class="sub_track">
+        <div class="subcontent" class="sub_track">
         </div>
         <br/>
     </div>
    <div id="overlayswitch">
-        <a href="#" onClick="reloadMap()" title="This link is supposed to open a legend and some checkboxes, but it doesn't do that at the moment">Legend&Controls</a>
+        <a href="javascript:map_shrink();showSubcontent('/misc/track_legend');" title="Map legend and checkboxes to control overlays">Legend&Controls</a>
    <!--     <input type="checkbox" onClick="enableWikipedia()"> Wikipedia Overlay<br>
         <input type="checkbox" onClick="toggletrack(this)" name="trackcheckbox" checked> Travelled<br>
         <input type="checkbox" onClick="togglemarkers(this)" name="trackcheckbox" checked> Markers<br>-->

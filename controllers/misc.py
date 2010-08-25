@@ -21,3 +21,6 @@ class MiscController(BaseController):
         q = model.Session.query(model.country).filter(model.country.iso_numcode==country_id)
         c.country=q.one()
         return render("/misc/country_svg.html")
+
+    def track_legend(self):
+        return render("/misc/legend.html")
