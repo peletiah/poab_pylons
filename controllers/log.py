@@ -32,7 +32,7 @@ class LogController(BaseController):
         older_createdate='2008-02-01'
         c.country_id=int(id1)
         if c.country_id==0 and page==None:
-            q = model.Session.query(model.log).filter(model.log.createdate>older_createdate)
+            q = model.Session.query(model.log)#.filter(model.log.createdate)
             log_count = q.count()
             page_fract=float(h.Fraction(str(log_count)+'/3'))
             if int(str(page_fract).split('.')[1])==0:
@@ -54,7 +54,7 @@ class LogController(BaseController):
         trkpt_list=list()
         for trackpoint in trackpoints:
             trkpt_list.append(trackpoint.id)
-        q = model.Session.query(model.log).filter(and_(model.log.infomarker_id.in_(trkpt_list),model.log.createdate>older_createdate))
+        q = model.Session.query(model.log).filter(model.log.infomarker_id.in_(trkpt_list))
         logs = q.order_by(asc(model.log.createdate)).all()
         c.page=list()
         c.pages=list()
