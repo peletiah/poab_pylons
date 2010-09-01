@@ -21,50 +21,51 @@ class TrackController(BaseController):
         q = model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
         c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
         for c.infomarker in c.infomarkers:
-            q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
-            if q.count() > 0:
-                firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
-                for image in firstimage:
-                    #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
-            else:
-                gallerylink=''
-            q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
-            if q.count() > 0:
-                #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
-                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
-                log=q.first()
-                p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
-                if p.search(log.topic):
-                    c.twitter=True
+            if c.infomarker.id!=1:
+                q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
+                if q.count() > 0:
+                    firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
+                    for image in firstimage:
+                        #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
+                        gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
+                else:
+                    gallerylink=''
+                q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
+                if q.count() > 0:
+                    #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
+                    loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
+                    log=q.first()
+                    p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
+                    if p.search(log.topic):
+                        c.twitter=True
+                        loglink=''
+                else:
                     loglink=''
-            else:
-                loglink=''
 
-            q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
-            if q.count() == 1:
-                c.track = q.one()
-                total_mins = c.track.timespan.seconds / 60
-                mins = total_mins % 60
-                hours = total_mins / 60
-                timespan = '<b>duration:</b> %sh%smin<br />' % (str(hours),str(mins))
-                rounded_distance='<b>distance:</b> %skm<br />' % (str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP)))
-                date=c.track.date.strftime('%B %d, %Y')
-                trackpts=c.track.gencpoly_pts
-                tracklevels=c.track.gencpoly_levels
-                trackcolor=c.track.color
-            else:
-                q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
-                c.timezone = q.one()
-                localtime=c.infomarker.timestamp+c.timezone.utcoffset
-                date=localtime.strftime('%B %d, %Y')
-                rounded_distance=''
-                timespan=''
-                trackpts=''
-                tracklevels=''
-                trackcolor=''
-            if c.twitter!=True and c.infomarker.id!=1:
-                c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
+                q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
+                if q.count() == 1:
+                    c.track = q.one()
+                    total_mins = c.track.timespan.seconds / 60
+                    mins = total_mins % 60
+                    hours = total_mins / 60
+                    timespan = '<b>duration:</b> %sh%smin<br />' % (str(hours),str(mins))
+                    rounded_distance='<b>distance:</b> %skm<br />' % (str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP)))
+                    date=c.track.date.strftime('%B %d, %Y')
+                    trackpts=c.track.gencpoly_pts
+                    tracklevels=c.track.gencpoly_levels
+                    trackcolor=c.track.color
+                else:
+                    q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
+                    c.timezone = q.one()
+                    localtime=c.infomarker.timestamp+c.timezone.utcoffset
+                    date=localtime.strftime('%B %d, %Y')
+                    rounded_distance=''
+                    timespan=''
+                    trackpts=''
+                    tracklevels=''
+                    trackcolor=''
+                if c.twitter!=True and c.infomarker.id!=1:
+                    c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
         c.markerlist=(c.markerlist + '''];''').replace('},];','}];')
         return render("/track/index.html")
 
@@ -81,50 +82,50 @@ class TrackController(BaseController):
             q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.country_id==c.country_id,model.trackpoint.infomarker==True))
         c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
         for c.infomarker in c.infomarkers:
-            q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
-            if q.count() > 0:
-                firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
-                for image in firstimage:
-                    #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
-                    gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
-            else:
-                gallerylink=''
-            q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
-            if q.count() > 0:
-                #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
-                loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
-                log=q.first()
-                p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
-                if p.search(log.topic):
-                    c.twitter=True
+            if c.infomarker.id!=1:
+                q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
+                if q.count() > 0:
+                    firstimage = q.order_by(asc(model.imageinfo.id)).limit(1)
+                    for image in firstimage:
+                        #creates the infomarker-image_icon-and-ajax-link(fancy escaping for js needed):
+                        gallerylink="""<span class=\\"image_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/view/gallery/%s/%s\')\\"></a></span>""" % (c.infomarker.id,image.id)
+                else:
+                    gallerylink=''
+                q = model.Session.query(model.log).filter(model.log.infomarker_id==c.infomarker.id)
+                if q.count() > 0:
+                    #creates the infomarker-log_icon-and-ajax-link(fancy escaping for js needed)                
+                    loglink="""<span class=\\"log_icon\\"><a href=\\"javascript:map_shrink();showSubcontent(\'/log/minimal/%s\')\\"></a></span>""" % (c.infomarker.id)
+                    log=q.first()
+                    p=re.compile("http://twitter.com/derreisende/statuses/(?P<guid>\d{1,})")
+                    if p.search(log.topic):
+                        c.twitter=True
+                        loglink=''
+                else:
                     loglink=''
-            else:
-                loglink=''
-
-            q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
-            if q.count() == 1:
-                c.track = q.one()
-                total_mins = c.track.timespan.seconds / 60
-                mins = total_mins % 60
-                hours = total_mins / 60
-                timespan = '<b>duration:</b> %sh%smin<br />' % (str(hours),str(mins))
-                rounded_distance='<b>distance:</b> %skm<br />' % (str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP)))
-                date=c.track.date.strftime('%B %d, %Y')
-                trackpts=c.track.gencpoly_pts
-                tracklevels=c.track.gencpoly_levels
-                trackcolor=c.track.color
-            else:
-                q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
-                c.timezone = q.one()
-                localtime=c.infomarker.timestamp+c.timezone.utcoffset
-                date=localtime.strftime('%B %d, %Y')
-                rounded_distance=''
-                timespan=''
-                trackpts=''
-                tracklevels=''
-                trackcolor=''
-            if c.twitter!=True and c.infomarker.id!=1:
-                c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
+                q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
+                if q.count() == 1:
+                    c.track = q.one()
+                    total_mins = c.track.timespan.seconds / 60
+                    mins = total_mins % 60
+                    hours = total_mins / 60
+                    timespan = '<b>duration:</b> %sh%smin<br />' % (str(hours),str(mins))
+                    rounded_distance='<b>distance:</b> %skm<br />' % (str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP)))
+                    date=c.track.date.strftime('%B %d, %Y')
+                    trackpts=c.track.gencpoly_pts
+                    tracklevels=c.track.gencpoly_levels
+                    trackcolor=c.track.color
+                else:
+                    q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
+                    c.timezone = q.one()
+                    localtime=c.infomarker.timestamp+c.timezone.utcoffset
+                    date=localtime.strftime('%B %d, %Y')
+                    rounded_distance=''
+                    timespan=''
+                    trackpts=''
+                    tracklevels=''
+                    trackcolor=''
+                if c.twitter!=True:
+                    c.markerlist=c.markerlist + '''{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s"},''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor)
         c.markerlist=(c.markerlist + '''];''').replace('},];','}];')
         return render("/track/index.html")
 
