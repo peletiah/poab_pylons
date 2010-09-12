@@ -2,62 +2,22 @@
 <%inherit file="site.html" />
 
 <div class="content"
+<div class="stats">
+<h2>Totals</h2>
+<small>since 02.09.2010</small>
+<hr/>
 
-<p>This section is supposed to show some nice looking statistics, but it is not yet finished.</p>
-<p>I hope i'll find some time to finish it before my journey starts, otherwise i'll try to do it while i'm on the road...</p>
-<p>Since all the data is collected and rests safely and happily on my harddisk, nothing is lost ;-)</p>
-<br/>
-<br/>
-<br/>
-<div id="placeholder" style="width:600px;height:300px;"></div>
-
-<script id="source" language="javascript" type="text/javascript">
-$(function () {
-    var options = {
-        lines: { show: true },
-        points: { show: false },
-        xaxis: { mode: "time", timeformat: "%H", monthNames: ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"] }
-    };
-    var data = [];
-    var placeholder = $("#placeholder");
-    
-    $.plot(placeholder, data, options);
-
-    
-    // fetch one series, adding to what we got
-    var alreadyFetched = {};
-    
-       function fetchData() {
-        // find the URL in the link right next to us 
-        //var dataurl = '/facts/infomarker/${c.infomarker}'
-        var dataurl = '/facts/distance/${c.infomarker}'
-        // then fetch the data with jQuery
-        function onDataReceived(series) {
-            // extract the first coordinate pair so you can see that
-            // data is now an ordinary Javascript object
-
-            // let's add it to our current data
-            if (!alreadyFetched[series.label]) {
-                alreadyFetched[series.label] = true;
-                data.push(series);
-            }
-            
-            // and plot all we got
-            $.plot(placeholder, data, options);
-         }
-        
-        $.ajax({
-            url: dataurl,
-            method: 'GET',
-            dataType: 'json',
-            success: onDataReceived
-        });
-    };
-fetchData();
-
-});
-</script>
-
-
-
+<h3>Distance</h3>
+<p>Total distance cycled: <b>${c.total_distance}km</b></p>
+<p>Average distance cycled/day: <b>${c.daily_avg}km</b></p>
+<p>Greatest distance cycled/day: <b>${c.max_distance}km</b></p>
+<p>Shortest distance cycled/day: <b>${c.min_distance}km</b></p>
+<h3>Speed</h3>
+<p>Average Speed: <b>${c.avg_speed}km/h</b></p>
+<h3>Elevation</h3>
+<p>Highest elevation(approx.): <b>${c.max_altitude}m</b></p>
+<p>Lowest elevation(approx.): <b>${c.min_altitude}m</b></p>
+<br/><br/>
+<p>More stats will follow, someday!</p>
+</div>
 </div>

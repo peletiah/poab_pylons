@@ -3,6 +3,7 @@ import logging
 from poab.lib.base import *
 from sqlalchemy import asc, desc, and_, or_
 import time, datetime, calendar
+from decimal import Decimal, ROUND_HALF_UP
 
 log = logging.getLogger(__name__)
 
@@ -17,18 +18,24 @@ class FactsController(BaseController):
         return render("/facts/index.html")
     
     def c(self,id):
-        q=model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
-        trackpoint=q.first()
-        c.infomarker=trackpoint.id
+        redirect_to(controller='facts', action='stats')
         return render("/facts/stats.html")
 
 
     def stats(self,id):
-        c.infomarker=id
-        if id==None:
-            q=model.Session.query(model.trackpoint).filter(model.trackpoint.infomarker==True)
-            trackpoint=q.first()
-            c.infomarker=trackpoint.id
+        #Total Distance:
+        q = model.Session.query(model.track).filter(and_(model.track.distance!=None,model.track.date>='2010-08-31'))
+        c.total_distance=int(q.sum(model.track.distance))
+        c.daily_avg=int(c.total_distance/q.count())
+        c.max_distance=int(q.order_by(desc(model.track.distance)).first().distance)
+        c.min_distance=int(q.order_by(asc(model.track.distance)).first().distance)
+        #Totals speed
+        q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.timestamp>='2010-08-31', model.trackpoint.velocity>0, model.trackpoint.velocity<70))
+        c.avg_speed=q.sum(model.trackpoint.velocity)/q.count()
+        #Totals altitude
+        q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.timestamp>='2010-08-31', model.trackpoint.altitude!=None))
+        c.max_altitude=q.order_by(desc(model.trackpoint.altitude)).first().altitude
+        c.min_altitude=q.order_by(asc(model.trackpoint.altitude)).first().altitude
         return render("/facts/stats.html")
 
     def infomarker(self,id):

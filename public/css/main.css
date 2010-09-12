@@ -720,6 +720,28 @@ height : auto;
 }
 
 
+.stats {
+    }
+
+.stats h2 {
+    font-size:110%;
+}
+
+.stats h3 {
+    font-size:95%;
+    font-weight: None;
+    margin: 2em 0 1em 0;
+}
+
+.stats small {
+    font-size:60%;
+}
+
+.stats p {
+    margin: 0.5em 0 0 0;
+    font-size: 90%
+}
+
 .about {
     float: left;
     display: inline;
