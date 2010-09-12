@@ -21,7 +21,6 @@
    trackpolyline=new Array();
    trackmarker=new Array();
 
-
 ///////////////////// OVERLAYS //////////////////////////////
 
 function resetContent() {
@@ -68,10 +67,10 @@ function modFromSVG(country_id) {
 
     function map_shrink() {
         if ($("#map").css("width")==$("#track").css("width")) {
-            $("#map").width('66%')
+            $("#map").width('65%')
             }
         else if ($("#map").css("width")=='100%') {
-            $("#map").width('66%')
+            $("#map").width('65%')
             }
         map.checkResize();
     }
@@ -161,8 +160,18 @@ function modFromSVG(country_id) {
 
    function trackoverlay(markerlist) {
         for (var n=0; n<markerlist.length; n++) {
+            maxlat=markerlist[n].maxlat
+            maxlon=markerlist[n].maxlon
+            minlat=markerlist[n].minlat
+            minlon=markerlist[n].minlon
 	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].markerdate,markerlist[n].distance,markerlist[n].timespan,markerlist[n].gal,markerlist[n].log,n)
-           setBounds(markerlist[n].lat,markerlist[n].lon)
+           if (maxlat!='None' && maxlon!='None' && minlat!='None' && minlon!='None') {
+                setBounds(maxlat,maxlon)
+                setBounds(minlat,minlon)
+           }
+           else {
+                setBounds(markerlist[n].lat,markerlist[n].lon)
+           }
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
         map.setCenter(markerBounds.getCenter(), map.getBoundsZoomLevel(markerBounds));

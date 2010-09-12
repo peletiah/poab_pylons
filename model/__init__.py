@@ -183,6 +183,10 @@ track_table = sa.Table("track", meta,
     sa.Column("gencpoly_pts", types.UnicodeText),
     sa.Column("gencpoly_levels", types.UnicodeText),
     sa.Column("color", types.CHAR(6), default='FF0000'),
+    sa.Column("maxlat", types.Numeric(9,7)),
+    sa.Column("maxlon", types.Numeric(10,7)),
+    sa.Column("minlat", types.Numeric(9,7)),
+    sa.Column("minlon", types.Numeric(10,7)),
     )
 
 class track(object):
