@@ -165,7 +165,7 @@ function modFromSVG(country_id) {
             minlat=markerlist[n].minlat
             minlon=markerlist[n].minlon
 	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].markerdate,markerlist[n].distance,markerlist[n].timespan,markerlist[n].gal,markerlist[n].log,n)
-           if (maxlat!='None' && maxlon!='None' && minlat!='None' && minlon!='None') {
+           if (maxlat && maxlon && minlat && minlon ) {
                 setBounds(maxlat,maxlon)
                 setBounds(minlat,minlon)
            }

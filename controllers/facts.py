@@ -27,8 +27,10 @@ class FactsController(BaseController):
         q = model.Session.query(model.track).filter(and_(model.track.distance!=None,model.track.date>='2010-08-31'))
         c.total_distance=int(q.sum(model.track.distance))
         c.daily_avg=int(c.total_distance/q.count())
-        c.max_distance=int(q.order_by(desc(model.track.distance)).first().distance)
-        c.min_distance=int(q.order_by(asc(model.track.distance)).first().distance)
+        c.max_dist=q.order_by(desc(model.track.distance)).first()
+        c.max_distance=int(c.max_dist.distance)        
+        c.min_dist=q.order_by(asc(model.track.distance)).first()
+        c.min_distance=int(c.min_dist.distance)
         #Totals speed
         q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.timestamp>='2010-08-31', model.trackpoint.velocity>0, model.trackpoint.velocity<70))
         c.avg_speed=q.sum(model.trackpoint.velocity)/q.count()

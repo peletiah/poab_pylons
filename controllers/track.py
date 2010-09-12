@@ -89,7 +89,6 @@ class TrackController(BaseController):
 
     def infomarker(self,id):
         c.country_id=0
-        c.navstring=h.countryDetails(model,c.country_id)
         q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==id)
         c.infomarker = q.one()
         q = model.Session.query(model.imageinfo).filter(model.imageinfo.infomarker_id==c.infomarker.id)
@@ -138,6 +137,7 @@ class TrackController(BaseController):
             minlat=''
             minlon=''
         c.markerlist='''[{'lat':%s, 'lon':%s, 'gal':"%s",'log':"%s", 'markerdate':"%s", 'distance':"%s", 'timespan':"%s", 'encpts':"%s", 'enclvl':"%s", 'color':"%s", 'maxlat':"%s", 'maxlon':"%s", 'minlat':"%s",'minlon':"%s",}];''' % (c.infomarker.latitude,c.infomarker.longitude,gallerylink,loglink,date,rounded_distance,timespan,trackpts,tracklevels,trackcolor,maxlat,maxlon,minlat,minlon)
+        c.navstring='''<li class="navigation"><ul><li class="navli"><a href="#" title="Journal-entries for all countries" onclick="resetContent\(\);">All</a>&#8594; Infomarker &#8594;<a href="/track/infomarker/%s" title="View track %s alone">%s</a></li></ul></li>''' % (c.infomarker.id,c.infomarker.id,c.infomarker.id)
         return render("/track/index.html")
 
 
