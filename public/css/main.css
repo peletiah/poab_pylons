@@ -477,6 +477,20 @@ body a:hover {
     text-decoration: none;
 }
 
+.hoverhide {
+        width:100%
+    }
+
+.keyboard-key {
+     color: #000000;
+     border: 0.2em 
+     outset #cecbc7; 
+     background: #f0ece8; 
+     padding: 0 0.4em 0.1em 0.3em; 
+     font-size: 70%; 
+     white-space: nowrap;
+}
+
 .logpagenext a,.logpageprev a,.logpagelowest a,.logpagehighest a {
     width:20px;
     height:20px;

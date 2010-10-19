@@ -1,8 +1,6 @@
 <%namespace name="pages" file="/misc/pages.html"/>
 <%inherit file="site.html" />
 <%include file="/menu/menu.html" />
-<div class="view_content">
-
 ${pages.pages()}
 <!--            highestimageid: ${c.highestimageid}<br />
             lowestimageid: ${c.lowestimageid}<br />
@@ -15,7 +13,11 @@ ${pages.pages()}
 <% i=1 %>
 % for viewdetail in c.viewlist:
 <div class="view">
-<a name='${i}'></a>
+<div class="hentry">
+<h2>
+<a class="entry-title" id="/view/id/${viewdetail.photoid}" name='${i}' href="#"></a>
+</h2>
+</div>
 <% i=i+1 %>
 <div class="imagecontainer">
     <a href="/view/id/${viewdetail.photoid}" title="View photo by itself"><img class="image" src="${viewdetail.imgname}" /></a>
@@ -55,6 +57,7 @@ ${pages.pages()}
 </div>
 </div>
 % endfor
+<a name="bottom" href="#"></a>
 
 ${pages.pages()}
 
@@ -70,6 +73,14 @@ $("div.imagecontainer").mouseover(function(){
     }).mouseout(function(){
       $(".caption",this).hide();
     });
+
+$(".hoverhide").hide();
+$("div.pages").mouseover(function(){
+      $(".hoverhide",this).show();
+    }).mouseout(function(){
+      $(".hoverhide",this).hide();
+    });
+
 modMenu(${c.country_id});
 
 $(document).ready(function(){

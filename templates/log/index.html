@@ -22,7 +22,11 @@ ${pages.pages()}
         % for log in c.logdetails:
             % if log.twitter==True:
                 <div class="twitter">
-                    <a name='${i}'></a> 
+                    <div class="hentry">
+                        <h2>
+                            <a class="entry-title" href="#" name=${i}></a>
+                        </h2>
+                    </div>
                     <% i=i+1 %>
                     <div class="logheader">
                         <span class="logheader_left">${log.createdate}</span>
@@ -37,7 +41,11 @@ ${pages.pages()}
                 </div>
             % else:
             <div class="logdetail">
-                <a name='${i}'></a> 
+                    <div class="hentry">
+                        <h2>
+                            <a class="entry-title" href="#" name=${i}></a>
+                        </h2>
+                    </div>
                 <% i=i+1 %>
                 <div class="logheader">
                     <span class="logheader_left">${log.createdate}</span>
@@ -82,6 +90,7 @@ ${pages.pages()}
             </div>
             % endif
         % endfor
+<a name="bottom" href="#"></a>
 ${pages.pages()}
  
 % if c.error:
@@ -109,6 +118,13 @@ function captionSize(){
       width=($(".inlineimage").css("width"))
       $('div.imagecontainer').css({width: width});
 };
+
+$(".hoverhide").hide();
+//$("div.pages").mouseover(function(){
+ //     $(".hoverhide",this).show();
+ //   }).mouseout(function(){
+//      $(".hoverhide",this).hide();
+//    });
 
 $(document).ready(function(){
         $("a[rel='image_colorbox']").colorbox({transition:"fade", photo:"true", height: "95%"});
