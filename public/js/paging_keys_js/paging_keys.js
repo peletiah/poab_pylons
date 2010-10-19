@@ -255,7 +255,7 @@ var pagingKeys = function() {
 			window.scrollTo(0, p.y);
 
 	    if((delta > 0) && (old_y == getScrollTop()))
-	      movePage(1);
+	      movePage(-1);
 	  }
 	  return true;
 	}
