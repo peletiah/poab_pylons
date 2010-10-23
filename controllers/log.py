@@ -7,6 +7,7 @@ from sqlalchemy import asc, desc, and_, or_
 import time, datetime
 import re
 from decimal import Decimal, ROUND_HALF_UP
+import markdown
 
 log = logging.getLogger(__name__)
 
@@ -135,6 +136,12 @@ class LogController(BaseController):
             <a href="http://www.flickr.com/peletiah/%s" target="_blank">www.flickr.com</a>
     </div></div><span class="imagedescription">%s</span></div>''' % (imageinfo.imgname,imageinfo.flickrtitle,imageinfo.flickrfarm,imageinfo.flickrserver,imageinfo.flickrphotoid,imageinfo.flickrsecret,imageinfo.flickrtitle,imageinfo.flickrphotoid,imageinfo.flickrdescription)
                 c.log.content=c.log.content.replace(imgidtag,inlineimage)
+            urlfinder = re.compile('^(http:\/\/\S+)')
+            urlfinder2 = re.compile('\s(http:\/\/\S+)')
+            def urlify_markdown(value):
+                value = urlfinder.sub(r'<\1>', value)
+                return urlfinder2.sub(r' <\1>', value)
+            c.log.content=markdown.markdown(urlify_markdown(c.log.content))
             # ###create logdetails-class
             class logdetails:
                 topic=c.log.topic
