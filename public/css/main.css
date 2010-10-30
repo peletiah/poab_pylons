@@ -375,6 +375,10 @@ body a:hover {
     font-weight: normal;
 }
 
+.logcontent p {
+    margin:1em 0;
+}
+
 .logfooter {
         height: 3em;
         padding: 3em;
