@@ -78,7 +78,7 @@ body a:hover {
     border: 0.05em solid #000000;
     border-width: 0.05em;
     color: #333333;
-    margin: 4em auto;
+    margin: 5em auto;
         }
 
 #map a {
@@ -102,4 +102,18 @@ body a:hover {
    -khtml-border-radius: 5px;
    border-radius: 5px;
    }
+
+#details {
+   position: fixed;
+   top: 0.5em;
+   left: 0.5em;
+   color: #AAAAAA;
+   border: 1px solid;
+   padding: 0.2em 0.5em 0.2em 0.5em;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+   -khtml-border-radius: 5px;
+   border-radius: 5px;
+   }
+
 

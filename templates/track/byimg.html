@@ -122,6 +122,14 @@ function setBounds(lat,lng) {
         ${c.error}
     </div>
 % endif
+
+% if c.temperature and c.viewall==False:
+        <div id="details">
+            Datum: ${c.date}<br>
+            Temperatur: ${c.temperature}&#8451<br>
+            Hoehe: ${c.altitude}m
+        </div>
+% endif
     <div class="content">
         <div id="track">
             <div id="map">

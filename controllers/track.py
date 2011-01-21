@@ -285,10 +285,13 @@ class TrackController(BaseController):
                 hours = total_mins / 60
                 timespan = '<b>duration:</b> %sh%smin<br />' % (str(hours),str(mins))
                 rounded_distance='<b>distance:</b> %skm<br />' % (str(c.track.distance.quantize(Decimal("0.01"), ROUND_HALF_UP)))
-                date=c.track.date.strftime('%B %d, %Y')
+                date=c.track.date.strftime('%d. %B %Y')
                 trackpts=c.track.gencpoly_pts
                 tracklevels=c.track.gencpoly_levels
                 trackcolor=c.track.color
+                c.temperature=c.infomarker.temperature
+                c.altitude=c.infomarker.altitude
+                c.date=date
                 maxlat=c.track.maxlat
                 maxlon=c.track.maxlon
                 minlat=c.track.minlat
@@ -297,8 +300,11 @@ class TrackController(BaseController):
                 q = model.Session.query(model.timezone).filter(model.timezone.id==c.infomarker.timezone_id)
                 c.timezone = q.one()
                 localtime=c.infomarker.timestamp+c.timezone.utcoffset
-                date=localtime.strftime('%B %d, %Y')
+                date=localtime.strftime('%d. %B %Y')
                 rounded_distance=''
+                c.temperature=c.infomarker.temperature
+                c.altitude=c.infomarker.altitude
+                c.date=date
                 timespan=''
                 trackpts=''
                 tracklevels=''
