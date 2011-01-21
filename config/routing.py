@@ -32,6 +32,7 @@ def make_map():
     map.connect('track/c/', controller='track', action='c', id1=0)
     map.connect('track/c/:id1', controller='track', action='c', id1=0)
     map.connect('track/simple/:trackpoint/:imageid', controller='track', action='simple',imageid=None)
+    map.connect('track/byimg/:imagename', controller='track', action='byimg',imagename=None)
     map.connect('track/markerbounds/', controller='track', action='markerbounds', country_id=0)
     map.connect('track/markerbounds/:country_id', controller='track', action='markerbounds', country_id=0)    
     
