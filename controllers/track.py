@@ -270,7 +270,7 @@ class TrackController(BaseController):
                 c.viewall=True
             else:
                 image=q.one()
-                q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.infomarker==True,model.trackpoint.id==image.infomarker_id))
+                q = model.Session.query(model.trackpoint).filter(model.trackpoint.id==image.trackpoint_id)
                 c.infomarkers=q.all()
         c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
         for c.infomarker in c.infomarkers:
