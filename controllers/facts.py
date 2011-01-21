@@ -24,7 +24,7 @@ class FactsController(BaseController):
 
     def stats(self,id):
         #Total Distance:
-        q = model.Session.query(model.track).filter(and_(model.track.distance!=None,model.track.date>='2010-08-31'))
+        q = model.Session.query(model.track).filter(and_(model.track.distance!=None,model.track.date>='2010-08-31',model.track.color=='FF0000'))
         c.total_distance=int(q.sum(model.track.distance))
         c.daily_avg=int(c.total_distance/q.count())
         c.max_dist=q.order_by(desc(model.track.distance)).first()

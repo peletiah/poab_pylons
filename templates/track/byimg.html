@@ -59,13 +59,30 @@
         });
 	map.addOverlay(trackpolyline[n]);
       }
-   
-   function trackoverlay() {
-	    markerlist = ${c.markerlist};
-            for (var n=0; n<markerlist.length; n++) {
+  
+function setBounds(lat,lng) {
+            markerBounds.extend( new GLatLng(lat,lng));
+    }
+ 
+   function trackoverlay(markerlist) {
+        alert('blabla')
+        for (var n=0; n<markerlist.length; n++) {
+                alert(maxlat,maxlon,minlat,minlon)
+            maxlat=markerlist[n].maxlat
+            maxlon=markerlist[n].maxlon
+            minlat=markerlist[n].minlat
+            minlon=markerlist[n].minlon
 	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].altitude,markerlist[n].location,markerlist[n].flickrthumb,n)
+            if (maxlat && maxlon && minlat && minlon ) {
+                setBounds(maxlat,maxlon)
+                setBounds(minlat,minlon)
+           }
+           else {
+                setBounds(markerlist[n].lat,markerlist[n].lon)
+           }
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
+        map.setCenter(markerBounds.getCenter(), map.getBoundsZoomLevel(markerBounds));
     }
 
 
@@ -85,7 +102,8 @@
         map.addControl(mapControl);
         map.addControl(new GOverviewMapControl ());
         map.enableScrollWheelZoom();
-	trackoverlay();
+        markerlist = ${c.markerlist};
+	     trackoverlay(markerlist);
         GEvent.addListener(map, 'extinfowindowopen', function(){map.getExtInfoWindow().resize();});
       }
     }
