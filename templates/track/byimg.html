@@ -13,6 +13,7 @@
 
    var map;
    var i = false;
+   var markerBounds = new GLatLngBounds();
    trackpolyline=new Array();
    trackmarker=new Array();
 
@@ -65,14 +66,13 @@ function setBounds(lat,lng) {
     }
  
    function trackoverlay(markerlist) {
-        alert('blabla')
         for (var n=0; n<markerlist.length; n++) {
-                alert(maxlat,maxlon,minlat,minlon)
             maxlat=markerlist[n].maxlat
             maxlon=markerlist[n].maxlon
             minlat=markerlist[n].minlat
             minlon=markerlist[n].minlon
 	        writegmarker(markerlist[n].lat,markerlist[n].lon,markerlist[n].altitude,markerlist[n].location,markerlist[n].flickrthumb,n)
+% if c.viewall==True:
             if (maxlat && maxlon && minlat && minlon ) {
                 setBounds(maxlat,maxlon)
                 setBounds(minlat,minlon)
@@ -80,9 +80,15 @@ function setBounds(lat,lng) {
            else {
                 setBounds(markerlist[n].lat,markerlist[n].lon)
            }
+% endif
 	        writepolyline(markerlist[n].encpts,markerlist[n].enclvl,markerlist[n].color,n)
 	}
+% if c.viewall==True:
         map.setCenter(markerBounds.getCenter(), map.getBoundsZoomLevel(markerBounds));
+    for (var n=0; n<markerlist.length; n++) {
+        trackmarker[n].hide()
+    }
+% endif
     }
 
 

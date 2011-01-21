@@ -254,16 +254,20 @@ class TrackController(BaseController):
         older_createdate='2010-08-31'
         gallerylink=''
         loglink=''
+        c.viewall=False
         if imagename==None:
             q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.infomarker==True,model.trackpoint.timestamp>=older_createdate))
+            c.viewall=True
         else:
             q = model.Session.query(model.imageinfo).filter(model.imageinfo.imgname.like('%'+imagename+'%'))
             if q.count() > 1:
                 c.error='Multiple images found, please elaborate'
                 q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.infomarker==True,model.trackpoint.timestamp>=older_createdate))
+                c.viewall=True
             elif q.count() < 1:
                 c.error='No images found'
                 q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.infomarker==True,model.trackpoint.timestamp>=older_createdate))
+                c.viewall=True
             else:
                 image=q.one()
                 q = model.Session.query(model.trackpoint).filter(and_(model.trackpoint.infomarker==True,model.trackpoint.id==image.infomarker_id))
