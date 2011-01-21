@@ -274,7 +274,7 @@ class TrackController(BaseController):
                 c.infomarkers=q.all()
         c.infomarkers = q.order_by(asc(model.trackpoint.timestamp)).all()
         for c.infomarker in c.infomarkers:
-            q = model.Session.query(model.track).filter(model.track.id==c.infomarker.track_id)
+            q = model.Session.query(model.track).filter(and_(model.track.id==c.infomarker.track_id,model.track.color=='FF0000'))
             if q.count() == 1:
                 c.track = q.one()
                 total_mins = c.track.timespan.seconds / 60

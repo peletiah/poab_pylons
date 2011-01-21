@@ -106,7 +106,6 @@ function setBounds(lat,lng) {
         mapControl.clearRelationships();
         mapControl.addRelationship(G_SATELLITE_MAP, G_HYBRID_MAP, "Labels", false);
         map.addControl(mapControl);
-        map.addControl(new GOverviewMapControl ());
         map.enableScrollWheelZoom();
         markerlist = ${c.markerlist};
 	     trackoverlay(markerlist);
